@@ -79,6 +79,7 @@
   .text-h3 { @apply text-[32px] leading-[40px] font-semibold; }
   .text-body { @apply text-[18px] leading-[32px] font-normal; }
   .text-small { @apply text-[14px] leading-[22px]; }
+  .text-h4 { @apply text-[24px] leading-[32px] font-semibold; }
   .text-label { @apply text-[13px] leading-[18px] font-semibold; }
 
   @media (max-width: 1024px) {

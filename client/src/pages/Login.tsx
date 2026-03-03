@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
 import { useLogin } from "@/hooks/use-auth";
+import { Citrus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 
@@ -23,61 +24,58 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen pt-[64px] flex flex-col md:flex-row">
-      {/* Left Panel */}
-      <div className="hidden md:flex md:w-1/2 bg-primary items-center justify-center p-12 text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-        <div className="max-w-md relative z-10">
-          <h1 className="text-h1 mb-4">Welcome back</h1>
-          <p className="text-body opacity-80">Sign in to track orders, manage addresses, and checkout faster.</p>
-        </div>
-      </div>
-
-      {/* Right Panel */}
-      <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-12 bg-white">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <h2 className="text-h3 text-neutral-950 mb-2">Log In</h2>
-            <p className="text-small text-neutral-500">Sign in with your email or sign up to become an ALNOURS member</p>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 50%, #F0F9FF 100%)" }}>
+      <div className="w-full max-w-[960px] bg-white rounded-modal shadow-[0_24px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col md:flex-row">
+        <div className="md:w-[400px] bg-primary p-10 md:p-12 text-white flex flex-col justify-center">
+          <div className="flex items-center gap-2 mb-10">
+            <div className="w-10 h-10 bg-white/20 rounded-md flex items-center justify-center">
+              <Citrus className="w-6 h-6 text-white" />
+            </div>
+            <span className="font-sora font-bold text-h4">ALNOURS</span>
           </div>
+          <h2 className="font-sora text-h3 mb-4">Welcome back</h2>
+          <p className="text-white/70 text-body">
+            Sign in to track orders, manage addresses, and checkout faster.
+          </p>
+        </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-label text-neutral-950">Email</label>
+        <div className="flex-1 p-8 md:p-12">
+          <h2 className="font-sora text-h3 text-neutral-950 mb-2">Log In</h2>
+          <p className="text-small text-neutral-500 mb-8">
+            Sign in with your email or sign up to become an ALNOURS member
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">Email</label>
               <input 
-                type="email" 
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full h-[44px] px-4 rounded-md border border-neutral-200 focus:border-primary outline-none"
-                placeholder="Email"
-                required
+                type="email" value={email} onChange={e => setEmail(e.target.value)}
+                className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
+                placeholder="you@example.com" required data-testid="input-email"
               />
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="text-label text-neutral-950">Password</label>
-                <button type="button" className="text-small text-primary hover:underline font-semibold">Forgot Password</button>
-              </div>
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">Password</label>
               <input 
-                type="password" 
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="w-full h-[44px] px-4 rounded-md border border-neutral-200 focus:border-primary outline-none"
-                placeholder="Password"
-                required
+                type="password" value={password} onChange={e => setPassword(e.target.value)}
+                className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
+                placeholder="Enter your password" required data-testid="input-password"
               />
             </div>
-            <Button 
-              type="submit" 
-              disabled={isPending}
-              className="w-full h-[48px] bg-primary hover:bg-primary-hover text-white font-bold"
+            <div className="text-right">
+              <button type="button" className="text-small text-primary hover:underline font-medium">Forgot Password</button>
+            </div>
+            <Button type="submit" disabled={isPending}
+              className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body"
+              data-testid="button-signin"
             >
               {isPending ? "Signing in..." : "Sign in"}
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-small text-neutral-500">
-            Don’t have an account? <Link href="/signup" className="text-primary font-bold hover:underline">Sign Up</Link>
+          <p className="text-center mt-8 text-neutral-500 text-small">
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-primary font-semibold hover:underline">Sign Up</Link>
           </p>
         </div>
       </div>

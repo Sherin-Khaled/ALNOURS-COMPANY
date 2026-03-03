@@ -2,6 +2,7 @@ import { useAddresses, useCreateAddress } from "@/hooks/use-addresses";
 import { useState } from "react";
 import { MapPin, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
 
 export default function Addresses() {
   const { data: addresses, isLoading } = useAddresses();
@@ -26,50 +27,71 @@ export default function Addresses() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold font-display">Saved Addresses</h2>
+    <div>
+      <div className="flex justify-between items-start mb-8">
+        <div>
+          <h2 className="font-sora text-h3 text-neutral-950 mb-2">Addresses</h2>
+          <p className="text-body text-neutral-500">Save delivery addresses for faster checkout.</p>
+        </div>
         {!showForm && (
-          <button 
-            onClick={() => setShowForm(true)}
-            className="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-xl font-bold hover:bg-primary/20 transition-colors"
-          >
-            <Plus className="w-4 h-4" /> Add New
-          </button>
+          <Button onClick={() => setShowForm(true)}
+            className="h-11 px-6 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold"
+            data-testid="button-add-address">
+            <Plus className="w-4 h-4 mr-2" /> Add new address
+          </Button>
         )}
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-white rounded-[2rem] p-8 border border-border shadow-sm mb-8 space-y-4">
-          <h3 className="font-bold text-lg mb-4">New Address</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input placeholder="Title (e.g. Home)" required value={formData.title} onChange={e=>setFormData({...formData, title: e.target.value})} className="px-4 py-3 rounded-xl bg-muted focus:bg-white border-2 border-transparent focus:border-primary focus:outline-none" />
-            <input placeholder="Full Name" required value={formData.fullName} onChange={e=>setFormData({...formData, fullName: e.target.value})} className="px-4 py-3 rounded-xl bg-muted focus:bg-white border-2 border-transparent focus:border-primary focus:outline-none" />
-            <input placeholder="Phone" required value={formData.phone} onChange={e=>setFormData({...formData, phone: e.target.value})} className="px-4 py-3 rounded-xl bg-muted focus:bg-white border-2 border-transparent focus:border-primary focus:outline-none" />
-            <input placeholder="City" required value={formData.city} onChange={e=>setFormData({...formData, city: e.target.value})} className="px-4 py-3 rounded-xl bg-muted focus:bg-white border-2 border-transparent focus:border-primary focus:outline-none" />
+        <form onSubmit={handleSubmit} className="bg-neutral-50 rounded-lg p-8 border border-neutral-200 mb-8 space-y-6">
+          <h3 className="font-sora font-bold text-h4 text-neutral-950">New Address</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">Full name</label>
+              <input required value={formData.fullName} onChange={e=>setFormData({...formData, fullName: e.target.value})} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+            </div>
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">Phone number</label>
+              <input required value={formData.phone} onChange={e=>setFormData({...formData, phone: e.target.value})} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+            </div>
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">City</label>
+              <input required value={formData.city} onChange={e=>setFormData({...formData, city: e.target.value})} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+            </div>
+            <div>
+              <label className="text-label text-neutral-700 mb-2 block">Label (e.g. Home, Work)</label>
+              <input required value={formData.title} onChange={e=>setFormData({...formData, title: e.target.value})} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+            </div>
           </div>
-          <textarea placeholder="Full Address Line" required rows={3} value={formData.addressLine} onChange={e=>setFormData({...formData, addressLine: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-muted focus:bg-white border-2 border-transparent focus:border-primary focus:outline-none resize-none"></textarea>
+          <div>
+            <label className="text-label text-neutral-700 mb-2 block">Address line</label>
+            <textarea required rows={3} value={formData.addressLine} onChange={e=>setFormData({...formData, addressLine: e.target.value})} className="w-full px-4 py-3 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none text-body"></textarea>
+          </div>
           
-          <div className="flex justify-end gap-4 mt-4">
-            <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 font-bold text-muted-foreground hover:bg-muted rounded-xl">Cancel</button>
-            <button type="submit" disabled={isPending} className="px-6 py-3 font-bold bg-foreground text-white rounded-xl hover:bg-primary transition-colors disabled:opacity-50">Save Address</button>
+          <div className="flex justify-end gap-4">
+            <Button type="button" variant="outline" onClick={() => setShowForm(false)} className="h-11 px-6 rounded-md border-neutral-200 text-neutral-700">Cancel</Button>
+            <Button type="submit" disabled={isPending} className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-save-address">
+              Save address
+            </Button>
           </div>
         </form>
       )}
 
       {addresses?.length === 0 && !showForm ? (
-         <div className="bg-white rounded-[2rem] p-12 border border-border shadow-sm text-center">
-         <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-         <p className="text-lg font-bold">No addresses saved</p>
-       </div>
+        <div className="bg-neutral-50 rounded-lg p-16 border border-neutral-200 text-center">
+          <MapPin className="w-12 h-12 text-neutral-500 mx-auto mb-4 opacity-50" />
+          <p className="text-body font-semibold text-neutral-950">No addresses saved</p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {addresses?.map(addr => (
-            <div key={addr.id} className="bg-white rounded-[2rem] p-6 border border-border shadow-sm relative">
-              {addr.isDefault && <span className="absolute top-4 right-4 bg-primary text-white text-xs px-2 py-1 rounded-full font-bold">Default</span>}
-              <h4 className="font-bold text-lg flex items-center gap-2 mb-2"><MapPin className="w-4 h-4 text-primary" /> {addr.title}</h4>
-              <div className="text-muted-foreground text-sm space-y-1">
-                <p className="text-foreground font-medium">{addr.fullName}</p>
+            <div key={addr.id} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 relative">
+              {addr.isDefault && <span className="absolute top-4 right-4 bg-primary text-white text-label px-3 py-1 rounded-pill">Default</span>}
+              <h4 className="font-semibold text-neutral-950 flex items-center gap-2 mb-3 text-body">
+                <MapPin className="w-4 h-4 text-primary" /> {addr.title}
+              </h4>
+              <div className="text-small text-neutral-700 space-y-1">
+                <p className="font-medium text-neutral-950">{addr.fullName}</p>
                 <p>{addr.addressLine}</p>
                 <p>{addr.city}</p>
                 <p>{addr.phone}</p>

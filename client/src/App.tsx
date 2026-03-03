@@ -1,15 +1,13 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
-// Components
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-// Pages
 import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import ProductDetail from "@/pages/ProductDetail";
@@ -18,15 +16,19 @@ import Cart from "@/pages/Cart";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import AccountLayout from "@/pages/account/AccountLayout";
+import AccountOverview from "@/pages/account/AccountOverview";
 import Profile from "@/pages/account/Profile";
 import Orders from "@/pages/account/Orders";
 import Addresses from "@/pages/account/Addresses";
 import { About, Contact } from "@/pages/StaticPages";
 
 function Router() {
+  const [location] = useLocation();
+  const isAuthPage = location === "/login" || location === "/signup";
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      {!isAuthPage && <Navbar />}
       <main className="flex-grow">
         <Switch>
           <Route path="/" component={Home} />
@@ -38,22 +40,22 @@ function Router() {
           <Route path="/cart" component={Cart} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          
           <Route path="/account">
-            <AccountLayout>
-              <Switch>
-                <Route path="/account" component={Profile} />
-                <Route path="/account/orders" component={Orders} />
-                <Route path="/account/addresses" component={Addresses} />
-                <Route path="/account/profile" component={Profile} />
-              </Switch>
-            </AccountLayout>
+            <AccountLayout><AccountOverview /></AccountLayout>
           </Route>
-
+          <Route path="/account/profile">
+            <AccountLayout><Profile /></AccountLayout>
+          </Route>
+          <Route path="/account/orders">
+            <AccountLayout><Orders /></AccountLayout>
+          </Route>
+          <Route path="/account/addresses">
+            <AccountLayout><Addresses /></AccountLayout>
+          </Route>
           <Route component={NotFound} />
         </Switch>
       </main>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </div>
   );
 }

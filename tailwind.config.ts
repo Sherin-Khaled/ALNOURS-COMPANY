@@ -30,6 +30,18 @@ export default {
         promo: {
           DEFAULT: "#F4B740",
         },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
         neutral: {
           50: "#F8FAFC",
           200: "#E2E8F0",
@@ -74,6 +86,7 @@ export default {
         cairo: ["var(--font-cairo)"],
         tajawal: ["var(--font-tajawal)"],
         sans: ["var(--font-inter)"],
+        display: ["var(--font-sora)"],
       },
       keyframes: {
         "accordion-down": {

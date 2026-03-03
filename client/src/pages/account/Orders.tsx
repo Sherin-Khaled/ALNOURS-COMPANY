@@ -1,5 +1,6 @@
 import { useOrders } from "@/hooks/use-orders";
-import { Package } from "lucide-react";
+import { Link } from "wouter";
+import { Button } from "@/components/ui/button";
 
 export default function Orders() {
   const { data: orders, isLoading } = useOrders();
@@ -7,37 +8,53 @@ export default function Orders() {
   if (isLoading) return <div>Loading orders...</div>;
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold font-display mb-2">Order History</h2>
+    <div>
+      <h2 className="font-sora text-h3 text-neutral-950 mb-2">Orders</h2>
+      <p className="text-body text-neutral-500 mb-8">Track your recent orders and view order details.</p>
       
       {orders?.length === 0 ? (
-        <div className="bg-white rounded-[2rem] p-12 border border-border shadow-sm text-center">
-          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4 text-muted-foreground">
-            <Package className="w-8 h-8" />
-          </div>
-          <p className="text-lg font-bold">No orders yet</p>
+        <div className="bg-neutral-50 rounded-lg p-16 border border-neutral-200 text-center">
+          <h3 className="text-h4 text-neutral-950 mb-2">No orders yet</h3>
+          <p className="text-body text-neutral-500 mb-6">Start shopping to place your first order.</p>
+          <Button asChild className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold">
+            <Link href="/products">Shop products</Link>
+          </Button>
         </div>
       ) : (
-        orders?.map(order => (
-          <div key={order.id} className="bg-white rounded-[2rem] p-6 border border-border shadow-sm flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:border-primary/30 transition-colors">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="font-bold text-lg">Order #{order.orderNo}</span>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                  order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'
-                }`}>
-                  {order.status}
-                </span>
-              </div>
-              <p className="text-muted-foreground text-sm">
-                Placed on {new Date(order.date).toLocaleDateString()}
-              </p>
-            </div>
-            <div className="text-right">
-              <div className="font-bold text-2xl text-primary mb-1">SAR {order.total}</div>
-            </div>
-          </div>
-        ))
+        <div className="border border-neutral-200 rounded-lg overflow-hidden">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="bg-neutral-50 border-b border-neutral-200">
+                <th className="text-label text-neutral-500 px-6 py-4">Order No.</th>
+                <th className="text-label text-neutral-500 px-6 py-4">Date</th>
+                <th className="text-label text-neutral-500 px-6 py-4">Total</th>
+                <th className="text-label text-neutral-500 px-6 py-4">Status</th>
+                <th className="text-label text-neutral-500 px-6 py-4">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.map(order => (
+                <tr key={order.id} className="border-b border-neutral-200 last:border-b-0">
+                  <td className="px-6 py-4 font-semibold text-neutral-950 text-small">{order.orderNo}</td>
+                  <td className="px-6 py-4 text-neutral-700 text-small">{new Date(order.date).toLocaleDateString()}</td>
+                  <td className="px-6 py-4 font-semibold text-neutral-950 text-small">SAR {order.total}</td>
+                  <td className="px-6 py-4">
+                    <span className={`inline-block px-3 py-1 rounded-pill text-label ${
+                      order.status === 'Delivered' ? 'bg-secondary/10 text-secondary' : 
+                      order.status === 'Cancelled' ? 'bg-destructive/10 text-destructive' :
+                      'bg-promo/20 text-neutral-950'
+                    }`}>
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    <button className="text-primary font-semibold text-small hover:underline">View</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
