@@ -1,0 +1,295 @@
+Below is a **single-source-of-truth handoff** you can start coding from: **design tokens, breakpoints, layout grids, typography (EN/AR), components specs, page IA, and all copy** (key sections). I’m keeping it structured so you can copy directly into a dev README.
+
+---
+
+# 0) Breakpoints & Frames
+
+* **Desktop:** 1440 (container 1200)
+* **Medium/Tablet:** 1024 (container 960)
+* **Mobile:** 375 (side padding 16)
+
+**Section spacing**
+
+* Desktop: 64
+* Medium: 48
+* Mobile: 40
+
+---
+
+# 1) Design Tokens
+
+## 1.1 Colors (bases)
+
+* **Primary (navy):** `#0F3D91`
+* **Secondary (blue-teal):** `#2FA9C6` *(your generated palette)*
+* **Promo (amber):** `#F4B740`
+* **Neutral base:** `#334155`
+* **White:** `#FFFFFF`
+
+### Text colors (use neutrals)
+
+* **Text primary:** Neutral/950 (your palette) *(example: `#171D26` in your file)*
+* **Text secondary:** Neutral/700
+* **Text muted:** Neutral/500
+* **Borders:** Neutral/200
+* **Background:** Neutral/50, Surface: White
+
+### Status
+
+* **Success:** `#16A34A`
+* **Error:** `#DC2626` (hover `#B91C1C`, pressed `#991B1B`)
+
+## 1.2 Spacing scale (px)
+
+Use only these:
+`4, 8, 12, 16, 20, 24, 32, 40, 48, 64`
+
+## 1.3 Radius (Apple-ish)
+
+* **Buttons/inputs:** 14
+* **Cards:** 20
+* **Large containers/sections:** 28
+* **Modal/drawer:** 32
+* **Pill:** 999
+
+## 1.4 Shadows (subtle)
+
+* Card hover: `0 8px 24px rgba(0,0,0,0.08)`
+* Modal: `0 24px 64px rgba(0,0,0,0.16)`
+
+---
+
+# 2) Typography (EN/AR)
+
+## Fonts
+
+**English**
+
+* Headings: **Sora**
+* Body/UI: **Inter**
+
+**Arabic**
+
+* Headings: **Cairo**
+* Body/UI: **Tajawal**
+
+## Core sizes
+
+### Desktop
+
+* H1: 48/56 700
+* H2: 40/48 700
+* H3: 32/40 600
+* H4: 28/36 600
+* H5: 24/32 600
+* Body: 18/32 400 *(Shop cards can use 16 if dense)*
+* Small: 14/22
+* Label: 13/18 600
+* Button: 16/20 600
+
+### Medium
+
+* H1: 40/48
+* H2: 32/40
+* H3: 28/36
+* Body: 17/30
+* Small: 13/20
+* Button: 15–16/20
+
+### Mobile
+
+* Title: 24/32 700
+* H2: 28/36 700
+* Body: 16/28 400
+* Small: 13/20
+* Button: 16/20
+* Inputs: **16px** (avoid iOS zoom)
+
+---
+
+# 3) Layout Grid
+
+## Desktop (1440)
+
+* Container: 1200 centered
+* Grid: 12 columns
+* Gutter: 24
+
+## Medium (1024)
+
+* Container: 960 centered
+* Grid: 12 columns
+* Gutter: 20
+
+## Mobile (375)
+
+* Side padding: 16
+* Grid: 4 columns
+* Gutter: 16
+
+---
+
+# 4) Component Specs
+
+## 4.1 Navbar
+
+* Height: Desktop/Medium **64**, Mobile **56**
+* Padding X: Desktop 24, Medium 20, Mobile 16
+* Nav link size: Desktop 15 (w500), Medium 14, Mobile menu 16
+* Gap between links: Desktop 24, Medium 20
+* Hover: pill bg Neutral/50
+* Active: underline 2px Primary/700 + text Primary/800 *(or pill active, pick one)*
+* Icons: **24px**, hit area **40×40**
+
+## 4.2 Buttons
+
+* Primary: height 44–48, radius 14, bg Primary/700 (hover 800)
+* Secondary: outline border Neutral/200, bg transparent, hover Neutral/50
+* Destructive: bg `#DC2626` (hover `#B91C1C`)
+
+## 4.3 Inputs
+
+* Height 44 (mobile/desktop), radius 14
+* Label gap 8, helper gap 8
+* Border Neutral/200, focus ring Primary/300–400
+
+## 4.4 Chips (sizes, filters)
+
+* Height 40, radius pill
+* Selected: Primary/700 + white
+* Unselected: Neutral/50 + Neutral/700
+
+## 4.5 Product cards (Featured / Shop)
+
+**Featured grid (Home):** 3–4 cards depending on layout
+
+* Title 18 w600
+* Meta 14–15 w500
+* Price 18–20 w700
+* Add button: 40–44 height
+
+**Shop page (2-column premium for 4 products):**
+
+* 2 columns desktop, gap 32
+* Card height ~300, packshot 220–260, slight overflow right/bottom (max 24/16)
+
+## 4.6 PDP (Product detail hero)
+
+Order (Info column):
+Brand → Title → Meta → Price → VAT note → Size chips → Add to cart → Nutrition mini → Ingredients preview (2 lines + link)
+
+Sizes:
+
+* Title: 32 (desktop), 28 (tablet), 24 (mobile)
+* Price: 24/22/20
+* Chips: 40 height
+* CTA: 48 desktop, 44 mobile
+
+## 4.7 Cart
+
+Desktop container 1200:
+
+* Left: 760, gap 80, right summary 360
+  Row:
+* Thumbnail 56×56 (radius 12)
+* Row padding 16 vertical
+* Qty control: 32×32 buttons
+  Actions:
+* Remove icon (trash), hit area 32–40
+
+Upsell section:
+
+* Eyebrow Suggested / مقترح
+* Title Recommended for you / مقترحات لك
+* Cards compact + Add button
+
+## 4.8 Account
+
+Sidebar:
+
+* Width 280 (desktop), 260 (tablet)
+* Row height 48, icon 24 in 40×40
+  Menu order:
+  Overview, Orders, (Invoices optional), Addresses, Account details, Logout (modal)
+
+Logout:
+
+* Confirmation modal with Cancel + Sign out (red)
+
+---
+
+# 5) Page Information Architecture
+
+## Home
+
+1. Hero (fixed H1 + rotating subtitle)
+2. Featured Products
+3. Shop by Flavor (4 big tiles)
+4. How it works (3 steps scrolly on desktop)
+5. Footer
+
+## Products
+
+* Header + flavor chips
+* 2-column grid (4 products)
+* Why ALNOURS (3 trust points)
+* Footer (optional mini)
+
+## PDP
+
+* Hero (buy controls)
+* Details (Nutrition / Ingredients / Sizes)
+* Related products
+* Footer (optional mini)
+
+## Cart
+
+* Items + Summary
+* Recommended for you
+* Mini footer
+
+## Brands
+
+* Header
+* Featured Domty brand card
+* Domty at a glance (brand-specific block) **instead of** Why ALNOURS
+* Mini footer
+
+## About
+
+* Hero
+* Mission + Coverage (merged)
+* What we do (3 cards)
+* Contact CTA
+* Footer
+
+## Contact
+
+* Contact methods section (same CTA style)
+* Wholesale inquiry form section
+* Footer
+
+## Account
+
+* Overview / Orders / Addresses / Account details (Security) + Logout modal
+* No big footer (mini footer only)
+
+## Login/Signup
+
+* Simplified navbar (logo + back to shop)
+* No big footer (mini footer only)
+* Split card with subtle gradient panel (desktop), single panel (mobile)
+
+---
+
+# 7) Product Data (4 SKUs)
+
+(Use in Odoo import + UI)
+
+* Cocktail Premium Drink — 46 kcal — Fat 0% — Carb 12% — sizes 235/1000
+* Mango Premium Drink — 48 kcal — Fat 1% — Carb 17% — sizes 235/1000
+* Guava Premium Drink — 52 kcal — Fat 0% — Carb 13% — Protein 3% — sizes 235/1000
+* Orange Premium Drink — 54 kcal — Carb 13% — sizes 235/1000
+
+---
+

@@ -13,6 +13,7 @@ import { Footer } from "@/components/Footer";
 import Home from "@/pages/Home";
 import Products from "@/pages/Products";
 import ProductDetail from "@/pages/ProductDetail";
+import Brands from "@/pages/Brands";
 import Cart from "@/pages/Cart";
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
@@ -20,7 +21,7 @@ import AccountLayout from "@/pages/account/AccountLayout";
 import Profile from "@/pages/account/Profile";
 import Orders from "@/pages/account/Orders";
 import Addresses from "@/pages/account/Addresses";
-import { Brands, About, Contact } from "@/pages/StaticPages";
+import { About, Contact } from "@/pages/StaticPages";
 
 function Router() {
   return (
@@ -38,18 +39,15 @@ function Router() {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           
-          {/* Account Routes Wrapped in Layout */}
           <Route path="/account">
-            {() => <AccountLayout><Profile /></AccountLayout>}
-          </Route>
-          <Route path="/account/profile">
-            {() => <AccountLayout><Profile /></AccountLayout>}
-          </Route>
-          <Route path="/account/orders">
-            {() => <AccountLayout><Orders /></AccountLayout>}
-          </Route>
-          <Route path="/account/addresses">
-            {() => <AccountLayout><Addresses /></AccountLayout>}
+            <AccountLayout>
+              <Switch>
+                <Route path="/account" component={Profile} />
+                <Route path="/account/orders" component={Orders} />
+                <Route path="/account/addresses" component={Addresses} />
+                <Route path="/account/profile" component={Profile} />
+              </Switch>
+            </AccountLayout>
           </Route>
 
           <Route component={NotFound} />

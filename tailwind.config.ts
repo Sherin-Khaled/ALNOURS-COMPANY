@@ -6,50 +6,36 @@ export default {
   theme: {
     extend: {
       borderRadius: {
-        lg: ".5625rem", /* 9px */
-        md: ".375rem", /* 6px */
-        sm: ".1875rem", /* 3px */
+        lg: "20px",
+        md: "14px",
+        sm: "8px",
+        section: "28px",
+        modal: "32px",
+        pill: "999px",
       },
       colors: {
-        // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
-        card: {
-          DEFAULT: "hsl(var(--card) / <alpha-value>)",
-          foreground: "hsl(var(--card-foreground) / <alpha-value>)",
-          border: "hsl(var(--card-border) / <alpha-value>)",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover) / <alpha-value>)",
-          foreground: "hsl(var(--popover-foreground) / <alpha-value>)",
-          border: "hsl(var(--popover-border) / <alpha-value>)",
-        },
         primary: {
-          DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+          DEFAULT: "#0F3D91",
           foreground: "hsl(var(--primary-foreground) / <alpha-value>)",
-          border: "var(--primary-border)",
+          hover: "#0c3175",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+          DEFAULT: "#2FA9C6",
           foreground: "hsl(var(--secondary-foreground) / <alpha-value>)",
-          border: "var(--secondary-border)",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted) / <alpha-value>)",
-          foreground: "hsl(var(--muted-foreground) / <alpha-value>)",
-          border: "var(--muted-border)",
+        promo: {
+          DEFAULT: "#F4B740",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent) / <alpha-value>)",
-          foreground: "hsl(var(--accent-foreground) / <alpha-value>)",
-          border: "var(--accent-border)",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
-          foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
-          border: "var(--destructive-border)",
+        neutral: {
+          50: "#F8FAFC",
+          200: "#E2E8F0",
+          500: "#64748B",
+          700: "#334155",
+          950: "#0F172A",
         },
         ring: "hsl(var(--ring) / <alpha-value>)",
         chart: {
@@ -83,9 +69,11 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
+        sora: ["var(--font-sora)"],
+        inter: ["var(--font-inter)"],
+        cairo: ["var(--font-cairo)"],
+        tajawal: ["var(--font-tajawal)"],
+        sans: ["var(--font-inter)"],
       },
       keyframes: {
         "accordion-down": {

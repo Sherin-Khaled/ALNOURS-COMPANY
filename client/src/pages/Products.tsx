@@ -1,75 +1,66 @@
 import { useProducts } from "@/hooks/use-products";
 import { ProductCard } from "@/components/ProductCard";
-import { Search } from "lucide-react";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function Products() {
   const { data: products, isLoading } = useProducts();
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
-
-  const categories = ["All", ...new Set(products?.map(p => p.category) || [])];
-
-  const filtered = products?.filter(p => {
-    const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase()) || p.flavor.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = category === "All" || p.category === category;
-    return matchesSearch && matchesCategory;
-  });
+  
+  const categories = ["All", "Cocktail", "Mango", "Orange", "Guava"];
 
   return (
-    <div className="pt-32 pb-20 min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl md:text-5xl font-display font-bold mb-8">All Products</h1>
-        
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-12 items-center justify-between">
-          <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 scrollbar-hide">
-            {categories.map(c => (
-              <button
-                key={c}
-                onClick={() => setCategory(c)}
-                className={`px-6 py-3 rounded-2xl font-bold whitespace-nowrap transition-colors ${
-                  category === c 
-                    ? "bg-foreground text-white" 
-                    : "bg-white text-foreground hover:bg-muted border border-border"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
-
-          <div className="relative w-full md:w-72">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <input 
-              type="text" 
-              placeholder="Search products..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-2xl border-2 border-border focus:border-primary focus:outline-none transition-colors bg-white"
-            />
-          </div>
+    <div className="min-h-screen pt-24 pb-16 bg-white">
+      <div className="container-custom">
+        {/* Header */}
+        <div className="mb-12">
+          <span className="text-label text-primary uppercase tracking-wider mb-2 block">Shop</span>
+          <h1 className="text-h2 text-neutral-950">Products</h1>
+          <p className="text-body text-neutral-500 mt-2">Premium drinks available now</p>
         </div>
 
-        {/* Grid */}
+        {/* Filter Chips */}
+        <div className="flex flex-wrap gap-3 mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              className={`h-[40px] px-6 rounded-pill font-medium transition-all ${
+                cat === "All" 
+                  ? "bg-primary text-white" 
+                  : "bg-neutral-50 text-neutral-700 hover:bg-neutral-200"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid - 2 columns premium as per specs */}
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-              <div key={i} className="h-[400px] bg-accent/20 animate-pulse rounded-[2rem]"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="h-[300px] bg-neutral-50 animate-pulse rounded-lg"></div>
             ))}
           </div>
-        ) : filtered?.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-[3rem] border border-border">
-            <h3 className="text-2xl font-bold text-foreground">No products found</h3>
-            <p className="text-muted-foreground mt-2">Try adjusting your filters.</p>
-          </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filtered?.map(product => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {products?.map(product => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         )}
+
+        {/* Why ALNOURS */}
+        <div className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-neutral-200 pt-16">
+          {[
+            { title: "VAT included", desc: "Transparent pricing with no hidden costs." },
+            { title: "Fast Delivery", desc: "Reliable distribution across Saudi Arabia." },
+            { title: "Secure Payment", desc: "Safe and encrypted checkout process." }
+          ].map((item, i) => (
+            <div key={i} className="text-center">
+              <h3 className="text-[20px] font-semibold text-neutral-950 mb-2">{item.title}</h3>
+              <p className="text-neutral-500">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
