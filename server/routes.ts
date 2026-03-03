@@ -129,10 +129,24 @@ export async function registerRoutes(
     }
   });
 
-  // Seed data function
-  await seedDatabase();
+  seedWithRetry();
 
   return httpServer;
+}
+
+async function seedWithRetry(retries = 5, delay = 2000) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      await seedDatabase();
+      return;
+    } catch (err) {
+      console.log(`Seed attempt ${i + 1}/${retries} failed: ${(err as Error).message}`);
+      if (i < retries - 1) {
+        await new Promise(r => setTimeout(r, delay));
+      }
+    }
+  }
+  console.log("Seeding skipped — database may be temporarily unavailable.");
 }
 
 async function seedDatabase() {
