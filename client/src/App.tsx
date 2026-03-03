@@ -5,14 +5,58 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 
+// Components
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+
+// Pages
+import Home from "@/pages/Home";
+import Products from "@/pages/Products";
+import ProductDetail from "@/pages/ProductDetail";
+import Cart from "@/pages/Cart";
+import Login from "@/pages/Login";
+import Signup from "@/pages/Signup";
+import AccountLayout from "@/pages/account/AccountLayout";
+import Profile from "@/pages/account/Profile";
+import Orders from "@/pages/account/Orders";
+import Addresses from "@/pages/account/Addresses";
+import { Brands, About, Contact } from "@/pages/StaticPages";
+
 function Router() {
   return (
-    <Switch>
-      {/* Add pages below */}
-      {/* <Route path="/" component={Home}/> */}
-      {/* Fallback to 404 */}
-      <Route component={NotFound} />
-    </Switch>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/products" component={Products} />
+          <Route path="/products/:slug" component={ProductDetail} />
+          <Route path="/brands" component={Brands} />
+          <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          
+          {/* Account Routes Wrapped in Layout */}
+          <Route path="/account">
+            {() => <AccountLayout><Profile /></AccountLayout>}
+          </Route>
+          <Route path="/account/profile">
+            {() => <AccountLayout><Profile /></AccountLayout>}
+          </Route>
+          <Route path="/account/orders">
+            {() => <AccountLayout><Orders /></AccountLayout>}
+          </Route>
+          <Route path="/account/addresses">
+            {() => <AccountLayout><Addresses /></AccountLayout>}
+          </Route>
+
+          <Route component={NotFound} />
+        </Switch>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
