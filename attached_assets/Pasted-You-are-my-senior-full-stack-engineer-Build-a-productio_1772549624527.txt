@@ -1,0 +1,271 @@
+You are my senior full-stack engineer. Build a production-ready B2C ecommerce website for “ALNOURS” (Saudi food trading/distributor) with a custom UI matching my Figma, and connect later to Odoo as backend (Odoo 19 Enterprise, hosted at https://alnours.odoo.com/odoo). We will start with a frontend-first implementation, but architect everything to be Odoo-ready (headless). I’m not strong in backend, so please include clear docs and helper scripts.
+
+GOALS
+- Implement the full website UI/UX exactly as specified (pages + copy).
+- Use clean components, strong responsive behavior (Desktop 1440, Medium 1024, Mobile 375).
+- Prepare a service layer to integrate Odoo for products, stock, customers, orders, invoices later.
+- For now, use a local mock API/data layer that matches the future Odoo data shape.
+- Provide a step-by-step “How to connect Odoo” guide, and implement the Odoo integration scaffolding (env vars, services, interfaces) even if not fully wired yet.
+
+TECH STACK (required)
+- Next.js (App Router) + TypeScript
+- TailwindCSS
+- ESLint + Prettier
+- State management: lightweight (React Context or Zustand) for cart/auth.
+- Forms: React Hook Form + Zod validation.
+- UI: custom components; no heavy UI framework.
+- Use CSS variables for tokens (colors, spacing) + Tailwind theme extension.
+
+IMPORTANT: Do NOT add social login buttons unless fully implemented. Use email/password auth UI (we will wire actual auth later).
+
+PAGES / ROUTES (must implement)
+Public:
+1) / (Home)
+2) /products (Products listing)
+3) /products/[slug] (Product detail)
+4) /brands
+5) /about
+6) /contact
+Commerce:
+7) /cart
+Auth:
+8) /login
+9) /signup
+Account (protected routes; use mock auth for now):
+10) /account (Overview)
+11) /account/orders
+12) /account/addresses
+13) /account/profile (Account information + Security)
+Logout is a confirmation modal, not a separate page.
+
+GLOBAL LAYOUT RULES
+- Desktop container 1200 centered at 1440 frame; Medium container 960 at 1024; Mobile padding 16 at 375.
+- Section vertical spacing: Desktop 64, Medium 48, Mobile 40.
+- Inputs height 44; buttons height 44–48; icons 24px with 40x40 hit area where possible.
+- Card radius 20–28; button/input radius 14; chips pill radius 999.
+- Use subtle light background gradient behind auth pages (login/signup) and some hero sections as per design.
+
+NAVBAR
+- Links: Home, Products, Brands, About, Contact Us
+- Cart icon (top right), Account icon (top right)
+- Active state: pill/underline consistent with design.
+
+FOOTER
+- Use the full footer on public pages as specified, but on account pages prefer a minimal footer or keep the same (make it configurable easily).
+
+CONTENT (EN only for now; keep i18n-ready)
+Use exactly these texts:
+
+HOME
+Hero:
+- Eyebrow: Official Distributor
+- H1: Quality Delivered
+- Subtitle: Fresh juices, delivered across Riyadh & Jeddah.
+- Body: Shop in minutes—secure payment, VAT included, delivery or pickup.
+- Buttons: Shop Products / Contact Us
+- Badges: VAT included / Fast Delivery
+Featured Products:
+- Eyebrow: New this week
+- Title: Featured Products
+- Subtitle: Best sellers & top picks this week.
+- Cards: {Flavor} Premium Drink, Meta “Premium Drink • 235 ml & 1000 ml”, Price SAR 30, Button Add To Cart
+- CTA: View All
+Shop by Flavor:
+- Eyebrow: Browse
+- Title: Shop by Flavor
+- Subtitle: Pick a flavor and start shopping.
+- Tiles copy:
+  Cocktail: A fruity blend for a refreshing sip.
+  Mango: Tropical mango flavor, smooth and rich.
+  Guava: Classic guava taste, light and delicious.
+  Orange: Citrus refreshment with a bright taste.
+How it works:
+- Title: How it works
+- Subtitle: Order in minutes. Delivered with confidence.
+- Step 1: Browse & choose — Pick your flavor and size—clear options, no confusion.
+- Step 2: Pay securely — Secure online payments, VAT included.
+- Step 3: Delivery or pickup — Choose what suits you in Riyadh & Jeddah.
+
+PRODUCTS PAGE
+- Eyebrow: Shop
+- Title: Products
+- Subtitle: Premium drinks available now
+- Filter chips: All, Cocktail, Mango, Orange, Guava
+- Grid shows 4 products
+
+PDP (Product Detail)
+- Brand: Domty
+- Title: {Flavor} Premium Drink
+- Meta: Premium Drink • VAT included
+- Price: SAR 30
+- Sizes: 235 ml and 1000 ml (use chips)
+- CTA: Add To Cart (Buy Now optional but keep secondary)
+Nutrition mini:
+- Fat, Calories, Carbohydrate
+Ingredients:
+- Show 2-line preview + link “View full ingredients” (full block below)
+Related:
+- Eyebrow: Related
+- Title: You might like
+- Body: More flavors from Domty Premium Drink.
+
+CART
+- Left: Your Cart
+- Coupon: Have a coupon? Enter your code. + Apply
+- Right summary: Cart Total, Shipping 10 SAR, Subtotal, Total
+- Button: Proceed To Checkout
+- Link: Continue Shopping
+Upsell section:
+- Eyebrow: Suggested
+- Title: Recommended for you
+- Subtitle: Quick add before checkout.
+
+BRANDS
+- Eyebrow: Brands
+- Title: Our Brands
+- Body: We distribute trusted FMCG brands across Saudi Arabia.
+- Domty card body: Domty Premium Drinks are available in 235 ml and 1000 ml—ready to order online.
+- CTA: Browse Domty products
+- Note: More brands coming soon.
+- “Domty at a glance” section:
+  Eyebrow: What’s inside
+  Title: Domty at a glance
+  Body: Premium drinks available in 235 ml and 1000 ml. Explore flavors and shop online.
+  Cards:
+   1) Flavors available — Cocktail, Mango, Guava, Orange
+   2) Sizes — 235 ml • 1000 ml
+   3) Clear product info — Ingredients & nutrition shown per product
+  CTA: Shop Domty products
+
+ABOUT
+Hero:
+- Title: Built to deliver trusted products across Saudi Arabia.
+- Body: ALNOURS is a Saudi-based food distribution company supplying premium FMCG products with reliable availability, clear pricing (VAT included), and smooth online ordering.
+- Buttons: Shop Products / Contact Us
+Mission:
+- Title: Our mission
+- Body: Make everyday shopping simpler by providing trusted brands, accurate availability, and dependable fulfillment—so customers can order with confidence.
+Coverage:
+- Title: Coverage across Saudi Arabia
+- Body: Based in Riyadh and serving customers across Saudi Arabia—including major cities like Jeddah.
+What we do:
+- Eyebrow: What we do
+- Title: Distribution built for reliability.
+- Body: We bring trusted FMCG products to customers across Saudi Arabia through dependable supply, simple online ordering, and flexible fulfillment options.
+- Cards:
+  Distribution & supply — Reliable FMCG supply across Saudi Arabia with consistent availability.
+  Online ordering — Browse products, choose size, and place your order in minutes.
+  Delivery or pickup — Flexible delivery or pickup options—whichever works for you.
+Contact CTA:
+- Eyebrow: Contact us
+- Title: Let’s plan your next order.
+- Body: Whether you’re ordering for home or wholesale, we’ll help you choose products, sizes, and delivery options—quickly and clearly.
+- Buttons: WhatsApp Us / Contact Us
+- Labels: Mail / Call us / Address
+
+CONTACT
+Top section same as About CTA, plus:
+Wholesale form section:
+- Eyebrow: Send your requirements
+- Title: Wholesale inquiry — tell us what you need.
+- Body: Planning a large order? Share the products, quantities, preferred sizes, and delivery city. Our team will get back to you with availability and a tailored quote.
+- Fields: Full Name, Email, Phone No., Product Interest, Message
+- Button: Send
+
+LOGIN
+Left panel:
+- Welcome back
+- Sign in to track orders, manage addresses, and checkout faster.
+Right panel:
+- Title: Log In
+- Helper: Sign in with your email or sign up to become an ALNOURS member
+- Fields: Email, Password
+- Link: Forgot Password
+- Button: Sign in
+- Bottom: Don’t have an account? Sign Up
+
+SIGNUP
+Left panel:
+- Join ALNOURS
+- Create an account to checkout faster, track orders, and manage addresses.
+Right panel:
+- Title: Create account
+- Helper: It takes less than a minute.
+- Fields: Full Name, Phone No., Email, Password, Confirm password
+- Button: Sign Up
+- Bottom: Already have an account? Sign In
+
+ACCOUNT
+Sidebar menu:
+- Overview, Orders, Addresses, Account, Logout
+Overview:
+- Title: Account overview
+- Subtitle: Manage orders, addresses, and account details.
+Orders:
+- Title: Orders
+- Subtitle: Track your recent orders and view order details.
+- Table headers: Order No., Date, Total, Status, Action
+- Actions: View + Download invoice (if available) + Cancel (if cancellable). Do NOT use edit/delete.
+Orders empty:
+- Title: No orders yet
+- Body: Start shopping to place your first order.
+- CTA: Shop products
+Addresses:
+- Title: Addresses
+- Subtitle: Save delivery addresses for faster checkout.
+- Address book list + Add new address + form
+Profile:
+- Title: Account Information
+- Subtitle: Update your personal information.
+- Fields: First name, Last name, Email, Phone No.
+- Button: Save changes
+Security block:
+- Title: Security
+- Subtitle: Update your password.
+- Fields: Current password, New password, Confirm password
+- Link: Forgot your password?
+- Button: Update password
+Logout:
+- Clicking logout opens modal:
+  Title: Sign out?
+  Body: You’ll be signed out of your account on this device.
+  Buttons: Cancel / Sign out (red)
+
+DATA (mock for now, but Odoo-ready)
+Products (4):
+- cocktail-premium-drink
+- mango-premium-drink
+- guava-premium-drink
+- orange-premium-drink
+All price SAR 30. Sizes 235 ml and 1000 ml.
+Nutrition & ingredients use the data we already have; include fields in the mock objects:
+name, slug, flavor, category, sizes[], price, currency, nutrition{fat, calories, carbs, protein?}, ingredients (string), images{packshot, decorations}
+
+CART LOGIC
+- Add to cart from any card/PDP
+- Cart summary: shipping fixed 10 SAR, VAT included note, totals
+- Coupon UI only (no real calculation required for MVP)
+
+ODOO INTEGRATION (scaffolding)
+- Create /lib/odoo with:
+  - odooClient.ts (base URL, auth strategy placeholder)
+  - productService.ts (getProducts, getProductBySlug)
+  - stockService.ts (getAvailability)
+  - orderService.ts (createOrder, getOrders)
+  - invoiceService.ts (getInvoicePdfUrl)
+- For now, services read from mock JSON; later they will call Odoo APIs.
+- Provide a README section “Connecting to Odoo” with:
+  env vars:
+   ODOO_BASE_URL=https://alnours.odoo.com
+   ODOO_DB (if needed)
+   ODOO_API_KEY or credentials placeholder
+- Explain which Odoo endpoints/models are likely needed (products, partners, sale orders, invoices, stock).
+
+DELIVERABLES
+- Working Next.js app with all pages styled + responsive.
+- Reusable components: Navbar, Footer, ProductCard, FlavorTiles, Chips, Buttons, Inputs, Modal, AccountLayout, OrderTable, AddressBook, AuthCard.
+- Mock data in /data.
+- README: how to run, build, and how Odoo integration will be added.
+- Ensure TypeScript types for all models.
+
+Build it cleanly and match the UI/UX. Do not add extra pages/features not listed. Start with frontend and mock data, but structure the code so we can replace mocks with Odoo calls later with minimal refactor.
