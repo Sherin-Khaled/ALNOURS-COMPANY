@@ -1,23 +1,25 @@
 import { useOrders } from "@/hooks/use-orders";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Orders() {
   const { data: orders, isLoading } = useOrders();
+  const { t } = useLanguage();
 
-  if (isLoading) return <div>Loading orders...</div>;
+  if (isLoading) return <div>{t.cta.loading}</div>;
 
   return (
     <div>
-      <h2 className="font-sora text-h3 text-neutral-950 mb-2">Orders</h2>
-      <p className="text-body text-neutral-500 mb-8">Track your recent orders and view order details.</p>
+      <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.account.orders.title}</h2>
+      <p className="text-body text-neutral-500 mb-8">{t.account.orders.subtitle}</p>
       
       {orders?.length === 0 ? (
         <div className="bg-neutral-50 rounded-lg p-16 border border-neutral-200 text-center">
-          <h3 className="text-h4 text-neutral-950 mb-2">No orders yet</h3>
-          <p className="text-body text-neutral-500 mb-6">Start shopping to place your first order.</p>
+          <h3 className="text-h4 text-neutral-950 mb-2">{t.account.orders.empty.title}</h3>
+          <p className="text-body text-neutral-500 mb-6">{t.account.orders.empty.body}</p>
           <Button asChild className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold">
-            <Link href="/products">Shop products</Link>
+            <Link href="/products">{t.account.orders.empty.cta}</Link>
           </Button>
         </div>
       ) : (
@@ -25,11 +27,11 @@ export default function Orders() {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-neutral-50 border-b border-neutral-200">
-                <th className="text-label text-neutral-500 px-6 py-4">Order No.</th>
-                <th className="text-label text-neutral-500 px-6 py-4">Date</th>
-                <th className="text-label text-neutral-500 px-6 py-4">Total</th>
-                <th className="text-label text-neutral-500 px-6 py-4">Status</th>
-                <th className="text-label text-neutral-500 px-6 py-4">Action</th>
+                <th className="text-label text-neutral-500 px-6 py-4">{t.account.orders.table.orderNo}</th>
+                <th className="text-label text-neutral-500 px-6 py-4">{t.account.orders.table.date}</th>
+                <th className="text-label text-neutral-500 px-6 py-4">{t.account.orders.table.total}</th>
+                <th className="text-label text-neutral-500 px-6 py-4">{t.account.orders.table.status}</th>
+                <th className="text-label text-neutral-500 px-6 py-4">{t.account.orders.table.action}</th>
               </tr>
             </thead>
             <tbody>
@@ -48,7 +50,7 @@ export default function Orders() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <button className="text-primary font-semibold text-small hover:underline">View</button>
+                    <button className="text-primary font-semibold text-small hover:underline">{t.cta.view}</button>
                   </td>
                 </tr>
               ))}

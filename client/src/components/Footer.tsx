@@ -12,7 +12,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
     return (
       <footer className="bg-neutral-50 border-t border-neutral-200 py-8 mt-16">
         <div className="container-custom text-center text-small text-neutral-500">
-          <p>{t.footer.copyright.replace("{year}", String(new Date().getFullYear()))}</p>
+          <p>{t.footer.bottom}</p>
         </div>
       </footer>
     );
@@ -31,18 +31,18 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
                 <span className="font-sora font-bold text-[20px] tracking-tight text-neutral-950">ALNOURS</span>
               </div>
               <p className="text-small text-neutral-500 leading-relaxed max-w-[280px]">
-                {t.footer.about}
+                {t.footer.aboutText}
               </p>
             </div>
 
             <div>
               <h4 className="font-sora font-bold text-[16px] text-neutral-950 mb-5">{t.footer.explore}</h4>
               <ul className="space-y-3 text-small">
-                <li><Link href="/" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.home}</Link></li>
-                <li><Link href="/products" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.products}</Link></li>
-                <li><Link href="/brands" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.brands}</Link></li>
-                <li><Link href="/about" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.aboutLink}</Link></li>
-                <li><Link href="/contact" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.contactLink}</Link></li>
+                <li><Link href="/" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.home}</Link></li>
+                <li><Link href="/products" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.products}</Link></li>
+                <li><Link href="/brands" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.brands}</Link></li>
+                <li><Link href="/about" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.about}</Link></li>
+                <li><Link href="/contact" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.contact}</Link></li>
               </ul>
             </div>
 
@@ -56,14 +56,14 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
             </div>
 
             <div>
-              <h4 className="font-sora font-bold text-[16px] text-neutral-950 mb-5">{t.footer.newsletter}</h4>
-              <p className="text-small text-neutral-500 mb-4">{t.footer.newsletterDesc}</p>
+              <h4 className="font-sora font-bold text-[16px] text-neutral-950 mb-5">{t.footer.newsletter.title}</h4>
+              <p className="text-small text-neutral-500 mb-4">{t.footer.newsletter.body}</p>
               <div className="flex gap-2">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder={t.footer.emailPlaceholder}
+                  placeholder={t.footer.newsletter.placeholder}
                   className="flex-1 h-10 px-4 rounded-pill border border-neutral-200 text-small bg-white text-neutral-700 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
                   data-testid="input-newsletter-email"
                 />
@@ -96,7 +96,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
             </div>
 
             <p className="text-[13px] text-white/40">
-              {t.footer.copyright.replace("{year}", String(new Date().getFullYear()))}
+              {t.footer.bottom}
             </p>
           </div>
         </div>

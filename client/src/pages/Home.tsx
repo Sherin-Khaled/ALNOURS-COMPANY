@@ -18,35 +18,35 @@ function HeroSection() {
           <Reveal>
             <div>
               <span className="text-[18px] font-bold text-[#248399] uppercase tracking-wider mb-4 block">
-                {t.hero.eyebrow}
+                {t.home.hero.eyebrow}
               </span>
               <h1 className="text-h1 text-neutral-950 mb-4">
-                {t.hero.title}
+                {t.home.hero.title}
               </h1>
               <h2 className="text-h3 text-neutral-700 mb-6 font-normal">
-                {t.hero.subtitle}
+                {t.home.hero.subtitle}
               </h2>
               <p className="text-body text-neutral-500 mb-10 max-w-xl">
-                {t.hero.description}
+                {t.home.hero.body}
               </p>
 
               <div className="flex flex-wrap gap-4 mb-12">
                 <Button asChild className="h-[48px] px-8 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold btn-styled">
-                  <Link href="/products">{t.hero.shopProducts}</Link>
+                  <Link href="/products">{t.cta.shopProducts}</Link>
                 </Button>
                 <Button asChild variant="outline" className="h-[48px] px-8 rounded-pill border-neutral-200 text-neutral-700 hover:bg-neutral-50 btn-styled">
-                  <Link href="/contact">{t.hero.contactUs}</Link>
+                  <Link href="/contact">{t.cta.contactUs}</Link>
                 </Button>
               </div>
 
               <div className="flex flex-wrap gap-8">
                 <div className="flex items-center gap-3">
                   <div className="w-[1px] h-[22px] bg-[#248399]" />
-                  <span className="text-[18px] font-bold text-neutral-700">{t.hero.vatIncluded}</span>
+                  <span className="text-[18px] font-bold text-neutral-700">{t.home.hero.badges.vatIncluded}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-[1px] h-[22px] bg-[#248399]" />
-                  <span className="text-[18px] font-bold text-neutral-700">{t.hero.fastDelivery}</span>
+                  <span className="text-[18px] font-bold text-neutral-700">{t.home.hero.badges.fastDelivery}</span>
                 </div>
               </div>
             </div>
@@ -127,9 +127,9 @@ function FeaturedSection() {
       <div className="container-custom relative z-10">
         <Reveal>
           <div className="mb-12">
-            <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.featured.eyebrow}</span>
-            <h2 className="text-h2 text-neutral-950">{t.featured.title}</h2>
-            <p className="text-body text-neutral-500 mt-2">{t.featured.subtitle}</p>
+            <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.home.featured.eyebrow}</span>
+            <h2 className="text-h2 text-neutral-950">{t.home.featured.title}</h2>
+            <p className="text-body text-neutral-500 mt-2">{t.home.featured.subtitle}</p>
           </div>
         </Reveal>
 
@@ -166,7 +166,7 @@ function FeaturedSection() {
           <div className="mt-12 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
               <Link href="/products">
-                {t.featured.viewAll} <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {t.cta.viewAll} <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
           </div>
@@ -189,28 +189,31 @@ export default function Home() {
         <div className="container-custom">
           <Reveal>
             <div className="text-center mb-12">
-              <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.flavors.eyebrow}</span>
-              <h2 className="text-h2 text-neutral-950">{t.flavors.title}</h2>
-              <p className="text-body text-neutral-500 mt-2">{t.flavors.subtitle}</p>
+              <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.home.flavors.eyebrow}</span>
+              <h2 className="text-h2 text-neutral-950">{t.home.flavors.title}</h2>
+              <p className="text-body text-neutral-500 mt-2">{t.home.flavors.subtitle}</p>
             </div>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { name: t.flavors.cocktail, desc: t.flavors.cocktailDesc, color: "bg-[#FFEFD5]", key: "cocktail" },
-              { name: t.flavors.mango, desc: t.flavors.mangoDesc, color: "bg-[#FFFACD]", key: "mango" },
-              { name: t.flavors.guava, desc: t.flavors.guavaDesc, color: "bg-[#F0FFF0]", key: "guava" },
-              { name: t.flavors.orange, desc: t.flavors.orangeDesc, color: "bg-[#FFF5EE]", key: "orange" }
-            ].map((flavor, i) => (
-              <Reveal key={flavor.key} delay={i * 100}>
-                <Link href={`/products?flavor=${flavor.key}`}>
-                  <div className={`p-8 rounded-section ${flavor.color} h-full card-hover-shadow cursor-pointer border border-white/50 transition-all active:scale-95`}>
-                    <h3 className="text-h3 text-neutral-950 mb-3">{flavor.name}</h3>
-                    <p className="text-neutral-700">{flavor.desc}</p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+              { tile: t.home.flavors.tiles.cocktail, color: "bg-[#FFEFD5]", key: "cocktail" },
+              { tile: t.home.flavors.tiles.mango, color: "bg-[#FFFACD]", key: "mango" },
+              { tile: t.home.flavors.tiles.guava, color: "bg-[#F0FFF0]", key: "guava" },
+              { tile: t.home.flavors.tiles.orange, color: "bg-[#FFF5EE]", key: "orange" }
+            ].map((flavor, i) => {
+              const [name, desc] = flavor.tile.split(" — ");
+              return (
+                <Reveal key={flavor.key} delay={i * 100}>
+                  <Link href={`/products?flavor=${flavor.key}`}>
+                    <div className={`p-8 rounded-section ${flavor.color} h-full card-hover-shadow cursor-pointer border border-white/50 transition-all active:scale-95`}>
+                      <h3 className="text-h3 text-neutral-950 mb-3">{name}</h3>
+                      <p className="text-neutral-700">{desc}</p>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -219,16 +222,16 @@ export default function Home() {
         <div className="container-custom">
           <Reveal>
             <div className="text-center mb-16">
-              <h2 className="text-h2 text-neutral-950">{t.howItWorks.title}</h2>
-              <p className="text-body text-neutral-500 mt-2">{t.howItWorks.subtitle}</p>
+              <h2 className="text-h2 text-neutral-950">{t.home.howItWorks.title}</h2>
+              <p className="text-body text-neutral-500 mt-2">{t.home.howItWorks.subtitle}</p>
             </div>
           </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {[
-              { step: "1", title: t.howItWorks.step1Title, body: t.howItWorks.step1Body },
-              { step: "2", title: t.howItWorks.step2Title, body: t.howItWorks.step2Body },
-              { step: "3", title: t.howItWorks.step3Title, body: t.howItWorks.step3Body }
+              { step: "1", title: t.home.howItWorks.steps.s1_title, body: t.home.howItWorks.steps.s1_body },
+              { step: "2", title: t.home.howItWorks.steps.s2_title, body: t.home.howItWorks.steps.s2_body },
+              { step: "3", title: t.home.howItWorks.steps.s3_title, body: t.home.howItWorks.steps.s3_body }
             ].map((item, i) => (
               <Reveal key={item.step} delay={i * 150}>
                 <div className="relative">
@@ -236,7 +239,7 @@ export default function Home() {
                     {item.step}
                   </div>
                   <div className="relative z-10">
-                    <h3 className="text-h4 text-neutral-950 mb-4">{item.step}. {item.title}</h3>
+                    <h3 className="text-h4 text-neutral-950 mb-4">{item.title}</h3>
                     <p className="text-body text-neutral-700">{item.body}</p>
                   </div>
                 </div>

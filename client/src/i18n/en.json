@@ -5,70 +5,396 @@
     "brands": "Brands",
     "about": "About",
     "contact": "Contact Us",
-    "signIn": "Sign in",
     "cart": "Cart",
-    "account": "Account"
+    "account": "Account",
+    "signin": "Sign in",
+    "signup": "Sign Up",
+    "language_en": "EN",
+    "language_ar": "AR"
   },
-  "hero": {
-    "eyebrow": "Official Distributor",
-    "title": "Quality Delivered",
-    "subtitle": "Fresh juices, delivered across Riyadh & Jeddah.",
-    "description": "Shop in minutes—secure payment, VAT included, delivery or pickup.",
+
+  "cta": {
     "shopProducts": "Shop Products",
     "contactUs": "Contact Us",
-    "vatIncluded": "VAT included",
-    "fastDelivery": "Fast Delivery"
+    "addToCart": "Add To Cart",
+    "add": "Add",
+    "added": "Added",
+    "viewAll": "View All",
+    "proceedToCheckout": "Proceed To Checkout",
+    "continueShopping": "Continue Shopping",
+    "send": "Send",
+    "subscribe": "Subscribe",
+    "whatsappUs": "WhatsApp Us",
+    "callUsDirectly": "Call us directly",
+    "sendYourRequirements": "Send Your Requirements",
+    "buyNow": "Buy Now",
+    "view": "View",
+    "apply": "Apply",
+    "cancel": "Cancel",
+    "save": "Save",
+    "processing": "Processing...",
+    "signingIn": "Signing in...",
+    "creating": "Creating...",
+    "startShopping": "Start Shopping",
+    "loading": "Loading..."
   },
-  "featured": {
-    "eyebrow": "New this week",
-    "title": "Featured Products",
-    "subtitle": "Best sellers & top picks this week.",
-    "viewAll": "View All"
+
+  "home": {
+    "hero": {
+      "eyebrow": "Official Distributor",
+      "title": "Quality Delivered",
+      "subtitle": "Fresh juices, delivered across Riyadh & Jeddah.",
+      "body": "Shop in minutes—secure payment, VAT included, delivery or pickup.",
+      "badges": {
+        "vatIncluded": "VAT included",
+        "fastDelivery": "Fast Delivery"
+      }
+    },
+    "featured": {
+      "eyebrow": "New this week",
+      "title": "Featured Products",
+      "subtitle": "Best sellers & top picks this week.",
+      "metaLine1": "Premium Drink",
+      "metaLine2": "235 ml & 1000 ml",
+      "price": "SAR 30"
+    },
+    "flavors": {
+      "eyebrow": "Browse",
+      "title": "Shop by Flavor",
+      "subtitle": "Pick a flavor and start shopping.",
+      "tiles": {
+        "cocktail": "Cocktail — A fruity blend for a refreshing sip.",
+        "mango": "Mango — Tropical mango flavor, smooth and rich.",
+        "guava": "Guava — Classic guava taste, light and delicious.",
+        "orange": "Orange — Citrus refreshment with a bright taste."
+      }
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "subtitle": "Order in minutes. Delivered with confidence.",
+      "steps": {
+        "s1_title": "1. Browse & choose",
+        "s1_body": "Pick your flavor and size—clear options, no confusion.",
+        "s2_title": "2. Pay securely",
+        "s2_body": "Secure online payments, VAT included.",
+        "s3_title": "3. Delivery or pickup",
+        "s3_body": "Choose what suits you in Riyadh & Jeddah."
+      }
+    }
   },
-  "flavors": {
-    "eyebrow": "Browse",
-    "title": "Shop by Flavor",
-    "subtitle": "Pick a flavor and start shopping.",
-    "cocktail": "Cocktail",
-    "cocktailDesc": "A fruity blend for a refreshing sip.",
-    "mango": "Mango",
-    "mangoDesc": "Tropical mango flavor, smooth and rich.",
-    "guava": "Guava",
-    "guavaDesc": "Classic guava taste, light and delicious.",
-    "orange": "Orange",
-    "orangeDesc": "Citrus refreshment with a bright taste."
+
+  "products": {
+    "header": {
+      "eyebrow": "Shop",
+      "title": "Products",
+      "subtitle": "Premium drinks available now"
+    },
+    "filters": {
+      "all": "All",
+      "cocktail": "Cocktail",
+      "mango": "Mango",
+      "orange": "Orange",
+      "guava": "Guava"
+    },
+    "card": {
+      "titleTemplate": "{flavor} Premium Drink",
+      "metaLine1": "Premium Drink",
+      "metaLine2": "235 ml & 1000 ml",
+      "price": "SAR 30"
+    },
+    "whyAlnours": {
+      "vatIncluded": "VAT included",
+      "vatDesc": "Transparent pricing with no hidden costs.",
+      "fastDelivery": "Fast Delivery",
+      "fastDeliveryDesc": "Reliable distribution across Saudi Arabia.",
+      "securePayment": "Secure Payment",
+      "securePaymentDesc": "Safe and encrypted checkout process."
+    }
   },
-  "howItWorks": {
-    "title": "How it works",
-    "subtitle": "Order in minutes. Delivered with confidence.",
-    "step1Title": "Browse & choose",
-    "step1Body": "Pick your flavor and size—clear options, no confusion.",
-    "step2Title": "Pay securely",
-    "step2Body": "Secure online payments, VAT included.",
-    "step3Title": "Delivery or pickup",
-    "step3Body": "Choose what suits you in Riyadh & Jeddah."
+
+  "pdp": {
+    "brand": "Domty",
+    "meta": "Premium Drink • VAT included",
+    "price": "SAR 30",
+    "availableSizes": "Available Sizes",
+    "sizes": {
+      "s235": "235 ml",
+      "s1000": "1000 ml"
+    },
+    "nutrition": {
+      "label": "Amount Per Serving",
+      "fat": "Fat",
+      "calories": "Calories",
+      "carbohydrate": "Carbs",
+      "protein": "Protein"
+    },
+    "ingredients": {
+      "label": "Ingredients:",
+      "viewFull": "View full ingredients"
+    },
+    "related": {
+      "eyebrow": "Related products",
+      "title": "You might like",
+      "body": "Other flavors from Domty Premium Drink."
+    }
   },
+
+  "cart": {
+    "title": "Your Cart",
+    "empty": {
+      "title": "Your cart is empty",
+      "body": "Looks like you haven't added anything yet."
+    },
+    "couponLine": "Have a coupon? Enter your code.",
+    "couponPlaceholder": "Coupon code",
+    "apply": "Apply",
+    "summaryTitle": "Cart Total",
+    "rows": {
+      "shipping": "Shipping",
+      "subtotal": "Subtotal",
+      "totalLabel": "Total"
+    },
+    "loginRequired": "Login required",
+    "loginRequiredDesc": "Please login to complete your order.",
+    "orderPlaced": "Order placed!",
+    "orderPlacedDesc": "Thank you for your purchase.",
+    "checkoutFailed": "Checkout failed",
+    "upsell": {
+      "eyebrow": "Suggested",
+      "title": "Recommended for you",
+      "subtitle": "Quick add before checkout."
+    }
+  },
+
+  "brands": {
+    "header": {
+      "eyebrow": "Brands",
+      "title": "Our Brands",
+      "body": "We distribute trusted FMCG brands across Saudi Arabia."
+    },
+    "domtyCard": {
+      "body": "Domty Premium Drinks are available in 235 ml and 1000 ml—ready to order online.",
+      "cta": "Browse Domty products"
+    },
+    "note": "More brands coming soon.",
+    "glance": {
+      "eyebrow": "What's inside",
+      "title": "Domty at a glance",
+      "body": "Premium drinks available in 235 ml and 1000 ml. Explore flavors and shop online.",
+      "cards": {
+        "flavors": "Flavors available — Cocktail, Mango, Guava, Orange",
+        "sizes": "Sizes — 235 ml • 1000 ml",
+        "info": "Clear product info — Ingredients & nutrition shown per product"
+      },
+      "cta": "Shop Domty products"
+    }
+  },
+
+  "about": {
+    "hero": {
+      "eyebrow": "About",
+      "title": "Built to deliver trusted products across Saudi Arabia.",
+      "body": "ALNOURS is a Saudi-based food distribution company supplying premium FMCG products with reliable availability, clear pricing (VAT included), and smooth online ordering."
+    },
+    "mission": {
+      "title": "Our mission",
+      "body": "Make everyday shopping simpler by providing trusted brands, accurate availability, and dependable fulfillment—so customers can order with confidence."
+    },
+    "coverage": {
+      "title": "Coverage across Saudi Arabia",
+      "body": "Based in Riyadh and serving customers across Saudi Arabia—including major cities like Jeddah."
+    },
+    "whatWeDo": {
+      "eyebrow": "What we do",
+      "title": "Distribution built for reliability.",
+      "body": "We bring trusted FMCG products to customers across Saudi Arabia through dependable supply, simple online ordering, and flexible fulfillment options.",
+      "cards": {
+        "distribution": {
+          "title": "Distribution & supply",
+          "body": "Reliable FMCG supply across Saudi Arabia with consistent availability."
+        },
+        "ordering": {
+          "title": "Online ordering",
+          "body": "Browse products, choose size, and place your order in minutes."
+        },
+        "fulfillment": {
+          "title": "Delivery or pickup",
+          "body": "Flexible delivery or pickup options—whichever works for you."
+        }
+      }
+    },
+    "contactCta": {
+      "eyebrow": "Contact us",
+      "title": "Let's plan your next order.",
+      "body": "Whether you're ordering for home or wholesale, we'll help you choose products, sizes, and delivery options—quickly and clearly.",
+      "labels": {
+        "mail": "Mail",
+        "call": "Call us",
+        "address": "Address"
+      }
+    }
+  },
+
+  "contact": {
+    "top": {
+      "eyebrow": "Contact Us",
+      "title": "Let's plan your next order.",
+      "body": "Whether you're ordering for home or wholesale, we'll help you choose products, sizes, and delivery options—quickly and clearly."
+    },
+    "form": {
+      "eyebrow": "Send your requirements",
+      "title": "Wholesale inquiry — tell us what you need.",
+      "body": "Planning a large order? Share the products, quantities, preferred sizes, and delivery city. Our team will get back to you with availability and a tailored quote.",
+      "fields": {
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone No.",
+        "productInterest": "Product Interest",
+        "message": "Message"
+      }
+    }
+  },
+
+  "auth": {
+    "login": {
+      "welcomeTitle": "Welcome back",
+      "welcomeBody": "Sign in to track orders, manage addresses, and checkout faster.",
+      "title": "Log In",
+      "helper": "Sign in with your email or sign up to become an ALNOURS member.",
+      "email": "Email",
+      "password": "Password",
+      "forgot": "Forgot Password",
+      "button": "Sign in",
+      "bottom": "Don't have an account? Sign Up",
+      "bottomLink": "Sign Up",
+      "bottomPrefix": "Don't have an account?",
+      "welcomeToast": "Welcome back!"
+    },
+    "signup": {
+      "joinTitle": "Join ALNOURS",
+      "joinBody": "Create an account to checkout faster, track orders, and manage addresses.",
+      "title": "Create account",
+      "helper": "It takes less than a minute.",
+      "fullName": "Full Name",
+      "phone": "Phone No.",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "button": "Sign Up",
+      "bottom": "Already have an account? Sign In",
+      "bottomLink": "Sign In",
+      "bottomPrefix": "Already have an account?",
+      "createdToast": "Account created!",
+      "passwordMismatch": "Passwords do not match"
+    }
+  },
+
+  "account": {
+    "menu": {
+      "overview": "Overview",
+      "orders": "Orders",
+      "addresses": "Addresses",
+      "account": "Account",
+      "logout": "Logout"
+    },
+    "overview": {
+      "title": "Account Overview",
+      "subtitle": "Manage your orders, addresses, and account details.",
+      "actions": {
+        "viewOrders": "View Orders",
+        "manageAddresses": "Manage Addresses",
+        "shopProducts": "Shop Products"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "subtitle": "Track your recent orders and view order details.",
+      "table": {
+        "orderNo": "Order No.",
+        "date": "Date",
+        "total": "Total",
+        "status": "Status",
+        "action": "Action"
+      },
+      "empty": {
+        "title": "No orders yet",
+        "body": "Start shopping to place your first order.",
+        "cta": "Shop products"
+      }
+    },
+    "addresses": {
+      "title": "Addresses",
+      "subtitle": "Save delivery addresses for faster checkout.",
+      "addNew": "Add new address",
+      "newAddress": "New Address",
+      "noAddresses": "No addresses saved",
+      "default": "Default",
+      "saved": "Address saved!",
+      "form": {
+        "fullName": "Full name",
+        "phone": "Phone number",
+        "city": "City",
+        "label": "Label (e.g. Home, Work)",
+        "addressLine": "Address line",
+        "save": "Save address"
+      }
+    },
+    "profile": {
+      "infoTitle": "Account Information",
+      "infoSubtitle": "Update your personal information.",
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone No."
+      },
+      "saveChanges": "Save changes",
+      "saved": "Saved!",
+      "securityTitle": "Security",
+      "securitySubtitle": "Update your password.",
+      "securityFields": {
+        "current": "Current password",
+        "new": "New password",
+        "confirm": "Confirm password"
+      },
+      "forgot": "Forgot your password?",
+      "updatePassword": "Update password",
+      "passwordUpdated": "Password updated!"
+    },
+    "logoutModal": {
+      "title": "Sign out?",
+      "body": "You'll be signed out of your account on this device.",
+      "cancel": "Cancel",
+      "signout": "Sign out"
+    }
+  },
+
   "footer": {
-    "about": "ALNOURS is a Saudi-based food distribution company supplying premium FMCG products to customers across the Kingdom. We focus on reliable availability, clear pricing, and fast fulfillment.",
+    "aboutText": "ALNOURS is a Saudi-based food distribution company supplying premium FMCG products to customers across the Kingdom. We focus on reliable availability, clear pricing, and fast fulfillment—serving individual shoppers and wholesale orders.",
     "explore": "Explore",
     "contact": "Contact",
-    "newsletter": "Newsletter",
-    "newsletterDesc": "Subscribe to get updates on new products and exclusive offers.",
-    "emailPlaceholder": "Your email address",
-    "subscribe": "Subscribe",
-    "copyright": "© {year} ALNOURS Food Trading. All rights reserved.",
-    "home": "Home",
-    "products": "Products",
-    "brands": "Brands",
-    "aboutLink": "About",
-    "contactLink": "Contact us"
+    "newsletter": {
+      "title": "Don't miss our latest quality updates",
+      "body": "Subscribe to get new products, offers, and availability updates.",
+      "placeholder": "Your email address"
+    },
+    "bottom": "© 2026 ALNOURS. All rights reserved.",
+    "links": {
+      "home": "Home",
+      "products": "Products",
+      "brands": "Brands",
+      "about": "About",
+      "contact": "Contact us"
+    }
   },
+
   "product": {
     "addToCart": "Add",
     "addedToCart": "Added to cart",
     "addedDesc": "{name} added to your cart.",
     "premiumDrink": "Premium Drink"
   },
+
   "seo": {
     "home": {
       "title": "ALNOURS — Premium Juice & Drinks | Official Domty Distributor in Saudi Arabia",
@@ -78,13 +404,17 @@
       "title": "Products — ALNOURS Premium Juice Collection",
       "description": "Browse our full range of premium juices and drinks. Cocktail, Mango, Guava, Orange and more flavors available."
     },
-    "brands": {
-      "title": "Brands — ALNOURS Official Brand Partners",
-      "description": "Explore the premium brands we distribute across Saudi Arabia including Domty and more."
+    "productDetail": {
+      "title": "{name} — ALNOURS",
+      "description": "Buy {name} from ALNOURS. Premium quality, fast delivery, VAT included."
     },
     "cart": {
       "title": "Your Cart — ALNOURS",
       "description": "Review your cart and proceed to checkout. Fast delivery across Riyadh & Jeddah."
+    },
+    "brands": {
+      "title": "Brands — ALNOURS Official Brand Partners",
+      "description": "Explore the premium brands we distribute across Saudi Arabia including Domty and more."
     },
     "about": {
       "title": "About ALNOURS — Saudi Food Distribution Company",
@@ -106,9 +436,17 @@
       "title": "My Account — ALNOURS",
       "description": "Manage your ALNOURS account, orders, addresses, and profile."
     },
-    "productDetail": {
-      "title": "{name} — ALNOURS",
-      "description": "Buy {name} from ALNOURS. Premium quality, fast delivery, VAT included."
+    "accountOrders": {
+      "title": "My Orders — ALNOURS",
+      "description": "Track your recent orders and view order details."
+    },
+    "accountAddresses": {
+      "title": "My Addresses — ALNOURS",
+      "description": "Manage your delivery addresses for faster checkout."
+    },
+    "accountProfile": {
+      "title": "My Profile — ALNOURS",
+      "description": "Update your personal information and password."
     }
   }
 }

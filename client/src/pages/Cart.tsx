@@ -27,7 +27,7 @@ export default function Cart() {
 
   const handleCheckout = async () => {
     if (!user) {
-      toast({ title: "Login required", description: "Please login to complete your order." });
+      toast({ title: t.cart.loginRequired, description: t.cart.loginRequiredDesc });
       setLocation("/login");
       return;
     }
@@ -37,10 +37,10 @@ export default function Cart() {
         addressId: undefined 
       });
       clearCart();
-      toast({ title: "Order placed!", description: "Thank you for your purchase." });
+      toast({ title: t.cart.orderPlaced, description: t.cart.orderPlacedDesc });
       setLocation("/account/orders");
     } catch (e: any) {
-      toast({ title: "Checkout failed", description: e.message, variant: "destructive" });
+      toast({ title: t.cart.checkoutFailed, description: e.message, variant: "destructive" });
     }
   };
 
@@ -48,10 +48,10 @@ export default function Cart() {
     return (
       <div className="min-h-screen pt-24 pb-20 flex flex-col items-center justify-center">
         <div className="container-custom text-center">
-          <h1 className="text-h2 text-neutral-950 mb-4">Your cart is empty</h1>
-          <p className="text-body text-neutral-500 mb-8">Looks like you haven't added anything yet.</p>
+          <h1 className="text-h2 text-neutral-950 mb-4">{t.cart.empty.title}</h1>
+          <p className="text-body text-neutral-500 mb-8">{t.cart.empty.body}</p>
           <Button asChild className="h-12 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold">
-            <Link href="/products">Start Shopping</Link>
+            <Link href="/products">{t.cta.startShopping}</Link>
           </Button>
         </div>
       </div>
@@ -62,7 +62,7 @@ export default function Cart() {
     <div className="min-h-screen pt-24 pb-20 bg-white">
       <SEO title={t.seo.cart.title} description={t.seo.cart.description} />
       <div className="container-custom">
-        <h1 className="text-h2 text-neutral-950 mb-10">Your Cart</h1>
+        <h1 className="text-h2 text-neutral-950 mb-10">{t.cart.title}</h1>
 
         <div className="flex flex-col lg:flex-row gap-16">
           <div className="flex-1 lg:max-w-[760px] space-y-0 divide-y divide-neutral-200">
@@ -104,12 +104,12 @@ export default function Cart() {
             ))}
 
             <div className="pt-6">
-              <p className="text-small text-neutral-500 mb-2">Have a coupon? Enter your code.</p>
+              <p className="text-small text-neutral-500 mb-2">{t.cart.couponLine}</p>
               <div className="flex gap-3">
-                <input type="text" placeholder="Coupon code" value={coupon} onChange={e => setCoupon(e.target.value)}
+                <input type="text" placeholder={t.cart.couponPlaceholder} value={coupon} onChange={e => setCoupon(e.target.value)}
                   className="flex-1 h-11 px-4 rounded-md border border-neutral-200 focus:border-primary outline-none transition-all text-body" />
                 <Button variant="outline" className="h-11 px-6 rounded-md border-neutral-200 text-neutral-700 font-semibold">
-                  Apply
+                  {t.cart.apply}
                 </Button>
               </div>
             </div>
@@ -117,30 +117,30 @@ export default function Cart() {
 
           <div className="lg:w-[360px] shrink-0">
             <div className="bg-neutral-50 p-8 rounded-lg border border-neutral-200 sticky top-24">
-              <h3 className="text-h4 font-bold text-neutral-950 mb-6">Cart Total</h3>
+              <h3 className="text-h4 font-bold text-neutral-950 mb-6">{t.cart.summaryTitle}</h3>
               
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-neutral-700 text-body">
-                  <span>Shipping</span>
+                  <span>{t.cart.rows.shipping}</span>
                   <span className="font-semibold">{shipping} SAR</span>
                 </div>
                 <div className="flex justify-between text-neutral-700 text-body">
-                  <span>Subtotal</span>
+                  <span>{t.cart.rows.subtotal}</span>
                   <span className="font-semibold">{subtotal} SAR</span>
                 </div>
                 <div className="border-t border-neutral-200 pt-4 flex justify-between font-bold text-h4 text-neutral-950">
-                  <span>Total</span>
+                  <span>{t.cart.rows.totalLabel}</span>
                   <span>{total} SAR</span>
                 </div>
               </div>
 
               <Button onClick={handleCheckout} disabled={isPending}
                 className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body mb-4">
-                {isPending ? "Processing..." : "Proceed To Checkout"}
+                {isPending ? t.cta.processing : t.cta.proceedToCheckout}
               </Button>
               
               <Link href="/products" className="block text-center text-primary font-semibold text-small hover:underline">
-                Continue Shopping
+                {t.cta.continueShopping}
               </Link>
             </div>
           </div>
@@ -148,9 +148,9 @@ export default function Cart() {
 
         {upsellProducts.length > 0 && (
           <section className="mt-24 border-t border-neutral-200 pt-16">
-            <span className="text-label text-primary uppercase tracking-wider mb-2 block">Suggested</span>
-            <h2 className="text-h3 text-neutral-950 mb-2">Recommended for you</h2>
-            <p className="text-body text-neutral-500 mb-8">Quick add before checkout.</p>
+            <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.cart.upsell.eyebrow}</span>
+            <h2 className="text-h3 text-neutral-950 mb-2">{t.cart.upsell.title}</h2>
+            <p className="text-body text-neutral-500 mb-8">{t.cart.upsell.subtitle}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {upsellProducts.map(p => (
                 <ProductCard key={p.id} product={p} />

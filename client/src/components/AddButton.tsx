@@ -3,6 +3,7 @@ import { Plus, Check } from "lucide-react";
 import type { Product } from "@shared/schema";
 import { useCart } from "@/store/use-cart";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface AddButtonProps {
   variant: "compact" | "full";
@@ -14,6 +15,7 @@ export function AddButton({ variant, product, size }: AddButtonProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const { addItem } = useCart();
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const handleClick = useCallback(
     (e: React.MouseEvent) => {
@@ -25,17 +27,17 @@ export function AddButton({ variant, product, size }: AddButtonProps) {
         size || (product.sizes && product.sizes.length > 0 ? product.sizes[0] : "Standard");
       addItem(product, selectedSize, 1);
       toast({
-        title: "Added to cart",
-        description: `${product.name} added to your cart.`,
+        title: t.product.addedToCart,
+        description: t.product.addedDesc.replace("{name}", product.name),
       });
 
       setIsSuccess(true);
       setTimeout(() => setIsSuccess(false), 1200);
     },
-    [isSuccess, product, size, addItem, toast],
+    [isSuccess, product, size, addItem, toast, t],
   );
 
-  const label = variant === "compact" ? "Add" : "Add To Cart";
+  const label = variant === "compact" ? t.cta.add : t.cta.addToCart;
 
   return (
     <button
@@ -47,7 +49,7 @@ export function AddButton({ variant, product, size }: AddButtonProps) {
       }}
       data-testid={`add-button-${product.id}`}
     >
-      <span>{isSuccess ? (variant === "compact" ? "Added" : "Added") : label}</span>
+      <span>{isSuccess ? t.cta.added : label}</span>
       <span
         className="relative w-4 h-4 flex items-center justify-center"
         style={{ transition: "transform 0.3s ease" }}

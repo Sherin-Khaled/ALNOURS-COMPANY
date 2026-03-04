@@ -1,114 +1,452 @@
 {
   "nav": {
-    "home": "Home",
-    "products": "Products",
-    "brands": "Brands",
-    "about": "About",
-    "contact": "Contact Us",
-    "signIn": "Sign in",
-    "cart": "Cart",
-    "account": "Account"
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "brands": "العلامات التجارية",
+    "about": "من نحن",
+    "contact": "تواصل معنا",
+    "cart": "السلة",
+    "account": "الحساب",
+    "signin": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "language_en": "EN",
+    "language_ar": "AR"
   },
-  "hero": {
-    "eyebrow": "Official Distributor",
-    "title": "Quality Delivered",
-    "subtitle": "Fresh juices, delivered across Riyadh & Jeddah.",
-    "description": "Shop in minutes—secure payment, VAT included, delivery or pickup.",
-    "shopProducts": "Shop Products",
-    "contactUs": "Contact Us",
-    "vatIncluded": "VAT included",
-    "fastDelivery": "Fast Delivery"
+
+  "cta": {
+    "shopProducts": "تسوق المنتجات",
+    "contactUs": "تواصل معنا",
+    "addToCart": "أضف إلى السلة",
+    "add": "أضف",
+    "added": "تمت الإضافة",
+    "viewAll": "عرض الكل",
+    "proceedToCheckout": "إتمام الشراء",
+    "continueShopping": "متابعة التسوق",
+    "send": "إرسال",
+    "subscribe": "اشترك",
+    "whatsappUs": "راسلنا على واتساب",
+    "callUsDirectly": "اتصل بنا مباشرة",
+    "sendYourRequirements": "أرسل متطلباتك",
+    "buyNow": "اشترِ الآن",
+    "view": "عرض",
+    "apply": "تطبيق",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "processing": "جارٍ المعالجة...",
+    "signingIn": "جارٍ تسجيل الدخول...",
+    "creating": "جارٍ الإنشاء...",
+    "startShopping": "ابدأ التسوق",
+    "loading": "جارٍ التحميل..."
   },
-  "featured": {
-    "eyebrow": "New this week",
-    "title": "Featured Products",
-    "subtitle": "Best sellers & top picks this week.",
-    "viewAll": "View All"
-  },
-  "flavors": {
-    "eyebrow": "Browse",
-    "title": "Shop by Flavor",
-    "subtitle": "Pick a flavor and start shopping.",
-    "cocktail": "Cocktail",
-    "cocktailDesc": "A fruity blend for a refreshing sip.",
-    "mango": "Mango",
-    "mangoDesc": "Tropical mango flavor, smooth and rich.",
-    "guava": "Guava",
-    "guavaDesc": "Classic guava taste, light and delicious.",
-    "orange": "Orange",
-    "orangeDesc": "Citrus refreshment with a bright taste."
-  },
-  "howItWorks": {
-    "title": "How it works",
-    "subtitle": "Order in minutes. Delivered with confidence.",
-    "step1Title": "Browse & choose",
-    "step1Body": "Pick your flavor and size—clear options, no confusion.",
-    "step2Title": "Pay securely",
-    "step2Body": "Secure online payments, VAT included.",
-    "step3Title": "Delivery or pickup",
-    "step3Body": "Choose what suits you in Riyadh & Jeddah."
-  },
-  "footer": {
-    "about": "ALNOURS is a Saudi-based food distribution company supplying premium FMCG products to customers across the Kingdom. We focus on reliable availability, clear pricing, and fast fulfillment.",
-    "explore": "Explore",
-    "contact": "Contact",
-    "newsletter": "Newsletter",
-    "newsletterDesc": "Subscribe to get updates on new products and exclusive offers.",
-    "emailPlaceholder": "Your email address",
-    "subscribe": "Subscribe",
-    "copyright": "© {year} ALNOURS Food Trading. All rights reserved.",
-    "home": "Home",
-    "products": "Products",
-    "brands": "Brands",
-    "aboutLink": "About",
-    "contactLink": "Contact us"
-  },
-  "product": {
-    "addToCart": "Add",
-    "addedToCart": "Added to cart",
-    "addedDesc": "{name} added to your cart.",
-    "premiumDrink": "Premium Drink"
-  },
-  "seo": {
-    "home": {
-      "title": "ALNOURS — Premium Juice & Drinks | Official Domty Distributor in Saudi Arabia",
-      "description": "Shop premium juices and drinks from ALNOURS, the official Domty distributor in Saudi Arabia. Fast delivery, VAT included, secure payment."
+
+  "home": {
+    "hero": {
+      "eyebrow": "الموزّع الرسمي",
+      "title": "جودة تصل إليك",
+      "subtitle": "عصائر طازجة تُوصّل إلى الرياض وجدة.",
+      "body": "تسوّق خلال دقائق—دفع آمن، السعر شامل ضريبة القيمة المضافة، توصيل أو استلام.",
+      "badges": {
+        "vatIncluded": "شامل ضريبة القيمة المضافة",
+        "fastDelivery": "توصيل سريع"
+      }
     },
-    "products": {
-      "title": "Products — ALNOURS Premium Juice Collection",
-      "description": "Browse our full range of premium juices and drinks. Cocktail, Mango, Guava, Orange and more flavors available."
+    "featured": {
+      "eyebrow": "جديد هذا الأسبوع",
+      "title": "المنتجات المميزة",
+      "subtitle": "الأكثر مبيعًا وأفضل الاختيارات هذا الأسبوع.",
+      "metaLine1": "مشروب بريميوم",
+      "metaLine2": "235 مل و 1000 مل",
+      "price": "30 ر.س"
     },
-    "brands": {
-      "title": "Brands — ALNOURS Official Brand Partners",
-      "description": "Explore the premium brands we distribute across Saudi Arabia including Domty and more."
+    "flavors": {
+      "eyebrow": "تصفّح",
+      "title": "تسوّق حسب النكهة",
+      "subtitle": "اختر نكهتك وابدأ التسوّق.",
+      "tiles": {
+        "cocktail": "كوكتيل — مزيج فواكه منعش لكل رشفة.",
+        "mango": "مانجو — نكهة استوائية ناعمة وغنية.",
+        "guava": "جوافة — طعم كلاسيكي خفيف ولذيذ.",
+        "orange": "برتقال — انتعاش حمضي بطعم مشرق."
+      }
     },
-    "cart": {
-      "title": "Your Cart — ALNOURS",
-      "description": "Review your cart and proceed to checkout. Fast delivery across Riyadh & Jeddah."
+    "howItWorks": {
+      "title": "كيف تعمل الخدمة",
+      "subtitle": "اطلب خلال دقائق. توصيل بثقة.",
+      "steps": {
+        "s1_title": "1. تصفّح واختر",
+        "s1_body": "اختر النكهة والحجم—خيارات واضحة بدون تعقيد.",
+        "s2_title": "2. ادفع بأمان",
+        "s2_body": "مدفوعات إلكترونية آمنة، والسعر شامل ضريبة القيمة المضافة.",
+        "s3_title": "3. توصيل أو استلام",
+        "s3_body": "اختر ما يناسبك في الرياض وجدة."
+      }
+    }
+  },
+
+  "products": {
+    "header": {
+      "eyebrow": "تسوّق",
+      "title": "المنتجات",
+      "subtitle": "مشروبات بريميوم متاحة الآن"
     },
-    "about": {
-      "title": "About ALNOURS — Saudi Food Distribution Company",
-      "description": "Learn about ALNOURS, a trusted Saudi food distribution company supplying premium FMCG products across the Kingdom."
+    "filters": {
+      "all": "الكل",
+      "cocktail": "كوكتيل",
+      "mango": "مانجو",
+      "orange": "برتقال",
+      "guava": "جوافة"
     },
-    "contact": {
-      "title": "Contact Us — ALNOURS",
-      "description": "Get in touch with ALNOURS for inquiries, partnerships, or support."
+    "card": {
+      "titleTemplate": "مشروب بريميوم {flavor}",
+      "metaLine1": "مشروب بريميوم",
+      "metaLine2": "235 مل و 1000 مل",
+      "price": "30 ر.س"
     },
+    "whyAlnours": {
+      "vatIncluded": "شامل ضريبة القيمة المضافة",
+      "vatDesc": "أسعار شفافة بدون تكاليف مخفية.",
+      "fastDelivery": "توصيل سريع",
+      "fastDeliveryDesc": "توزيع موثوق في أنحاء المملكة.",
+      "securePayment": "دفع آمن",
+      "securePaymentDesc": "عملية دفع آمنة ومشفرة."
+    }
+  },
+
+  "pdp": {
+    "brand": "دومتي",
+    "meta": "مشروب بريميوم • شامل ضريبة القيمة المضافة",
+    "price": "30 ر.س",
+    "availableSizes": "الأحجام المتاحة",
+    "sizes": {
+      "s235": "235 مل",
+      "s1000": "1000 مل"
+    },
+    "nutrition": {
+      "label": "الكمية لكل حصة",
+      "fat": "الدهون",
+      "calories": "السعرات الحرارية",
+      "carbohydrate": "الكربوهيدرات",
+      "protein": "البروتين"
+    },
+    "ingredients": {
+      "label": "المكونات:",
+      "viewFull": "عرض المكونات كاملة"
+    },
+    "related": {
+      "eyebrow": "منتجات مشابهة",
+      "title": "قد يعجبك أيضًا",
+      "body": "نكهات أخرى من مشروب دومتي بريميوم."
+    }
+  },
+
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": {
+      "title": "سلة التسوق فارغة",
+      "body": "يبدو أنك لم تضف أي منتجات بعد."
+    },
+    "couponLine": "هل لديك كوبون؟ أدخل الرمز.",
+    "couponPlaceholder": "رمز الكوبون",
+    "apply": "تطبيق",
+    "summaryTitle": "إجمالي السلة",
+    "rows": {
+      "shipping": "الشحن",
+      "subtotal": "المجموع الفرعي",
+      "totalLabel": "الإجمالي"
+    },
+    "loginRequired": "يجب تسجيل الدخول",
+    "loginRequiredDesc": "الرجاء تسجيل الدخول لإتمام طلبك.",
+    "orderPlaced": "تم تقديم الطلب!",
+    "orderPlacedDesc": "شكرًا لشرائك.",
+    "checkoutFailed": "فشل إتمام الشراء",
+    "upsell": {
+      "eyebrow": "مقترح",
+      "title": "مقترح لك",
+      "subtitle": "إضافة سريعة قبل إتمام الشراء."
+    }
+  },
+
+  "brands": {
+    "header": {
+      "eyebrow": "العلامات التجارية",
+      "title": "علاماتنا التجارية",
+      "body": "نوزّع علامات FMCG موثوقة في جميع أنحاء المملكة العربية السعودية."
+    },
+    "domtyCard": {
+      "body": "مشروبات دومتي بريميوم متوفرة بحجمي 235 مل و 1000 مل—جاهزة للطلب عبر الإنترنت.",
+      "cta": "تصفّح منتجات دومتي"
+    },
+    "note": "المزيد من العلامات قريبًا.",
+    "glance": {
+      "eyebrow": "المحتوى",
+      "title": "دومتي في لمحة",
+      "body": "مشروبات بريميوم متوفرة بحجمي 235 مل و 1000 مل. استكشف النكهات وتسوّق عبر الإنترنت.",
+      "cards": {
+        "flavors": "النكهات المتاحة — كوكتيل، مانجو، جوافة، برتقال",
+        "sizes": "الأحجام — 235 مل • 1000 مل",
+        "info": "معلومات واضحة — المكونات والقيم الغذائية لكل منتج"
+      },
+      "cta": "تسوّق منتجات دومتي"
+    }
+  },
+
+  "about": {
+    "hero": {
+      "eyebrow": "من نحن",
+      "title": "نبني تجربة موثوقة لتوصيل المنتجات داخل السعودية.",
+      "body": "ALNOURS شركة توزيع أغذية سعودية توفّر منتجات FMCG بريميوم بتوفّر موثوق، وأسعار واضحة (شاملة ضريبة القيمة المضافة)، وتجربة طلب سهلة عبر الإنترنت."
+    },
+    "mission": {
+      "title": "رسالتنا",
+      "body": "تبسيط التسوّق اليومي عبر توفير علامات موثوقة، وتوفّر دقيق، وتنفيذ طلبات يعتمد عليه—ليطلب العملاء بثقة."
+    },
+    "coverage": {
+      "title": "تغطية داخل المملكة",
+      "body": "مقرنا الرياض ونخدم العملاء في مختلف مدن المملكة—بما في ذلك جدة."
+    },
+    "whatWeDo": {
+      "eyebrow": "ماذا نقدم",
+      "title": "توزيع يعتمد عليه.",
+      "body": "نصل بالعلامات الموثوقة إلى العملاء داخل السعودية عبر توريد مستقر، وطلب إلكتروني بسيط، وخيارات تنفيذ مرنة.",
+      "cards": {
+        "distribution": {
+          "title": "التوزيع والتوريد",
+          "body": "توريد FMCG موثوق داخل السعودية بتوفّر مستمر."
+        },
+        "ordering": {
+          "title": "الطلب عبر الإنترنت",
+          "body": "تصفّح المنتجات، اختر الحجم، وأكمل طلبك خلال دقائق."
+        },
+        "fulfillment": {
+          "title": "توصيل أو استلام",
+          "body": "خيارات توصيل أو استلام مرنة—حسب ما يناسبك."
+        }
+      }
+    },
+    "contactCta": {
+      "eyebrow": "تواصل معنا",
+      "title": "لنخطط لطلبك القادم.",
+      "body": "سواء كان طلبًا للمنزل أو للشراء بالجملة، سنساعدك في اختيار المنتجات والأحجام وخيارات التوصيل—بوضوح وسرعة.",
+      "labels": {
+        "mail": "البريد",
+        "call": "اتصل بنا",
+        "address": "العنوان"
+      }
+    }
+  },
+
+  "contact": {
+    "top": {
+      "eyebrow": "تواصل معنا",
+      "title": "لنخطط لطلبك القادم.",
+      "body": "سواء كان طلبًا للمنزل أو للشراء بالجملة، سنساعدك في اختيار المنتجات والأحجام وخيارات التوصيل—بوضوح وسرعة."
+    },
+    "form": {
+      "eyebrow": "أرسل متطلباتك",
+      "title": "طلب بالجملة — أخبرنا بما تحتاجه.",
+      "body": "تخطط لطلب كبير؟ شارك المنتجات والكميات والأحجام والمدينة. سنعود إليك بالتوفّر وعرض سعر مناسب.",
+      "fields": {
+        "fullName": "الاسم الكامل",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الجوال",
+        "productInterest": "المنتج المطلوب",
+        "message": "الرسالة"
+      }
+    }
+  },
+
+  "auth": {
     "login": {
-      "title": "Sign In — ALNOURS",
-      "description": "Sign in to your ALNOURS account to manage orders and track deliveries."
+      "welcomeTitle": "مرحبًا بعودتك",
+      "welcomeBody": "سجّل الدخول لتتبع الطلبات وإدارة العناوين وإتمام الشراء أسرع.",
+      "title": "تسجيل الدخول",
+      "helper": "سجّل الدخول ببريدك الإلكتروني أو أنشئ حسابًا لتصبح عضوًا في ALNOURS.",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "forgot": "نسيت كلمة المرور؟",
+      "button": "تسجيل الدخول",
+      "bottom": "ليس لديك حساب؟ إنشاء حساب",
+      "bottomLink": "إنشاء حساب",
+      "bottomPrefix": "ليس لديك حساب؟",
+      "welcomeToast": "مرحبًا بعودتك!"
     },
     "signup": {
-      "title": "Create Account — ALNOURS",
-      "description": "Create your ALNOURS account and start shopping premium juices and drinks."
+      "joinTitle": "انضم إلى ALNOURS",
+      "joinBody": "أنشئ حسابًا لإتمام الشراء أسرع وتتبع الطلبات وإدارة العناوين.",
+      "title": "إنشاء حساب",
+      "helper": "لن يستغرق الأمر أكثر من دقيقة.",
+      "fullName": "الاسم الكامل",
+      "phone": "رقم الجوال",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "confirmPassword": "تأكيد كلمة المرور",
+      "button": "إنشاء حساب",
+      "bottom": "لديك حساب؟ تسجيل الدخول",
+      "bottomLink": "تسجيل الدخول",
+      "bottomPrefix": "لديك حساب؟",
+      "createdToast": "تم إنشاء الحساب!",
+      "passwordMismatch": "كلمات المرور غير متطابقة"
+    }
+  },
+
+  "account": {
+    "menu": {
+      "overview": "نظرة عامة",
+      "orders": "الطلبات",
+      "addresses": "العناوين",
+      "account": "الحساب",
+      "logout": "تسجيل الخروج"
     },
-    "account": {
-      "title": "My Account — ALNOURS",
-      "description": "Manage your ALNOURS account, orders, addresses, and profile."
+    "overview": {
+      "title": "نظرة عامة على الحساب",
+      "subtitle": "إدارة الطلبات والعناوين وتفاصيل الحساب.",
+      "actions": {
+        "viewOrders": "عرض الطلبات",
+        "manageAddresses": "إدارة العناوين",
+        "shopProducts": "تسوق المنتجات"
+      }
+    },
+    "orders": {
+      "title": "الطلبات",
+      "subtitle": "تتبّع طلباتك الأخيرة واعرض التفاصيل.",
+      "table": {
+        "orderNo": "رقم الطلب",
+        "date": "التاريخ",
+        "total": "الإجمالي",
+        "status": "الحالة",
+        "action": "إجراء"
+      },
+      "empty": {
+        "title": "لا توجد طلبات بعد",
+        "body": "ابدأ التسوّق لتقديم طلبك الأول.",
+        "cta": "تسوق المنتجات"
+      }
+    },
+    "addresses": {
+      "title": "العناوين",
+      "subtitle": "احفظ عناوين التوصيل لإتمام الشراء أسرع.",
+      "addNew": "إضافة عنوان جديد",
+      "newAddress": "عنوان جديد",
+      "noAddresses": "لا توجد عناوين محفوظة",
+      "default": "افتراضي",
+      "saved": "تم حفظ العنوان!",
+      "form": {
+        "fullName": "الاسم الكامل",
+        "phone": "رقم الجوال",
+        "city": "المدينة",
+        "label": "التسمية (مثلاً: المنزل، العمل)",
+        "addressLine": "العنوان",
+        "save": "حفظ العنوان"
+      }
+    },
+    "profile": {
+      "infoTitle": "معلومات الحساب",
+      "infoSubtitle": "تحديث معلوماتك الشخصية.",
+      "fields": {
+        "firstName": "الاسم الأول",
+        "lastName": "اسم العائلة",
+        "email": "البريد الإلكتروني",
+        "phone": "رقم الجوال"
+      },
+      "saveChanges": "حفظ التغييرات",
+      "saved": "تم الحفظ!",
+      "securityTitle": "الأمان",
+      "securitySubtitle": "تحديث كلمة المرور.",
+      "securityFields": {
+        "current": "كلمة المرور الحالية",
+        "new": "كلمة المرور الجديدة",
+        "confirm": "تأكيد كلمة المرور"
+      },
+      "forgot": "نسيت كلمة المرور؟",
+      "updatePassword": "تحديث كلمة المرور",
+      "passwordUpdated": "تم تحديث كلمة المرور!"
+    },
+    "logoutModal": {
+      "title": "تسجيل الخروج؟",
+      "body": "سيتم تسجيل خروجك من حسابك على هذا الجهاز.",
+      "cancel": "إلغاء",
+      "signout": "تسجيل الخروج"
+    }
+  },
+
+  "footer": {
+    "aboutText": "ALNOURS شركة توزيع أغذية سعودية توفّر منتجات FMCG بريميوم للعملاء داخل المملكة. نركز على التوفّر الموثوق، وتسعير واضح، وتنفيذ سريع—لنخدم المتسوقين الأفراد وطلبات الجملة.",
+    "explore": "استكشف",
+    "contact": "التواصل",
+    "newsletter": {
+      "title": "لا تفوّت آخر تحديثات الجودة لدينا",
+      "body": "اشترك لتصلك المنتجات الجديدة والعروض وتحديثات التوفّر.",
+      "placeholder": "أدخل بريدك الإلكتروني"
+    },
+    "bottom": "© 2026 ALNOURS. جميع الحقوق محفوظة.",
+    "links": {
+      "home": "الرئيسية",
+      "products": "المنتجات",
+      "brands": "العلامات التجارية",
+      "about": "من نحن",
+      "contact": "تواصل معنا"
+    }
+  },
+
+  "product": {
+    "addToCart": "أضف",
+    "addedToCart": "تمت الإضافة إلى السلة",
+    "addedDesc": "تمت إضافة {name} إلى سلتك.",
+    "premiumDrink": "مشروب بريميوم"
+  },
+
+  "seo": {
+    "home": {
+      "title": "ALNOURS — عصائر ومشروبات بريميوم | الموزع الرسمي لدومتي في السعودية",
+      "description": "تسوّق عصائر ومشروبات بريميوم من ALNOURS، الموزع الرسمي لدومتي في المملكة العربية السعودية. توصيل سريع، شامل ضريبة القيمة المضافة، دفع آمن."
+    },
+    "products": {
+      "title": "المنتجات — مجموعة عصائر ALNOURS بريميوم",
+      "description": "تصفّح مجموعتنا الكاملة من العصائر والمشروبات بريميوم. كوكتيل، مانجو، جوافة، برتقال ونكهات أخرى متاحة."
     },
     "productDetail": {
       "title": "{name} — ALNOURS",
-      "description": "Buy {name} from ALNOURS. Premium quality, fast delivery, VAT included."
+      "description": "اشترِ {name} من ALNOURS. جودة بريميوم، توصيل سريع، شامل ضريبة القيمة المضافة."
+    },
+    "cart": {
+      "title": "سلة التسوق — ALNOURS",
+      "description": "راجع سلتك وأتمم الشراء. توصيل سريع إلى الرياض وجدة."
+    },
+    "brands": {
+      "title": "العلامات التجارية — شركاء ALNOURS الرسميون",
+      "description": "استكشف العلامات التجارية بريميوم التي نوزعها في أنحاء المملكة العربية السعودية بما في ذلك دومتي والمزيد."
+    },
+    "about": {
+      "title": "من نحن — ALNOURS شركة توزيع أغذية سعودية",
+      "description": "تعرّف على ALNOURS، شركة توزيع أغذية سعودية موثوقة توفّر منتجات FMCG بريميوم في أنحاء المملكة."
+    },
+    "contact": {
+      "title": "تواصل معنا — ALNOURS",
+      "description": "تواصل مع ALNOURS للاستفسارات أو الشراكات أو الدعم."
+    },
+    "login": {
+      "title": "تسجيل الدخول — ALNOURS",
+      "description": "سجّل الدخول إلى حسابك في ALNOURS لإدارة الطلبات وتتبع الشحنات."
+    },
+    "signup": {
+      "title": "إنشاء حساب — ALNOURS",
+      "description": "أنشئ حسابك في ALNOURS وابدأ تسوّق العصائر والمشروبات بريميوم."
+    },
+    "account": {
+      "title": "حسابي — ALNOURS",
+      "description": "إدارة حسابك في ALNOURS، الطلبات، العناوين، والملف الشخصي."
+    },
+    "accountOrders": {
+      "title": "طلباتي — ALNOURS",
+      "description": "تتبّع طلباتك الأخيرة واعرض تفاصيل الطلبات."
+    },
+    "accountAddresses": {
+      "title": "عناويني — ALNOURS",
+      "description": "إدارة عناوين التوصيل لإتمام الشراء أسرع."
+    },
+    "accountProfile": {
+      "title": "ملفي الشخصي — ALNOURS",
+      "description": "تحديث معلوماتك الشخصية وكلمة المرور."
     }
   }
 }

@@ -19,7 +19,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login({ email, password });
-      toast({ title: "Welcome back!" });
+      toast({ title: t.auth.login.welcomeToast });
       setLocation("/account");
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -37,21 +37,21 @@ export default function Login() {
             </div>
             <span className="font-sora font-bold text-h4">ALNOURS</span>
           </div>
-          <h2 className="font-sora text-h3 mb-4">Welcome back</h2>
+          <h2 className="font-sora text-h3 mb-4">{t.auth.login.welcomeTitle}</h2>
           <p className="text-white/70 text-body">
-            Sign in to track orders, manage addresses, and checkout faster.
+            {t.auth.login.welcomeBody}
           </p>
         </div>
 
         <div className="flex-1 p-8 md:p-12">
-          <h2 className="font-sora text-h3 text-neutral-950 mb-2">Log In</h2>
+          <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.auth.login.title}</h2>
           <p className="text-small text-neutral-500 mb-8">
-            Sign in with your email or sign up to become an ALNOURS member
+            {t.auth.login.helper}
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Email</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.login.email}</label>
               <input 
                 type="email" value={email} onChange={e => setEmail(e.target.value)}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
@@ -59,7 +59,7 @@ export default function Login() {
               />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Password</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.login.password}</label>
               <input 
                 type="password" value={password} onChange={e => setPassword(e.target.value)}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
@@ -67,19 +67,19 @@ export default function Login() {
               />
             </div>
             <div className="text-right">
-              <button type="button" className="text-small text-primary hover:underline font-medium">Forgot Password</button>
+              <button type="button" className="text-small text-primary hover:underline font-medium">{t.auth.login.forgot}</button>
             </div>
             <Button type="submit" disabled={isPending}
               className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body"
               data-testid="button-signin"
             >
-              {isPending ? "Signing in..." : "Sign in"}
+              {isPending ? t.cta.signingIn : t.auth.login.button}
             </Button>
           </form>
 
           <p className="text-center mt-8 text-neutral-500 text-small">
-            Don't have an account?{" "}
-            <Link href="/signup" className="text-primary font-semibold hover:underline">Sign Up</Link>
+            {t.auth.login.bottomPrefix}{" "}
+            <Link href="/signup" className="text-primary font-semibold hover:underline">{t.auth.login.bottomLink}</Link>
           </p>
         </div>
       </div>

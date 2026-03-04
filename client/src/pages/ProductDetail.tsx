@@ -37,8 +37,8 @@ export default function ProductDetail() {
   const handleAdd = () => {
     addItem(product, selectedSize || "Standard", quantity);
     toast({
-      title: "Added to cart",
-      description: `${quantity}x ${product.name} added.`,
+      title: t.product.addedToCart,
+      description: t.product.addedDesc.replace("{name}", product.name),
     });
   };
 
@@ -73,9 +73,9 @@ export default function ProductDetail() {
             </div>
 
             <div className="flex flex-col">
-              <span className="text-label text-neutral-500 uppercase tracking-wider mb-2 block">Domty</span>
+              <span className="text-label text-neutral-500 uppercase tracking-wider mb-2 block">{t.pdp.brand}</span>
               <h1 className="text-[32px] md:text-[28px] lg:text-[32px] font-bold text-neutral-950 mb-2" data-testid="text-product-name">{product.name}</h1>
-              <p className="text-body text-neutral-500 mb-6">Premium Drink &bull; VAT included</p>
+              <p className="text-body text-neutral-500 mb-6">{t.pdp.meta}</p>
               
               <div className="text-[24px] font-bold text-neutral-950 mb-8" data-testid="text-product-price">
                 <span className="text-[18px] mr-1">{product.currency}</span>{product.price}
@@ -83,7 +83,7 @@ export default function ProductDetail() {
 
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-label text-neutral-950 mb-3">Available Sizes</h3>
+                  <h3 className="text-label text-neutral-950 mb-3">{t.pdp.availableSizes}</h3>
                   <div className="flex gap-3 flex-wrap">
                     {product.sizes.map(size => (
                       <button
@@ -108,12 +108,12 @@ export default function ProductDetail() {
                     data-testid="button-add-to-cart"
                     className="h-[48px] px-10 bg-primary hover:bg-primary-hover text-white rounded-md font-bold text-lg flex-1"
                   >
-                    Add To Cart
+                    {t.cta.addToCart}
                   </Button>
                 </div>
 
                 <div className="pt-8 border-t border-neutral-200">
-                  <h3 className="text-label text-neutral-950 mb-4 uppercase">Amount Per Serving</h3>
+                  <h3 className="text-label text-neutral-950 mb-4 uppercase">{t.pdp.nutrition.label}</h3>
                   <div className="grid grid-cols-3 gap-4">
                     {Object.entries(product.nutrition || {}).map(([key, value]) => (
                       <div key={key} className="text-left" data-testid={`text-nutrition-${key}`}>
@@ -125,12 +125,12 @@ export default function ProductDetail() {
                 </div>
 
                 <div className="pt-8 border-t border-neutral-200">
-                  <h3 className="text-label text-neutral-950 mb-2 uppercase">Ingredients:</h3>
+                  <h3 className="text-label text-neutral-950 mb-2 uppercase">{t.pdp.ingredients.label}</h3>
                   <p className="text-body text-neutral-700 line-clamp-2" data-testid="text-ingredients">
                     {product.ingredients}
                   </p>
                   <button className="text-primary font-semibold mt-2 hover:underline" data-testid="button-view-ingredients">
-                    View full ingredients
+                    {t.pdp.ingredients.viewFull}
                   </button>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export default function ProductDetail() {
 
       {relatedProducts.length > 0 && (
         <div className="container-custom mt-16">
-          <h2 className="text-h3 text-neutral-950 mb-8" data-testid="text-related-title">You might like</h2>
+          <h2 className="text-h3 text-neutral-950 mb-8" data-testid="text-related-title">{t.pdp.related.title}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {relatedProducts.map(p => (
               <ProductCard key={p.id} product={p} variant="related" />

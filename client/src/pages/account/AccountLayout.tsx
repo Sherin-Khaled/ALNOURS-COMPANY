@@ -2,14 +2,16 @@ import { Link, useLocation } from "wouter";
 import { User as UserIcon, Package, MapPin, Settings, LogOut } from "lucide-react";
 import { useAuth, useLogout } from "@/hooks/use-auth";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AccountLayout({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useLocation();
   const { data: user, isLoading } = useAuth();
   const { mutateAsync: logout } = useLogout();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { t } = useLanguage();
 
-  if (isLoading) return <div className="min-h-screen pt-32 text-center">Loading...</div>;
+  if (isLoading) return <div className="min-h-screen pt-32 text-center">{t.cta.loading}</div>;
   if (!user) {
     setLocation("/login");
     return null;
@@ -22,10 +24,10 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   };
 
   const nav = [
-    { href: "/account", icon: UserIcon, label: "Overview" },
-    { href: "/account/orders", icon: Package, label: "Orders" },
-    { href: "/account/addresses", icon: MapPin, label: "Addresses" },
-    { href: "/account/profile", icon: Settings, label: "Account" },
+    { href: "/account", icon: UserIcon, label: t.account.menu.overview },
+    { href: "/account/orders", icon: Package, label: t.account.menu.orders },
+    { href: "/account/addresses", icon: MapPin, label: t.account.menu.addresses },
+    { href: "/account/profile", icon: Settings, label: t.account.menu.account },
   ];
 
   return (
@@ -53,7 +55,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                     className="w-full flex items-center gap-3 h-12 px-4 rounded-md font-medium text-destructive hover:bg-destructive/10 transition-colors"
                     data-testid="button-logout"
                   >
-                    <LogOut className="w-6 h-6" /> Logout
+                    <LogOut className="w-6 h-6" /> {t.account.menu.logout}
                   </button>
                 </div>
               </div>
@@ -69,22 +71,22 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
       {showLogoutModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
           <div className="bg-white rounded-modal p-8 max-w-sm w-full modal-shadow">
-            <h3 className="font-sora text-h4 text-neutral-950 mb-2">Sign out?</h3>
-            <p className="text-body text-neutral-500 mb-8">You'll be signed out of your account on this device.</p>
+            <h3 className="font-sora text-h4 text-neutral-950 mb-2">{t.account.logoutModal.title}</h3>
+            <p className="text-body text-neutral-500 mb-8">{t.account.logoutModal.body}</p>
             <div className="flex gap-4">
               <button 
                 onClick={() => setShowLogoutModal(false)}
                 className="flex-1 h-11 rounded-md border border-neutral-200 text-neutral-700 font-semibold hover:bg-neutral-50 transition-colors"
                 data-testid="button-cancel-logout"
               >
-                Cancel
+                {t.account.logoutModal.cancel}
               </button>
               <button 
                 onClick={handleLogout}
                 className="flex-1 h-11 rounded-md bg-destructive hover:bg-destructive/90 text-white font-semibold transition-colors"
                 data-testid="button-confirm-logout"
               >
-                Sign out
+                {t.account.logoutModal.signout}
               </button>
             </div>
           </div>

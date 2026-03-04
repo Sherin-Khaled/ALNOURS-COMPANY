@@ -67,8 +67,8 @@ Preferred communication style: Simple, everyday language.
 - `client/src/index.css` — Design tokens, typography scale, utility classes, btn-styled, featured-gradient-bg
 - `tailwind.config.ts` — Extended theme with brand colors, fonts, radii
 - `client/src/contexts/LanguageContext.tsx` — i18n context (EN/AR toggle, RTL/LTR, localStorage persistence)
-- `client/src/i18n/en.json` — English translations (all pages + SEO metadata)
-- `client/src/i18n/ar.json` — Arabic translations (currently duplicates English, structure ready)
+- `client/src/i18n/en.json` — English translations (nested: nav, cta, home, products, pdp, cart, brands, about, contact, auth, account, footer, product, seo)
+- `client/src/i18n/ar.json` — Arabic translations (fully translated, mirrors en.json structure exactly)
 - `client/src/components/Reveal.tsx` — IntersectionObserver scroll animation wrapper
 - `client/src/components/SEO.tsx` — Document head metadata setter
 - `client/src/store/use-cart.ts` — Zustand cart store

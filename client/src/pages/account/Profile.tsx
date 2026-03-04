@@ -2,10 +2,12 @@ import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Profile() {
   const { data: user } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [currentPw, setCurrentPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
@@ -15,56 +17,56 @@ export default function Profile() {
   return (
     <div className="space-y-12">
       <div>
-        <h2 className="font-sora text-h3 text-neutral-950 mb-2">Account Information</h2>
-        <p className="text-body text-neutral-500 mb-8">Update your personal information.</p>
+        <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.account.profile.infoTitle}</h2>
+        <p className="text-body text-neutral-500 mb-8">{t.account.profile.infoSubtitle}</p>
 
-        <form onSubmit={e => { e.preventDefault(); toast({ title: "Saved!" }); }} className="space-y-6 max-w-xl">
+        <form onSubmit={e => { e.preventDefault(); toast({ title: t.account.profile.saved }); }} className="space-y-6 max-w-xl">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">First name</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.fields.firstName}</label>
               <input type="text" defaultValue={user.firstName} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Last name</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.fields.lastName}</label>
               <input type="text" defaultValue={user.lastName || ""} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
             </div>
           </div>
           <div>
-            <label className="text-label text-neutral-700 mb-2 block">Email</label>
+            <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.fields.email}</label>
             <input type="email" defaultValue={user.email} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <div>
-            <label className="text-label text-neutral-700 mb-2 block">Phone No.</label>
+            <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.fields.phone}</label>
             <input type="tel" defaultValue={user.phone} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <Button type="submit" className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-save-profile">
-            Save changes
+            {t.account.profile.saveChanges}
           </Button>
         </form>
       </div>
 
       <div className="border-t border-neutral-200 pt-12">
-        <h2 className="font-sora text-h4 text-neutral-950 mb-2">Security</h2>
-        <p className="text-body text-neutral-500 mb-8">Update your password.</p>
+        <h2 className="font-sora text-h4 text-neutral-950 mb-2">{t.account.profile.securityTitle}</h2>
+        <p className="text-body text-neutral-500 mb-8">{t.account.profile.securitySubtitle}</p>
 
-        <form onSubmit={e => { e.preventDefault(); toast({ title: "Password updated!" }); }} className="space-y-6 max-w-xl">
+        <form onSubmit={e => { e.preventDefault(); toast({ title: t.account.profile.passwordUpdated }); }} className="space-y-6 max-w-xl">
           <div>
-            <label className="text-label text-neutral-700 mb-2 block">Current password</label>
+            <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.securityFields.current}</label>
             <input type="password" value={currentPw} onChange={e => setCurrentPw(e.target.value)} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <div>
-            <label className="text-label text-neutral-700 mb-2 block">New password</label>
+            <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.securityFields.new}</label>
             <input type="password" value={newPw} onChange={e => setNewPw(e.target.value)} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <div>
-            <label className="text-label text-neutral-700 mb-2 block">Confirm password</label>
+            <label className="text-label text-neutral-700 mb-2 block">{t.account.profile.securityFields.confirm}</label>
             <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <div>
-            <button type="button" className="text-small text-primary hover:underline font-medium">Forgot your password?</button>
+            <button type="button" className="text-small text-primary hover:underline font-medium">{t.account.profile.forgot}</button>
           </div>
           <Button type="submit" className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-update-password">
-            Update password
+            {t.account.profile.updatePassword}
           </Button>
         </form>
       </div>

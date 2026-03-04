@@ -17,12 +17,12 @@ export default function Signup() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      toast({ title: "Error", description: "Passwords do not match", variant: "destructive" });
+      toast({ title: "Error", description: t.auth.signup.passwordMismatch, variant: "destructive" });
       return;
     }
     try {
       await signup({ firstName: formData.firstName, phone: formData.phone, email: formData.email, password: formData.password });
-      toast({ title: "Account created!" });
+      toast({ title: t.auth.signup.createdToast });
       setLocation("/account");
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -40,56 +40,56 @@ export default function Signup() {
             </div>
             <span className="font-sora font-bold text-h4">ALNOURS</span>
           </div>
-          <h2 className="font-sora text-h3 mb-4">Join ALNOURS</h2>
+          <h2 className="font-sora text-h3 mb-4">{t.auth.signup.joinTitle}</h2>
           <p className="text-white/70 text-body">
-            Create an account to checkout faster, track orders, and manage addresses.
+            {t.auth.signup.joinBody}
           </p>
         </div>
 
         <div className="flex-1 p-8 md:p-12">
-          <h2 className="font-sora text-h3 text-neutral-950 mb-2">Create account</h2>
-          <p className="text-small text-neutral-500 mb-8">It takes less than a minute.</p>
+          <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.auth.signup.title}</h2>
+          <p className="text-small text-neutral-500 mb-8">{t.auth.signup.helper}</p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Full Name</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.signup.fullName}</label>
               <input type="text" required value={formData.firstName} onChange={e => setFormData({...formData, firstName: e.target.value})}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
                 data-testid="input-fullname" />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Phone No.</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.signup.phone}</label>
               <input type="tel" required value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
                 data-testid="input-phone" />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Email</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.signup.email}</label>
               <input type="email" required value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
                 data-testid="input-email" />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Password</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.signup.password}</label>
               <input type="password" required minLength={6} value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
                 data-testid="input-password" />
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">Confirm password</label>
+              <label className="text-label text-neutral-700 mb-2 block">{t.auth.signup.confirmPassword}</label>
               <input type="password" required minLength={6} value={formData.confirmPassword} onChange={e => setFormData({...formData, confirmPassword: e.target.value})}
                 className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body"
                 data-testid="input-confirm-password" />
             </div>
             
             <Button type="submit" disabled={isPending} className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body" data-testid="button-signup">
-              {isPending ? "Creating..." : "Sign Up"}
+              {isPending ? t.cta.creating : t.auth.signup.button}
             </Button>
           </form>
 
           <p className="text-center mt-8 text-neutral-500 text-small">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary font-semibold hover:underline">Sign In</Link>
+            {t.auth.signup.bottomPrefix}{" "}
+            <Link href="/login" className="text-primary font-semibold hover:underline">{t.auth.signup.bottomLink}</Link>
           </p>
         </div>
       </div>

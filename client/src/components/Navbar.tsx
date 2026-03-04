@@ -89,7 +89,7 @@ export function Navbar() {
                 className="hidden md:inline-flex h-9 px-5 items-center justify-center rounded-pill bg-primary text-white text-small font-semibold hover:bg-primary-hover transition-colors btn-styled"
                 data-testid="link-signin"
               >
-                {t.nav.signIn}
+                {t.nav.signin}
               </Link>
             )}
 
@@ -146,7 +146,7 @@ export function Navbar() {
                 className="font-semibold text-body text-primary py-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {t.nav.signIn}
+                {t.nav.signin}
               </Link>
               <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
                 <a href="#" className="text-neutral-500"><SiInstagram className="w-5 h-5" /></a>

@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import type { Product } from "@shared/schema";
 import { AddButton } from "@/components/AddButton";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ProductCardProps {
   product: Product;
@@ -54,6 +55,7 @@ const variantStyles = {
 
 export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
   const s = variantStyles[variant];
+  const { t } = useLanguage();
 
   return (
     <Link
@@ -78,7 +80,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
           </h3>
           <div className="mt-1">
             <p className="text-[12px] leading-[16px] text-neutral-500">
-              Premium Drink
+              {t.product.premiumDrink}
             </p>
             <p className="text-[12px] leading-[16px] text-neutral-500">
               {product.sizes.join(" & ")}
