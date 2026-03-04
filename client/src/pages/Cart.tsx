@@ -8,6 +8,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useProducts } from "@/hooks/use-products";
 import { ProductCard } from "@/components/ProductCard";
+import { SEO } from "@/components/SEO";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Cart() {
   const { items, updateQuantity, removeItem, getTotals, clearCart } = useCart();
@@ -20,6 +22,7 @@ export default function Cart() {
   const [coupon, setCoupon] = useState("");
   const { subtotal, shipping, total } = getTotals();
 
+  const { t } = useLanguage();
   const upsellProducts = products?.filter(p => !items.some(i => i.product.id === p.id))?.slice(0, 3) || [];
 
   const handleCheckout = async () => {
@@ -57,6 +60,7 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen pt-24 pb-20 bg-white">
+      <SEO title={t.seo.cart.title} description={t.seo.cart.description} />
       <div className="container-custom">
         <h1 className="text-h2 text-neutral-950 mb-10">Your Cart</h1>
 

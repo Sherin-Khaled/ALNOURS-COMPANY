@@ -1,21 +1,27 @@
 import { useProducts } from "@/hooks/use-products";
 import { ProductCard } from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
+import { Reveal } from "@/components/Reveal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Products() {
   const { data: products, isLoading } = useProducts();
+  const { t } = useLanguage();
   
   const categories = ["All", "Cocktail", "Mango", "Orange", "Guava"];
 
   return (
     <div className="min-h-screen pt-24 pb-16 bg-white">
+      <SEO title={t.seo.products.title} description={t.seo.products.description} />
       <div className="container-custom">
-        {/* Header */}
+        <Reveal>
         <div className="mb-12">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">Shop</span>
           <h1 className="text-h2 text-neutral-950">Products</h1>
           <p className="text-body text-neutral-500 mt-2">Premium drinks available now</p>
         </div>
+        </Reveal>
 
         {/* Filter Chips */}
         <div className="flex flex-wrap gap-3 mb-12">

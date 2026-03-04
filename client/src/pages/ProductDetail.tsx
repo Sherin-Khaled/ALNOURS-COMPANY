@@ -6,12 +6,15 @@ import { useState, useEffect } from "react";
 import { Minus, Plus, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function ProductDetail() {
   const [, params] = useRoute("/products/:slug");
   const { data: product, isLoading } = useProduct(params?.slug || "");
   const { addItem } = useCart();
   const { toast } = useToast();
+  const { t } = useLanguage();
   
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
@@ -40,6 +43,10 @@ export default function ProductDetail() {
 
   return (
     <div className="pt-24 pb-20 min-h-screen bg-white">
+      <SEO
+        title={t.seo.productDetail.title.replace("{name}", product.name)}
+        description={t.seo.productDetail.description.replace("{name}", product.name)}
+      />
       <div className="container-custom">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
           

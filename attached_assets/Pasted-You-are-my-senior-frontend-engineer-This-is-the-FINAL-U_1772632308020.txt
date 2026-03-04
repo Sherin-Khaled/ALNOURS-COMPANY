@@ -1,0 +1,111 @@
+You are my senior frontend engineer. This is the FINAL UI alignment pass. Do not redesign. Implement exactly what I describe.
+
+STACK (keep as is):
+Next.js App Router + TypeScript + TailwindCSS.
+Keep components reusable; do not hardcode styles inside pages when they belong to components.
+
+GLOBAL TASKS (must do first)
+A) Language toggle (EN/AR)
+- Add a language toggle next to cart/account area.
+- Use a simple toggle: “EN” and “AR” (no dropdown).
+- Clicking switches site language AND direction:
+  - EN => LTR
+  - AR => RTL
+- Use JSON translation files:
+  - /src/i18n/en.json
+  - /src/i18n/ar.json
+- Implement i18n using next-intl (or a lightweight solution), but must support:
+  - route-based locale: /en/... and /ar/...
+  - html lang attribute and dir attribute on <html>
+  - fonts: EN (Sora/Inter), AR (Cairo/Tajawal) prepared
+- Do NOT translate content automatically with invented Arabic. If Arabic text is missing, duplicate English for now but keep structure ready.
+
+B) Header behavior (auth vs guest)
+- If user is NOT signed in (mock auth state is fine):
+  - show: Social icons (small) + Cart icon + “Sign in” button + language toggle
+  - Do NOT show account icon.
+  - “Sign in” navigates to /login.
+  - From /login there must be link to /signup.
+- If user IS signed in:
+  - show: Cart icon + Account icon + language toggle
+  - Hide social icons + Sign in button.
+- Social icons should link placeholders (#) for now (Instagram, Facebook, LinkedIn).
+
+C) Scroll animations
+- All sections should appear gradually while scrolling (fade + slight upward translate).
+- Use IntersectionObserver (preferred) and a reusable component:
+  - <Reveal> wrapper used across sections
+  - animations should be subtle: opacity 0 → 1, translateY 12px → 0, duration 500–700ms, once per section
+- Avoid heavy animation libraries unless already included.
+
+D) SEO (important)
+- Add proper metadata per page for both locales:
+  - Title + description per page (Home, Products, PDP, Cart, Brands, About, Contact, Login, Signup, Account)
+- Use Next.js Metadata API (generateMetadata) and read titles/descriptions from your locale JSON.
+- Also add canonical + alternates for /en and /ar.
+- Add OpenGraph basics (title/description/siteName).
+- No keyword stuffing. Keep clean.
+
+UI ADJUSTMENTS (must match exactly)
+
+1) HOME Hero section
+- Right side must contain TWO images:
+  - Drink image size: 203 × 467
+  - Fruits image size: 531 × 501 (positioned behind/below drink image)
+- Left side text stays.
+- Section padding: 96px (top/bottom and/or as in Figma; enforce 96px vertical at desktop).
+- Space between left text and right images should be auto (use layout like grid/flex with container 1200).
+
+Hero badges CTA (trust badges) design EXACTLY like screenshot:
+- “VAT included” and “Fast Delivery”
+- Text size: 18px, font-weight: 700
+- Each badge has a vertical line to its LEFT:
+  - color: #248399
+  - width: 1px
+  - height: (text height + 2px)
+  - centered vertically to the text
+- Eyebrow color everywhere: #248399
+
+Buttons global style updates (apply to all buttons site-wide):
+- border radius: pill / 999 (100% rounded)
+- Stroke: black with 18% opacity
+- Stroke appears ONLY on bottom and right edges (not full border)
+  - implement as box-shadow style that simulates bottom/right stroke
+- Shadow: x 2, y 2, blur 2, opacity 25% (subtle)
+- Ensure buttons still look clean and consistent.
+
+2) HOME Featured Products section
+Background:
+- Add a background linear gradient like screenshot:
+  - color: #9FBDF5
+  - opacity: 0 at top → 100% around middle → 0 at bottom
+- Add subtle motion to gradient (very gentle):
+  - either animated background-position or animated opacity shift
+  - must not be distracting
+
+Cards:
+- Card size: 251 × 216
+- Card background: #EDF2FD at 50% opacity
+- On the right edge of card:
+  - drink packshot image overflows beyond the card right edge
+  - fruits image sits behind it and also overflows slightly
+- Cards row behavior:
+  - auto-scroll horizontally over time (slow)
+  - user can also scroll horizontally manually
+  - keep it smooth, and pause auto-scroll on hover or when user interacts
+- Keep the “View All” button at bottom center.
+
+3) Footer
+Make footer match the screenshot EXACTLY:
+- Light top area with 4 columns (logo/about, explore links, contact, newsletter)
+- Dark bottom bar with centered logo, social icons, and copyright
+- Typography, spacing, and layout should match screenshot as close as possible.
+
+IMPORTANT DELIVERY RULES
+- Do these changes ONLY (don’t start other pages yet).
+- After implementing, provide:
+  1) list of files changed
+  2) a short “how to test” checklist (breakpoints + language toggle + scroll reveal + guest/auth header)
+  3) confirm Home hero + Featured + Footer match the screenshots.
+
+We will continue with other pages after this pass is approved.

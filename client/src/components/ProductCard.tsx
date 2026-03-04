@@ -45,7 +45,7 @@ export function ProductCard({ product }: { product: Product }) {
             
             <button 
               onClick={handleAdd}
-              className="h-11 px-4 bg-primary text-white rounded-md font-semibold hover:bg-primary-hover transition-colors active:scale-95 flex items-center gap-2"
+              className="h-11 px-4 bg-primary text-white rounded-pill font-semibold hover:bg-primary-hover transition-colors active:scale-95 flex items-center gap-2 btn-styled"
               data-testid={`add-to-cart-${product.id}`}
             >
               <Plus className="w-5 h-5" />

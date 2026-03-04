@@ -1,0 +1,114 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "brands": "Brands",
+    "about": "About",
+    "contact": "Contact Us",
+    "signIn": "Sign in",
+    "cart": "Cart",
+    "account": "Account"
+  },
+  "hero": {
+    "eyebrow": "Official Distributor",
+    "title": "Quality Delivered",
+    "subtitle": "Fresh juices, delivered across Riyadh & Jeddah.",
+    "description": "Shop in minutes—secure payment, VAT included, delivery or pickup.",
+    "shopProducts": "Shop Products",
+    "contactUs": "Contact Us",
+    "vatIncluded": "VAT included",
+    "fastDelivery": "Fast Delivery"
+  },
+  "featured": {
+    "eyebrow": "New this week",
+    "title": "Featured Products",
+    "subtitle": "Best sellers & top picks this week.",
+    "viewAll": "View All"
+  },
+  "flavors": {
+    "eyebrow": "Browse",
+    "title": "Shop by Flavor",
+    "subtitle": "Pick a flavor and start shopping.",
+    "cocktail": "Cocktail",
+    "cocktailDesc": "A fruity blend for a refreshing sip.",
+    "mango": "Mango",
+    "mangoDesc": "Tropical mango flavor, smooth and rich.",
+    "guava": "Guava",
+    "guavaDesc": "Classic guava taste, light and delicious.",
+    "orange": "Orange",
+    "orangeDesc": "Citrus refreshment with a bright taste."
+  },
+  "howItWorks": {
+    "title": "How it works",
+    "subtitle": "Order in minutes. Delivered with confidence.",
+    "step1Title": "Browse & choose",
+    "step1Body": "Pick your flavor and size—clear options, no confusion.",
+    "step2Title": "Pay securely",
+    "step2Body": "Secure online payments, VAT included.",
+    "step3Title": "Delivery or pickup",
+    "step3Body": "Choose what suits you in Riyadh & Jeddah."
+  },
+  "footer": {
+    "about": "ALNOURS is a Saudi-based food distribution company supplying premium FMCG products to customers across the Kingdom. We focus on reliable availability, clear pricing, and fast fulfillment.",
+    "explore": "Explore",
+    "contact": "Contact",
+    "newsletter": "Newsletter",
+    "newsletterDesc": "Subscribe to get updates on new products and exclusive offers.",
+    "emailPlaceholder": "Your email address",
+    "subscribe": "Subscribe",
+    "copyright": "© {year} ALNOURS Food Trading. All rights reserved.",
+    "home": "Home",
+    "products": "Products",
+    "brands": "Brands",
+    "aboutLink": "About",
+    "contactLink": "Contact us"
+  },
+  "product": {
+    "addToCart": "Add",
+    "addedToCart": "Added to cart",
+    "addedDesc": "{name} added to your cart.",
+    "premiumDrink": "Premium Drink"
+  },
+  "seo": {
+    "home": {
+      "title": "ALNOURS — Premium Juice & Drinks | Official Domty Distributor in Saudi Arabia",
+      "description": "Shop premium juices and drinks from ALNOURS, the official Domty distributor in Saudi Arabia. Fast delivery, VAT included, secure payment."
+    },
+    "products": {
+      "title": "Products — ALNOURS Premium Juice Collection",
+      "description": "Browse our full range of premium juices and drinks. Cocktail, Mango, Guava, Orange and more flavors available."
+    },
+    "brands": {
+      "title": "Brands — ALNOURS Official Brand Partners",
+      "description": "Explore the premium brands we distribute across Saudi Arabia including Domty and more."
+    },
+    "cart": {
+      "title": "Your Cart — ALNOURS",
+      "description": "Review your cart and proceed to checkout. Fast delivery across Riyadh & Jeddah."
+    },
+    "about": {
+      "title": "About ALNOURS — Saudi Food Distribution Company",
+      "description": "Learn about ALNOURS, a trusted Saudi food distribution company supplying premium FMCG products across the Kingdom."
+    },
+    "contact": {
+      "title": "Contact Us — ALNOURS",
+      "description": "Get in touch with ALNOURS for inquiries, partnerships, or support."
+    },
+    "login": {
+      "title": "Sign In — ALNOURS",
+      "description": "Sign in to your ALNOURS account to manage orders and track deliveries."
+    },
+    "signup": {
+      "title": "Create Account — ALNOURS",
+      "description": "Create your ALNOURS account and start shopping premium juices and drinks."
+    },
+    "account": {
+      "title": "My Account — ALNOURS",
+      "description": "Manage your ALNOURS account, orders, addresses, and profile."
+    },
+    "productDetail": {
+      "title": "{name} — ALNOURS",
+      "description": "Buy {name} from ALNOURS. Premium quality, fast delivery, VAT included."
+    }
+  }
+}

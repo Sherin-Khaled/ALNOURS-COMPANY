@@ -1,10 +1,15 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { SEO } from "@/components/SEO";
+import { Reveal } from "@/components/Reveal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function About() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen pt-24 pb-16">
+      <SEO title={t.seo.about.title} description={t.seo.about.description} />
       <section className="section-spacing bg-neutral-50">
         <div className="container-custom">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">About</span>
@@ -71,8 +76,10 @@ export function About() {
 }
 
 export function Contact() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen pt-24 pb-16">
+      <SEO title={t.seo.contact.title} description={t.seo.contact.description} />
       <section className="section-spacing bg-neutral-50">
         <div className="container-custom">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">Contact Us</span>

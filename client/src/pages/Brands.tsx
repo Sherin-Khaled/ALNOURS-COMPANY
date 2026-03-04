@@ -1,11 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import { SEO } from "@/components/SEO";
+import { Reveal } from "@/components/Reveal";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Brands() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen pt-24 pb-16">
+      <SEO title={t.seo.brands.title} description={t.seo.brands.description} />
       <div className="container-custom">
-        {/* Header */}
+        <Reveal>
         <div className="mb-12">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">Brands</span>
           <h1 className="text-h2 text-neutral-950">Our Brands</h1>
@@ -13,6 +18,7 @@ export default function Brands() {
             We distribute trusted FMCG brands across Saudi Arabia.
           </p>
         </div>
+        </Reveal>
 
         {/* Domty Card */}
         <div className="bg-neutral-50 rounded-section p-8 md:p-12 mb-16 border border-neutral-200">
