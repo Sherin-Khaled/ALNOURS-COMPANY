@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useCallback } from "react";
 
 function HeroSection() {
   const { t } = useLanguage();
@@ -79,28 +79,46 @@ function FeaturedSection() {
   const featured = products?.slice(0, 4) || [];
   const { t } = useLanguage();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
+  const isPausedRef = useRef(false);
+  const manualTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  const pauseAuto = useCallback(() => { isPausedRef.current = true; }, []);
+  const resumeAuto = useCallback(() => { isPausedRef.current = false; }, []);
+
+  const pauseForManualScroll = useCallback(() => {
+    isPausedRef.current = true;
+    clearTimeout(manualTimerRef.current);
+    manualTimerRef.current = setTimeout(() => { isPausedRef.current = false; }, 2000);
+  }, []);
 
   useEffect(() => {
     const container = scrollRef.current;
     if (!container || featured.length === 0) return;
 
     let animFrame: number;
-    let scrollSpeed = 0.5;
+    const cardW = 251 + 24;
+    const setWidth = cardW * featured.length;
 
     function step() {
-      if (!isPaused && container) {
-        container.scrollLeft += scrollSpeed;
-        if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
-          container.scrollLeft = 0;
+      if (!isPausedRef.current && container) {
+        container.scrollLeft += 0.5;
+        if (container.scrollLeft >= setWidth) {
+          container.scrollLeft -= setWidth;
         }
       }
       animFrame = requestAnimationFrame(step);
     }
     animFrame = requestAnimationFrame(step);
 
-    return () => cancelAnimationFrame(animFrame);
-  }, [featured.length, isPaused]);
+    const handleWheel = () => pauseForManualScroll();
+    container.addEventListener("wheel", handleWheel, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animFrame);
+      container.removeEventListener("wheel", handleWheel);
+      clearTimeout(manualTimerRef.current);
+    };
+  }, [featured.length, pauseForManualScroll]);
 
   return (
     <section className="relative py-20 overflow-hidden">
@@ -128,15 +146,16 @@ function FeaturedSection() {
             <div
               ref={scrollRef}
               className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-              onTouchStart={() => setIsPaused(true)}
-              onTouchEnd={() => setIsPaused(false)}
+              onMouseEnter={pauseAuto}
+              onMouseLeave={resumeAuto}
+              onTouchStart={pauseAuto}
+              onTouchEnd={resumeAuto}
+              onPointerDown={pauseForManualScroll}
               style={{ scrollBehavior: "auto" }}
             >
-              {[...featured, ...featured].map((product, idx) => (
+              {[...featured, ...featured, ...featured].map((product, idx) => (
                 <div key={`${product.id}-${idx}`} className="shrink-0" style={{ width: 251 }}>
-                  <FeaturedCard product={product} />
+                  <ProductCard variant="featured" product={product} />
                 </div>
               ))}
             </div>
@@ -154,31 +173,6 @@ function FeaturedSection() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-function FeaturedCard({ product }: { product: any }) {
-  return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <div
-        className="relative rounded-lg overflow-visible"
-        style={{ height: 216, backgroundColor: "rgba(237,242,253,0.5)" }}
-      >
-        <div className="p-4 flex flex-col h-full relative z-10" style={{ maxWidth: "60%" }}>
-          <h3 className="text-[15px] font-semibold text-neutral-950 line-clamp-1">{product.name}</h3>
-          <p className="text-[12px] text-neutral-500 mt-1">{product.flavor}</p>
-          <div className="mt-auto">
-            <span className="text-[11px] text-neutral-500">{product.currency}</span>
-            <span className="text-[20px] font-bold text-neutral-950 ml-1">{product.price}</span>
-          </div>
-        </div>
-        <img
-          src={product.images?.packshot}
-          alt={product.name}
-          className="absolute -right-4 top-2 h-[180px] w-auto object-contain group-hover:scale-105 transition-transform duration-500 z-20"
-        />
-      </div>
-    </Link>
   );
 }
 

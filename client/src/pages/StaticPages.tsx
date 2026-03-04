@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Truck, ShoppingCart, Package } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Reveal } from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -30,25 +30,30 @@ export function About() {
         </div>
       </section>
 
-      <section className="section-spacing bg-white">
-        <div className="container-custom grid grid-cols-1 md:grid-cols-2 gap-16">
-          <div>
-            <h2 className="text-h3 text-neutral-950 mb-4">Our mission</h2>
-            <p className="text-body text-neutral-700">
-              Make everyday shopping simpler by providing trusted brands, accurate availability, and dependable fulfillment—so customers can order with confidence.
-            </p>
-          </div>
-          <div>
-            <h2 className="text-h3 text-neutral-950 mb-4">Coverage across Saudi Arabia</h2>
-            <p className="text-body text-neutral-700">
-              Based in Riyadh and serving customers across Saudi Arabia—including major cities like Jeddah.
-            </p>
+      <section className="section-spacing bg-white overflow-hidden">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div>
+              <h2 className="text-h3 text-neutral-950 mb-4">Our mission</h2>
+              <p className="text-body text-neutral-700">
+                Make everyday shopping simpler by providing trusted brands, accurate availability, and dependable fulfillment—so customers can order with confidence.
+              </p>
+            </div>
+            <div className="relative">
+              <div className="bg-[#0F3D91] text-white p-8 rounded-tl-[16px] rounded-bl-[16px] rounded-tr-none rounded-br-none" style={{ marginRight: '-9999px', paddingRight: 'calc(9999px + 32px)' }}>
+                <h2 className="text-h3 text-white mb-4">Coverage across Saudi Arabia</h2>
+                <p className="text-body text-white/90">
+                  Based in Riyadh and serving customers across Saudi Arabia—including major cities like Jeddah.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section-spacing bg-neutral-50">
-        <div className="container-custom">
+      <section className="section-spacing relative overflow-hidden">
+        <div className="featured-gradient-bg" />
+        <div className="container-custom relative z-10">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">What we do</span>
           <h2 className="text-h2 text-neutral-950 mb-4">Distribution built for reliability.</h2>
           <p className="text-body text-neutral-500 max-w-2xl mb-12">
@@ -57,11 +62,12 @@ export function About() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Distribution & supply", desc: "Reliable FMCG supply across Saudi Arabia with consistent availability." },
-              { title: "Online ordering", desc: "Browse products, choose size, and place your order in minutes." },
-              { title: "Delivery or pickup", desc: "Flexible delivery or pickup options—whichever works for you." }
+              { title: "Distribution & supply", desc: "Reliable FMCG supply across Saudi Arabia with consistent availability.", icon: Truck },
+              { title: "Online ordering", desc: "Browse products, choose size, and place your order in minutes.", icon: ShoppingCart },
+              { title: "Delivery or pickup", desc: "Flexible delivery or pickup options—whichever works for you.", icon: Package }
             ].map((card, i) => (
-              <div key={i} className="bg-white p-8 rounded-lg border border-neutral-200">
+              <div key={i} className="bg-[#EDF2FD] p-8 rounded-[20px] card-hover-shadow">
+                <card.icon className="w-8 h-8 text-primary mb-4" />
                 <h3 className="text-h4 text-neutral-950 mb-3">{card.title}</h3>
                 <p className="text-body text-neutral-700">{card.desc}</p>
               </div>

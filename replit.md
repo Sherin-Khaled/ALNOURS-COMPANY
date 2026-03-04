@@ -78,9 +78,12 @@ Preferred communication style: Simple, everyday language.
 - `client/src/hooks/use-addresses.ts` — Address queries/mutations
 - `client/src/components/Navbar.tsx` — Fixed top nav: auth/guest behavior, social icons, language toggle, cart badge
 - `client/src/components/Footer.tsx` — Light 4-column top + dark centered bottom bar with social icons
-- `client/src/components/ProductCard.tsx` — Reusable product card with pill button
-- `client/src/pages/StaticPages.tsx` — About + Contact pages
-- `client/src/pages/Home.tsx` — Hero (2 images, trust badges), Featured Products (gradient + auto-scroll carousel), Shop by Flavor, How it works
+- `client/src/components/AddButton.tsx` — Reusable add-to-cart button with plus→check morph animation (compact/full variants)
+- `client/src/components/ProductCard.tsx` — Unified product card with variant prop: "featured" (251×216 compact), "grid" (responsive large), "related" (280×230). Packshot overflows right edge, fruit splash behind, 2-line meta.
+- `client/src/pages/StaticPages.tsx` — About (full-bleed blue block section 2, gradient + icon cards section 3) + Contact pages
+- `client/src/pages/Home.tsx` — Hero (2 images, trust badges), Featured Products (gradient + seamless infinite auto-scroll carousel), Shop by Flavor, How it works
+- `client/src/pages/ProductDetail.tsx` — Blue gradient hero bg, layered drink+fruit images, "You might like" related products section
+- `client/src/pages/Brands.tsx` — "Domty at a glance" cards: bg #EDF2FD, rounded 20px, hover shadow
 
 ### Header Behavior
 - **Guest (not signed in):** Social icons (Instagram, Facebook, LinkedIn) + Cart icon + "Sign in" button + Language toggle

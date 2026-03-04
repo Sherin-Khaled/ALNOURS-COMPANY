@@ -46,15 +46,15 @@ export default function Brands() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-lg border border-neutral-200">
+            <div className="p-8 rounded-[20px] bg-[#EDF2FD] card-hover-shadow transition-all">
               <h3 className="font-bold text-neutral-950 mb-2">Flavors available</h3>
               <p className="text-neutral-700">Cocktail, Mango, Guava, Orange</p>
             </div>
-            <div className="p-8 rounded-lg border border-neutral-200">
+            <div className="p-8 rounded-[20px] bg-[#EDF2FD] card-hover-shadow transition-all">
               <h3 className="font-bold text-neutral-950 mb-2">Sizes</h3>
               <p className="text-neutral-700">235 ml • 1000 ml</p>
             </div>
-            <div className="p-8 rounded-lg border border-neutral-200">
+            <div className="p-8 rounded-[20px] bg-[#EDF2FD] card-hover-shadow transition-all">
               <h3 className="font-bold text-neutral-950 mb-2">Clear product info</h3>
               <p className="text-neutral-700">Ingredients & nutrition shown per product</p>
             </div>

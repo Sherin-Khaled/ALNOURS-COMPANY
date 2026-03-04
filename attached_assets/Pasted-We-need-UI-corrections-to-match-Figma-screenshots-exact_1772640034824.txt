@@ -1,0 +1,128 @@
+We need UI corrections to match Figma screenshots exactly. Do NOT redesign. Fix by updating shared components first.
+
+IMPORTANT RULES
+- Work component-first: update ProductCard + Featured carousel card first, then reuse.
+- Do not hardcode per-page unless absolutely needed.
+- After changes: send screenshots for Desktop 1440 for: Home Featured section, /products grid, /products/[slug] hero + related section, /brands section 2, /about section 2 + section 3.
+
+========================================================
+1) HOME → Featured Products cards (THIS IS MAIN ISSUE)
+Current result looks like big image tiles (wrong). Target is the compact Domty packshot cards like my screenshot (the small cards with packshot overflowing at right edge).
+
+CARD SPEC (Featured carousel card)
+- Card size: 251px width × 216px height (fixed)
+- Card background: #EDF2FD at 50% opacity (rgba equivalent ok)
+- Border radius: 20px
+- Layout: text block on LEFT, packshot image on RIGHT OVERFLOWING outside card edge
+  - packshot should “stick out” beyond the right edge and slightly below like screenshot
+  - fruits splash image behind packshot also overflows right edge (z-index behind packshot)
+- Content inside card:
+  - Title must show FULL (no early truncation). Increase text container width to allow title.
+  - Meta must be TWO LINES exactly:
+    Line 1: "Premium Drink"
+    Line 2: "235 ml & 1000 ml"
+  - Price row below meta.
+- Replace old button behavior with ADD button behavior below (see section 2).
+- Cards row: auto-scroll horizontally over time (slow) + user can scroll horizontally.
+  - Pause auto-scroll on hover OR when user scrolls manually.
+  - Smooth continuous scroll (no sudden jumps). If you loop, loop softly.
+
+ADD BUTTON in Featured cards:
+- Button must be compact and aligned like screenshot.
+- Left: text “Add” (not “Add To Cart”) for featured carousel only
+- Right: plus icon
+- On click:
+  1) plus icon morphs smoothly into a check icon (very smooth)
+  2) button background becomes green (success state)
+  3) show the existing alert/toast (already built)
+  4) after ~1.2s button returns to default (blue) with plus icon again
+- The animation must be smooth (use CSS transition + keyframes or Framer Motion if already installed).
+- IMPORTANT: text must not be cut off (ensure button padding + width).
+
+========================================================
+2) PRODUCTS PAGE cards (/products)
+We want the SAME card style as Featured cards, but slightly bigger and in a grid.
+
+Products grid card spec:
+- Use same component style (packshot overflows right edge + fruits behind)
+- Increase size relative to featured:
+  - Card width ~ 520–560px (or use responsive grid that matches screenshot)
+  - Card height ~ 250–300px
+- Keep same internal structure:
+  Title (full), Meta line1 + line2, Price, Add button
+- Title should not truncate early; if too long, allow 2 lines max then clamp.
+- Meta MUST be split into 2 lines like described.
+- “Add To Cart” is allowed on products page, but the button style (pill + plus→check behavior) should still exist.
+  - If label is “Add To Cart”, keep plus icon right.
+
+Chips row:
+- Keep pill style as is, just ensure spacing matches screenshot.
+
+========================================================
+3) PRODUCT DETAIL PAGE (/products/[slug]) fixes
+A) Hero background:
+- The hero section background must use SAME gradient style/color as Home Featured section background (the #9FBDF5 gradient that fades 0→100→0 vertically).
+- Apply to the hero container behind the left text and right images.
+
+B) Right images:
+- Drink image must have fruit image behind/below it (like home hero style):
+  - fruits image behind the drink
+  - drink is on top
+  - both positioned on the right side; fruit slightly offset to show behind
+
+C) Related products section ("You might like")
+- The card style must match the SAME “Domty packshot overflow card” style (like my desired screenshot).
+- Show remaining 3 products with same card structure and Add button behavior (plus→check).
+
+========================================================
+4) BRANDS PAGE – 2nd section ("Domty at a glance") cards
+- Each of the 3 info cards background must be: #EDF2FD
+- Border radius 20
+- On hover: show card hover shadow:
+  0 8px 24px rgba(0,0,0,0.08)
+- Keep spacing and alignment like screenshot (3 cards centered).
+- No redesign of text; just styling.
+
+========================================================
+5) ABOUT PAGE fixes
+A) Section 2 (Mission + Coverage / text right block)
+- The RIGHT text block must have background color: #0F3D91
+- Padding inside block: 32px
+- The blue block must TOUCH the right edge of the website (full-bleed to right).
+  - Implementation: wrap content in container, but background extends to viewport right edge (use pseudo element or full-width wrapper).
+- Border radius: 16px ONLY on:
+  - top-left
+  - bottom-left
+  (right corners must be square because it touches the right edge)
+
+B) Section 3 ("What we do") background
+- Apply the SAME gradient background style we used before:
+  - base color: #9FBDF5
+  - opacity 0 at top → opacity 100% mid → opacity 0 bottom
+- Cards inside this section:
+  - Each card background: #EDF2FD
+  - Border radius: 20px
+  - Add an icon INSIDE each card BEFORE the title (left/top aligned) that represents:
+    1) Distribution & supply
+    2) Online ordering
+    3) Delivery or pickup
+  - On hover: show card hover shadow:
+    0 8px 24px rgba(0,0,0,0.08)
+
+========================================================
+IMPLEMENTATION NOTES (IMPORTANT)
+- Create/reuse ONE shared ProductCard style for:
+  - Featured carousel cards (small variant)
+  - Products page cards (large variant)
+  - Related products cards
+  Use a prop like variant="featured" | "grid" | "related" to control sizing only.
+- Implement Add button behavior as a reusable component:
+  - <AddButton variant="compact|full" />
+- Ensure text layout:
+  - Title: allow full width; clamp to 2 lines max if needed.
+  - Meta: ALWAYS 2 lines exactly:
+    line1 "Premium Drink"
+    line2 "235 ml & 1000 ml"
+- Provide final list of files changed.
+
+STOP after completing these items. Do not start other pages.
