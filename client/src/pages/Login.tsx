@@ -67,7 +67,7 @@ export default function Login() {
               />
             </div>
             <div className="text-right">
-              <button type="button" className="text-small text-primary hover:underline font-medium">{t.auth.login.forgot}</button>
+              <Link href="/forgot-password" className="text-small text-primary hover:underline font-medium" data-testid="link-forgot-password">{t.auth.login.forgot}</Link>
             </div>
             <Button type="submit" disabled={isPending}
               className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body"

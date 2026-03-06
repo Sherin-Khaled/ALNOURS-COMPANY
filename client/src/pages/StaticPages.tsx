@@ -1,9 +1,11 @@
 import { Link } from "wouter";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin, MessageCircle, Truck, ShoppingCart, Package } from "lucide-react";
 import { SEO } from "@/components/SEO";
 import { Reveal } from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useToast } from "@/hooks/use-toast";
 
 export function About() {
   const { t } = useLanguage();
@@ -83,6 +85,44 @@ export function About() {
 
 export function Contact() {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  const [isPending, setIsPending] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", phone: "", productInterest: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, boolean>>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, boolean> = {};
+    if (!form.name.trim()) errs.name = true;
+    if (!form.email.trim() || !form.email.includes("@")) errs.email = true;
+    if (!form.message.trim()) errs.message = true;
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setIsPending(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast({ title: t.contact.form.errorTitle, description: data.message, variant: "destructive" });
+        return;
+      }
+      toast({ title: t.contact.form.successTitle, description: data.message });
+      setForm({ name: "", email: "", phone: "", productInterest: "", message: "" });
+    } catch {
+      toast({ title: t.contact.form.errorTitle, variant: "destructive" });
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const inputCls = (field: string) =>
+    `w-full h-11 px-4 rounded-md border ${errors[field] ? "border-destructive" : "border-neutral-200"} focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body`;
+
   return (
     <div className="min-h-screen pt-24 pb-16">
       <SEO title={t.seo.contact.title} description={t.seo.contact.description} />
@@ -115,31 +155,39 @@ export function Contact() {
             {t.contact.form.body}
           </p>
 
-          <form className="space-y-6" onSubmit={e => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.fullName}</label>
-                <input type="text" className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+                <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.fullName} *</label>
+                <input type="text" value={form.name} onChange={e => setForm(p => ({...p, name: e.target.value}))}
+                  className={inputCls("name")} data-testid="input-contact-name" />
               </div>
               <div>
-                <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.email}</label>
-                <input type="email" className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+                <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.email} *</label>
+                <input type="email" value={form.email} onChange={e => setForm(p => ({...p, email: e.target.value}))}
+                  className={inputCls("email")} data-testid="input-contact-email" />
               </div>
               <div>
                 <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.phone}</label>
-                <input type="tel" className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+                <input type="tel" value={form.phone} onChange={e => setForm(p => ({...p, phone: e.target.value}))}
+                  className={inputCls("phone")} data-testid="input-contact-phone" />
               </div>
               <div>
                 <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.productInterest}</label>
-                <input type="text" className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
+                <input type="text" value={form.productInterest} onChange={e => setForm(p => ({...p, productInterest: e.target.value}))}
+                  className={inputCls("productInterest")} data-testid="input-contact-product" />
               </div>
             </div>
             <div>
-              <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.message}</label>
-              <textarea rows={5} className="w-full px-4 py-3 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none text-body"></textarea>
+              <label className="text-label text-neutral-700 mb-2 block">{t.contact.form.fields.message} *</label>
+              <textarea rows={5} value={form.message} onChange={e => setForm(p => ({...p, message: e.target.value}))}
+                className={`w-full px-4 py-3 rounded-md border ${errors.message ? "border-destructive" : "border-neutral-200"} focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none text-body`}
+                data-testid="input-contact-message"></textarea>
             </div>
-            <Button type="submit" className="h-12 px-10 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold">
-              {t.cta.send}
+            <Button type="submit" disabled={isPending}
+              className="h-12 px-10 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold"
+              data-testid="button-contact-submit">
+              {isPending ? t.cta.processing : t.cta.send}
             </Button>
           </form>
         </div>

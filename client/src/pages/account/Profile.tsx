@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "wouter";
 
 export default function Profile() {
   const { data: user } = useAuth();
@@ -63,7 +64,7 @@ export default function Profile() {
             <input type="password" value={confirmPw} onChange={e => setConfirmPw(e.target.value)} className="w-full h-11 px-4 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all text-body" />
           </div>
           <div>
-            <button type="button" className="text-small text-primary hover:underline font-medium">{t.account.profile.forgot}</button>
+            <Link href="/forgot-password" className="text-small text-primary hover:underline font-medium" data-testid="link-forgot-password">{t.account.profile.forgot}</Link>
           </div>
           <Button type="submit" className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-update-password">
             {t.account.profile.updatePassword}

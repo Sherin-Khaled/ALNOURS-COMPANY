@@ -130,7 +130,8 @@
     },
     "ingredients": {
       "label": "Ingredients:",
-      "viewFull": "View full ingredients"
+      "viewFull": "View full ingredients",
+      "viewLess": "View less"
     },
     "related": {
       "eyebrow": "Related products",
@@ -251,7 +252,9 @@
         "phone": "Phone No.",
         "productInterest": "Product Interest",
         "message": "Message"
-      }
+      },
+      "successTitle": "Message sent!",
+      "errorTitle": "Failed to send"
     }
   },
 
@@ -393,6 +396,93 @@
     "addedToCart": "Added to cart",
     "addedDesc": "{name} added to your cart.",
     "premiumDrink": "Premium Drink"
+  },
+
+  "checkout": {
+    "seoTitle": "Checkout — ALNOURS",
+    "seoDesc": "Complete your order with ALNOURS. Secure checkout with delivery across Saudi Arabia.",
+    "title": "Checkout",
+    "back": "Back",
+    "steps": {
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "review": "Review"
+    },
+    "shippingTitle": "Shipping Address",
+    "savedAddresses": "Use a saved address",
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "street": "Street Address",
+      "city": "City",
+      "country": "Country",
+      "postalCode": "Postal Code (optional)"
+    },
+    "errors": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email",
+      "invalidCard": "Invalid card number",
+      "invalidExpiry": "Invalid expiry (MM/YY)",
+      "invalidCvv": "Invalid CVV"
+    },
+    "continueToPayment": "Continue to Payment",
+    "paymentTitle": "Payment Method",
+    "paymentCard": "Credit / Debit Card",
+    "paymentCardDesc": "Visa, Mastercard (test mode)",
+    "paymentCod": "Cash on Delivery",
+    "paymentCodDesc": "Pay when your order arrives",
+    "testMode": "Test mode — no real charges",
+    "cardFields": {
+      "name": "Name on Card",
+      "number": "Card Number",
+      "expiry": "Expiry",
+      "cvv": "CVV"
+    },
+    "reviewOrder": "Review Order",
+    "reviewTitle": "Review Your Order",
+    "itemsTitle": "Items",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "payNow": "Pay Now",
+    "placeOrder": "Place Order",
+    "orderSuccess": "Order placed!",
+    "orderSuccessDesc": "Thank you for your purchase. You can track it in your orders.",
+    "orderFailed": "Order failed"
+  },
+
+  "forgotPassword": {
+    "seoTitle": "Forgot Password — ALNOURS",
+    "seoDesc": "Reset your ALNOURS account password.",
+    "title": "Forgot your password?",
+    "body": "Enter your email and we'll send you instructions to reset your password.",
+    "emailLabel": "Email",
+    "button": "Send Reset Link",
+    "backToLogin": "Back to Sign In",
+    "sentTitle": "Check your email",
+    "sentBody": "If an account with that email exists, we've sent reset instructions. Check your inbox (and spam folder).",
+    "successTitle": "Reset link sent",
+    "errorTitle": "Something went wrong"
+  },
+
+  "resetPassword": {
+    "seoTitle": "Reset Password — ALNOURS",
+    "seoDesc": "Set a new password for your ALNOURS account.",
+    "title": "Set new password",
+    "body": "Enter your new password below.",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "button": "Reset Password",
+    "mismatch": "Passwords do not match",
+    "tooShort": "Password must be at least 6 characters",
+    "missingToken": "No reset token found. Please use the link from your email.",
+    "successTitle": "Password reset!",
+    "errorTitle": "Failed to reset password",
+    "doneTitle": "Password updated",
+    "doneBody": "Your password has been reset. You can now sign in with your new password.",
+    "goToLogin": "Go to Sign In"
   },
 
   "seo": {

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { Reveal } from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { GradientMesh } from "@/components/GradientMesh";
 
 export default function Products() {
   const { data: products, isLoading } = useProducts();
@@ -21,13 +22,16 @@ export default function Products() {
     <div className="min-h-screen pt-24 pb-16 bg-white">
       <SEO title={t.seo.products.title} description={t.seo.products.description} />
       <div className="container-custom">
-        <Reveal>
-        <div className="mb-12">
-          <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.products.header.eyebrow}</span>
-          <h1 className="text-h2 text-neutral-950">{t.products.header.title}</h1>
-          <p className="text-body text-neutral-500 mt-2">{t.products.header.subtitle}</p>
+        <div className="relative mb-12">
+          <GradientMesh />
+          <Reveal>
+            <div className="relative z-10">
+              <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.products.header.eyebrow}</span>
+              <h1 className="text-h2 text-neutral-950">{t.products.header.title}</h1>
+              <p className="text-body text-neutral-500 mt-2">{t.products.header.subtitle}</p>
+            </div>
+          </Reveal>
         </div>
-        </Reveal>
 
         {/* Filter Chips */}
         <div className="flex flex-wrap gap-3 mb-12">

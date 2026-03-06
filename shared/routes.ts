@@ -54,6 +54,26 @@ export const api = {
       responses: {
         200: z.object({ message: z.string() }),
       }
+    },
+    forgotPassword: {
+      method: 'POST' as const,
+      path: '/api/auth/forgot-password' as const,
+      input: z.object({ email: z.string().email() }),
+      responses: {
+        200: z.object({ message: z.string() }),
+      }
+    },
+    resetPassword: {
+      method: 'POST' as const,
+      path: '/api/auth/reset-password' as const,
+      input: z.object({
+        token: z.string().min(1),
+        password: z.string().min(6),
+      }),
+      responses: {
+        200: z.object({ message: z.string() }),
+        400: errorSchemas.validation,
+      }
     }
   },
   products: {
@@ -91,7 +111,16 @@ export const api = {
           quantity: z.number(),
           size: z.string()
         })),
-        addressId: z.number().optional()
+        shippingAddress: z.object({
+          fullName: z.string().min(1),
+          email: z.string().email(),
+          phone: z.string().min(1),
+          street: z.string().min(1),
+          city: z.string().min(1),
+          country: z.string().min(1),
+          postalCode: z.string().optional(),
+        }),
+        paymentMethod: z.enum(["card", "cod"]),
       }),
       responses: {
         201: z.custom<typeof orders.$inferSelect>(),
@@ -117,6 +146,23 @@ export const api = {
         201: z.custom<typeof addresses.$inferSelect>(),
         400: errorSchemas.validation,
         401: errorSchemas.unauthorized,
+      }
+    }
+  },
+  contact: {
+    submit: {
+      method: 'POST' as const,
+      path: '/api/contact' as const,
+      input: z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        productInterest: z.string().optional(),
+        message: z.string().min(1),
+      }),
+      responses: {
+        200: z.object({ message: z.string() }),
+        500: errorSchemas.validation,
       }
     }
   }

@@ -2,7 +2,6 @@ import { pgTable, text, serial, integer, boolean, timestamp, jsonb } from "drizz
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// Users
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
@@ -11,21 +10,23 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   phone: text("phone").notNull(),
   odooPartnerId: integer("odoo_partner_id"),
+  resetToken: text("reset_token"),
+  resetTokenExpiry: timestamp("reset_token_expiry"),
 });
 
-// Addresses
 export const addresses = pgTable("addresses", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
-  title: text("title").notNull(), // e.g. "Home", "Work"
+  title: text("title").notNull(),
   fullName: text("full_name").notNull(),
   phone: text("phone").notNull(),
   city: text("city").notNull(),
   addressLine: text("address_line").notNull(),
+  country: text("country").default("Saudi Arabia"),
+  postalCode: text("postal_code"),
   isDefault: boolean("is_default").default(false).notNull(),
 });
 
-// Products (matches the future Odoo shape)
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -50,14 +51,24 @@ export const products = pgTable("products", {
   }>().notNull(),
 });
 
-// Orders
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
   orderNo: text("order_no").notNull().unique(),
   date: timestamp("date").defaultNow().notNull(),
   total: integer("total").notNull(),
-  status: text("status").notNull(), // "Pending", "Processing", "Delivered", "Cancelled"
+  status: text("status").notNull(),
+  paymentMethod: text("payment_method").default("cod"),
+  paymentStatus: text("payment_status").default("pending"),
+  shippingAddress: jsonb("shipping_address").$type<{
+    fullName: string;
+    email: string;
+    phone: string;
+    street: string;
+    city: string;
+    country: string;
+    postalCode?: string;
+  }>(),
 });
 
 // Zod schemas

@@ -1,0 +1,73 @@
+Hi — update after testing the current build with Odoo.
+
+## A) Checkout + Payment (must be implemented properly)
+
+Right now checkout completes without collecting required info and without payment.
+
+1. Collect required customer data before placing order:
+
+* Full name, email, phone
+* Full address: street, city, country (+ optional postal/zip)
+
+2. Add payment step with two options:
+
+* **Card (Visa/Mastercard)**: allow entering card details.
+* **Cash on Delivery (COD)**: place order without card.
+  For card testing, please enable **test mode** so I can run a “fake/test card” payment flow safely.
+
+3. Order submission rules:
+
+* Don’t allow placing an order until required address fields are filled.
+* After payment success (card) OR selection of COD, then proceed to create the order in Odoo.
+
+## B) Odoo Sync: contacts + address mapping
+
+When I add/update address in the website, it doesn’t reflect correctly in the Odoo contact.
+Please ensure we update the same res.partner record with:
+
+* street, city, zip, country_id
+* phone, email, name
+  And confirm which website fields map to which Odoo fields.
+
+## C) Sales Order status (Quotation vs Confirmed)
+
+I didn’t understand this before, so here’s what I want:
+
+* **Default for now: create it as a “Quotation” (draft sale.order)** when checkout is done, then the company can confirm it in Odoo.
+* If payment is successful (Card), we can optionally auto-confirm it later, but for now keep it Quotation to be safe.
+
+## D) “Send Requirements / Contact Us” form -> Odoo + UI feedback
+
+When user submits the form:
+
+* Create a record in Odoo for tracking (preferred: CRM Lead `crm.lead`; if not available, use the best standard model you recommend).
+* Show frontend status:
+
+  * Success message if created in Odoo
+  * Error message if failed (friendly error, no raw stack traces)
+
+## E) Auth fixes (local auth)
+
+* “Forgot password” button currently does nothing.
+  Please implement reset password flow for our current local auth (email reset link + new password + success/error UI).
+
+## F) Product page bug
+
+* “View all” in product description does not expand the rest of the text. Please fix.
+
+## G) Animated gradient mesh (like Colorflow, but in our colors)
+
+I want a subtle animated “mesh/gradient” background similar to the effect here (style reference only):
+
+<iframe src="https://colorflow.ls.graphics/embed.html#..." width="800" height="600" frameborder="0"></iframe>
+
+But DO NOT embed an iframe.
+Instead, implement a lightweight CSS/JS gradient mesh animation using our primary color:
+
+* Primary: **#0F3D91** (use shades/tints of this color + very soft complementary tones)
+* Animation should be subtle/slow (no distracting motion)
+
+## H) Workflow question
+
+Is there an option for me to edit the code directly inside Replit (without downloading)?
+Please confirm the best workflow (branches/commits if Git is connected, or direct edits).

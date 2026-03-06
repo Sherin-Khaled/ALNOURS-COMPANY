@@ -2,7 +2,6 @@ import { useCart } from "@/store/use-cart";
 import { Link, useLocation } from "wouter";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
-import { useCreateOrder } from "@/hooks/use-orders";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,6 @@ export default function Cart() {
   const { items, updateQuantity, removeItem, getTotals, clearCart } = useCart();
   const { data: user } = useAuth();
   const [, setLocation] = useLocation();
-  const { mutateAsync: createOrder, isPending } = useCreateOrder();
   const { toast } = useToast();
   const { data: products } = useProducts();
   
@@ -25,23 +23,13 @@ export default function Cart() {
   const { t } = useLanguage();
   const upsellProducts = products?.filter(p => !items.some(i => i.product.id === p.id))?.slice(0, 3) || [];
 
-  const handleCheckout = async () => {
+  const handleCheckout = () => {
     if (!user) {
       toast({ title: t.cart.loginRequired, description: t.cart.loginRequiredDesc });
       setLocation("/login");
       return;
     }
-    try {
-      await createOrder({
-        items: items.map(i => ({ productId: i.product.id, quantity: i.quantity, size: i.size })),
-        addressId: undefined 
-      });
-      clearCart();
-      toast({ title: t.cart.orderPlaced, description: t.cart.orderPlacedDesc });
-      setLocation("/account/orders");
-    } catch (e: any) {
-      toast({ title: t.cart.checkoutFailed, description: e.message, variant: "destructive" });
-    }
+    setLocation("/checkout");
   };
 
   if (items.length === 0) {
@@ -134,9 +122,9 @@ export default function Cart() {
                 </div>
               </div>
 
-              <Button onClick={handleCheckout} disabled={isPending}
-                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body mb-4">
-                {isPending ? t.cta.processing : t.cta.proceedToCheckout}
+              <Button onClick={handleCheckout}
+                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body mb-4" data-testid="button-checkout">
+                {t.cta.proceedToCheckout}
               </Button>
               
               <Link href="/products" className="block text-center text-primary font-semibold text-small hover:underline">

@@ -19,6 +19,7 @@ export default function ProductDetail() {
   
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+  const [ingredientsExpanded, setIngredientsExpanded] = useState(false);
 
   useEffect(() => {
     if (product && product.sizes.length > 0) {
@@ -126,11 +127,11 @@ export default function ProductDetail() {
 
                 <div className="pt-8 border-t border-neutral-200">
                   <h3 className="text-label text-neutral-950 mb-2 uppercase">{t.pdp.ingredients.label}</h3>
-                  <p className="text-body text-neutral-700 line-clamp-2" data-testid="text-ingredients">
+                  <p className={`text-body text-neutral-700 ${ingredientsExpanded ? '' : 'line-clamp-2'}`} data-testid="text-ingredients">
                     {product.ingredients}
                   </p>
-                  <button className="text-primary font-semibold mt-2 hover:underline" data-testid="button-view-ingredients">
-                    {t.pdp.ingredients.viewFull}
+                  <button className="text-primary font-semibold mt-2 hover:underline" data-testid="button-view-ingredients" onClick={() => setIngredientsExpanded(!ingredientsExpanded)}>
+                    {ingredientsExpanded ? t.pdp.ingredients.viewLess : t.pdp.ingredients.viewFull}
                   </button>
                 </div>
               </div>

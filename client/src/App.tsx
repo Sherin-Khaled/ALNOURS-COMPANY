@@ -22,10 +22,13 @@ import Profile from "@/pages/account/Profile";
 import Orders from "@/pages/account/Orders";
 import Addresses from "@/pages/account/Addresses";
 import { About, Contact } from "@/pages/StaticPages";
+import Checkout from "@/pages/Checkout";
+import ForgotPassword from "@/pages/ForgotPassword";
+import ResetPassword from "@/pages/ResetPassword";
 
 function Router() {
   const [location] = useLocation();
-  const isAuthPage = location === "/login" || location === "/signup";
+  const isAuthPage = location === "/login" || location === "/signup" || location === "/forgot-password" || location.startsWith("/reset-password");
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -39,8 +42,11 @@ function Router() {
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout" component={Checkout} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/forgot-password" component={ForgotPassword} />
+          <Route path="/reset-password" component={ResetPassword} />
           <Route path="/account">
             <AccountLayout><AccountOverview /></AccountLayout>
           </Route>

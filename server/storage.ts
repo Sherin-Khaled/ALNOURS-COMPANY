@@ -11,7 +11,9 @@ import {
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
+  getUserByResetToken(token: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: number, data: Partial<InsertUser>): Promise<void>;
   updateUserOdooPartnerId(id: number, partnerId: number): Promise<void>;
   
   getAddressesByUserId(userId: number): Promise<Address[]>;
@@ -38,9 +40,18 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  async getUserByResetToken(token: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.resetToken, token));
+    return user;
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db.insert(users).values(insertUser).returning();
     return user;
+  }
+
+  async updateUser(id: number, data: Partial<InsertUser>): Promise<void> {
+    await db.update(users).set(data).where(eq(users.id, id));
   }
 
   async updateUserOdooPartnerId(id: number, partnerId: number): Promise<void> {

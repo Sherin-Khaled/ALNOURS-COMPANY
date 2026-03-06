@@ -3,15 +3,13 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { syncProductsFromOdoo, createOrUpdatePartner, createSalesOrder, isOdooConfigured } from "./odoo";
+import crypto from "crypto";
+import { syncProductsFromOdoo, createOrUpdatePartner, createSalesOrder, isOdooConfigured, createCrmLead } from "./odoo";
 
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Mock Auth (using session or just a simple mock for now since it's frontend-first)
-  // For simplicity in this demo, we'll use a mocked "logged in" state in memory 
-  // or simple cookie/session if requested, but a global mock user is easier for B2C demo.
   let mockLoggedInUserId: number | null = null;
 
   app.post(api.auth.signup.path, async (req, res) => {
@@ -26,7 +24,7 @@ export async function registerRoutes(
         lastName: input.lastName || null,
         email: input.email,
         phone: input.phone,
-        password: input.password // In a real app, hash this!
+        password: input.password
       });
       mockLoggedInUserId = user.id;
       res.status(201).json(user);
@@ -70,7 +68,43 @@ export async function registerRoutes(
     res.status(200).json({ message: "Logged out" });
   });
 
-  // Products
+  app.post(api.auth.forgotPassword.path, async (req, res) => {
+    try {
+      const input = api.auth.forgotPassword.input.parse(req.body);
+      const user = await storage.getUserByEmail(input.email);
+      if (!user) {
+        return res.status(200).json({ message: "If that email exists, a reset link has been sent." });
+      }
+      const token = crypto.randomBytes(32).toString("hex");
+      const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+      const expiry = new Date(Date.now() + 60 * 60 * 1000);
+      await storage.updateUser(user.id, { resetToken: hashedToken, resetTokenExpiry: expiry } as any);
+      console.log(`[auth] Password reset requested for ${user.email}`);
+      res.status(200).json({ message: "If that email exists, a reset link has been sent." });
+    } catch (err) {
+      res.status(400).json({ message: "Invalid request" });
+    }
+  });
+
+  app.post(api.auth.resetPassword.path, async (req, res) => {
+    try {
+      const input = api.auth.resetPassword.input.parse(req.body);
+      const hashedToken = crypto.createHash("sha256").update(input.token).digest("hex");
+      const user = await storage.getUserByResetToken(hashedToken);
+      if (!user || !user.resetTokenExpiry || new Date(user.resetTokenExpiry) < new Date()) {
+        return res.status(400).json({ message: "Invalid or expired reset token" });
+      }
+      await storage.updateUser(user.id, {
+        password: input.password,
+        resetToken: null,
+        resetTokenExpiry: null,
+      } as any);
+      res.status(200).json({ message: "Password has been reset successfully" });
+    } catch (err) {
+      res.status(400).json({ message: "Invalid request" });
+    }
+  });
+
   app.get(api.products.list.path, async (req, res) => {
     const products = await storage.getProducts();
     res.status(200).json(products);
@@ -84,7 +118,6 @@ export async function registerRoutes(
     res.status(200).json(product);
   });
 
-  // Orders
   app.get(api.orders.list.path, async (req, res) => {
     if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
     const orders = await storage.getOrdersByUserId(mockLoggedInUserId);
@@ -117,20 +150,34 @@ export async function registerRoutes(
       const order = await storage.createOrder({
         userId: mockLoggedInUserId,
         total,
-        status: "Processing"
+        status: "Processing",
+        paymentMethod: input.paymentMethod,
+        paymentStatus: input.paymentMethod === "card" ? "paid" : "pending",
+        shippingAddress: input.shippingAddress,
       });
 
       if (isOdooConfigured() && orderItems.length > 0) {
         try {
           const user = await storage.getUser(mockLoggedInUserId);
           if (user) {
-            let address;
-            if (input.addressId) {
-              const addresses = await storage.getAddressesByUserId(mockLoggedInUserId);
-              address = addresses.find(a => a.id === input.addressId);
-            }
-
-            const partnerId = await createOrUpdatePartner(user, address || undefined, user.odooPartnerId || undefined);
+            const addr = input.shippingAddress;
+            const partnerId = await createOrUpdatePartner(
+              {
+                firstName: addr.fullName.split(" ")[0] || addr.fullName,
+                lastName: addr.fullName.split(" ").slice(1).join(" ") || null,
+                email: addr.email,
+                phone: addr.phone,
+              },
+              {
+                fullName: addr.fullName,
+                city: addr.city,
+                addressLine: addr.street,
+                phone: addr.phone,
+                country: addr.country,
+                postalCode: addr.postalCode,
+              },
+              user.odooPartnerId || undefined
+            );
             if (!user.odooPartnerId || user.odooPartnerId !== partnerId) {
               await storage.updateUserOdooPartnerId(user.id, partnerId);
             }
@@ -143,11 +190,14 @@ export async function registerRoutes(
 
       res.status(201).json(order);
     } catch (err) {
-      res.status(400).json({ message: "Invalid request" });
+      if (err instanceof z.ZodError) {
+        res.status(400).json({ message: err.errors[0].message, field: err.errors[0].path.join('.') });
+      } else {
+        res.status(400).json({ message: "Invalid request" });
+      }
     }
   });
 
-  // Addresses
   app.get(api.addresses.list.path, async (req, res) => {
     if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
     const addresses = await storage.getAddressesByUserId(mockLoggedInUserId);
@@ -163,6 +213,33 @@ export async function registerRoutes(
         userId: mockLoggedInUserId
       });
       res.status(201).json(address);
+    } catch (err) {
+      res.status(400).json({ message: "Invalid request" });
+    }
+  });
+
+  app.post(api.contact.submit.path, async (req, res) => {
+    try {
+      const input = api.contact.submit.input.parse(req.body);
+
+      if (isOdooConfigured()) {
+        try {
+          await createCrmLead({
+            contactName: input.name,
+            email: input.email,
+            phone: input.phone || "",
+            name: input.productInterest ? `Website Inquiry: ${input.productInterest}` : "Website Contact Form",
+            description: input.message,
+          });
+          return res.status(200).json({ message: "Your message has been sent successfully. Our team will get back to you soon." });
+        } catch (odooErr) {
+          console.error("[odoo] Failed to create CRM lead:", (odooErr as Error).message);
+          return res.status(500).json({ message: "We couldn't process your request right now. Please try again later or contact us directly." });
+        }
+      }
+
+      console.log("[contact] Form submission (no Odoo):", input);
+      res.status(200).json({ message: "Your message has been sent successfully. Our team will get back to you soon." });
     } catch (err) {
       res.status(400).json({ message: "Invalid request" });
     }

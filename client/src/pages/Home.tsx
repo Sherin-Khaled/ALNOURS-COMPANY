@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { GradientMesh } from "@/components/GradientMesh";
 import { useRef, useEffect, useCallback } from "react";
 
 function HeroSection() {
@@ -13,6 +14,7 @@ function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-neutral-50" style={{ paddingTop: 96, paddingBottom: 96 }}>
+      <GradientMesh />
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <Reveal>

@@ -150,6 +150,8 @@ export async function createOrUpdatePartner(user: {
   city?: string;
   addressLine?: string;
   phone?: string;
+  country?: string;
+  postalCode?: string;
 }, existingPartnerId?: number): Promise<number> {
   const name = [user.firstName, user.lastName].filter(Boolean).join(" ");
   const values: Record<string, any> = {
@@ -163,6 +165,17 @@ export async function createOrUpdatePartner(user: {
     if (address.city) values.city = address.city;
     if (address.addressLine) values.street = address.addressLine;
     if (address.phone) values.phone = address.phone;
+    if (address.postalCode) values.zip = address.postalCode;
+    if (address.country) {
+      try {
+        const countries = await searchRead("res.country", [["name", "ilike", address.country]], ["id"], 1);
+        if (countries.length > 0) {
+          values.country_id = countries[0].id;
+        }
+      } catch (e) {
+        console.error("[odoo] Country lookup failed:", (e as Error).message);
+      }
+    }
   }
 
   if (existingPartnerId) {
@@ -183,6 +196,25 @@ export async function createOrUpdatePartner(user: {
     console.log(`[odoo] Created partner ${partnerId}`);
     return partnerId;
   }
+}
+
+export async function createCrmLead(data: {
+  contactName: string;
+  email: string;
+  phone: string;
+  name: string;
+  description: string;
+}): Promise<number> {
+  const leadId = await create("crm.lead", {
+    contact_name: data.contactName,
+    email_from: data.email,
+    phone: data.phone,
+    name: data.name,
+    description: data.description,
+    type: "lead",
+  });
+  console.log(`[odoo] Created CRM lead ${leadId}`);
+  return leadId;
 }
 
 export async function getOdooProductId(defaultCode: string): Promise<number | null> {
