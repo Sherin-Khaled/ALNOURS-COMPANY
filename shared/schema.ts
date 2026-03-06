@@ -10,6 +10,7 @@ export const users = pgTable("users", {
   firstName: text("first_name").notNull(),
   lastName: text("last_name"),
   phone: text("phone").notNull(),
+  odooPartnerId: integer("odoo_partner_id"),
 });
 
 // Addresses
@@ -32,8 +33,10 @@ export const products = pgTable("products", {
   flavor: text("flavor").notNull(),
   category: text("category").notNull(),
   sizes: jsonb("sizes").$type<string[]>().notNull(),
-  price: integer("price").notNull(), // Price in SAR
+  price: integer("price").notNull(),
   currency: text("currency").default("SAR").notNull(),
+  defaultCode: text("default_code"),
+  description: text("description"),
   nutrition: jsonb("nutrition").$type<{
     fat: string;
     calories: string;

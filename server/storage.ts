@@ -9,21 +9,19 @@ import {
 } from "@shared/schema";
 
 export interface IStorage {
-  // Users
   getUser(id: number): Promise<User | undefined>;
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserOdooPartnerId(id: number, partnerId: number): Promise<void>;
   
-  // Addresses
   getAddressesByUserId(userId: number): Promise<Address[]>;
   createAddress(address: InsertAddress & { userId: number }): Promise<Address>;
   
-  // Products
   getProducts(): Promise<Product[]>;
   getProductBySlug(slug: string): Promise<Product | undefined>;
   createProduct(product: InsertProduct): Promise<Product>;
+  updateProduct(id: number, data: Partial<InsertProduct>): Promise<void>;
   
-  // Orders
   getOrdersByUserId(userId: number): Promise<Order[]>;
   createOrder(order: InsertOrder & { userId: number }): Promise<Order>;
 }
@@ -43,6 +41,10 @@ export class DatabaseStorage implements IStorage {
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db.insert(users).values(insertUser).returning();
     return user;
+  }
+
+  async updateUserOdooPartnerId(id: number, partnerId: number): Promise<void> {
+    await db.update(users).set({ odooPartnerId: partnerId }).where(eq(users.id, id));
   }
 
   // Addresses
@@ -82,6 +84,10 @@ export class DatabaseStorage implements IStorage {
   async createProduct(insertProduct: InsertProduct): Promise<Product> {
     const [product] = await db.insert(products).values(insertProduct).returning();
     return product;
+  }
+
+  async updateProduct(id: number, data: Partial<InsertProduct>): Promise<void> {
+    await db.update(products).set(data).where(eq(products.id, id));
   }
 
   // Orders

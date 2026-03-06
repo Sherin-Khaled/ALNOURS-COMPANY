@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
+import { syncProductsFromOdoo, createOrUpdatePartner, createSalesOrder, isOdooConfigured } from "./odoo";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -94,14 +95,52 @@ export async function registerRoutes(
     if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
     try {
       const input = api.orders.create.input.parse(req.body);
-      // Mock calculation for total
-      const total = input.items.reduce((acc, item) => acc + (item.quantity * 30), 0) + 10; // 30 SAR per item + 10 SAR shipping
-      
+
+      const allProducts = await storage.getProducts();
+      let total = 0;
+      const orderItems: { defaultCode: string; quantity: number; price: number }[] = [];
+
+      for (const item of input.items) {
+        const product = allProducts.find(p => p.id === item.productId);
+        const price = product ? product.price : 30;
+        total += item.quantity * price;
+        if (product?.defaultCode) {
+          orderItems.push({
+            defaultCode: product.defaultCode,
+            quantity: item.quantity,
+            price,
+          });
+        }
+      }
+      total += 10;
+
       const order = await storage.createOrder({
         userId: mockLoggedInUserId,
         total,
         status: "Processing"
       });
+
+      if (isOdooConfigured() && orderItems.length > 0) {
+        try {
+          const user = await storage.getUser(mockLoggedInUserId);
+          if (user) {
+            let address;
+            if (input.addressId) {
+              const addresses = await storage.getAddressesByUserId(mockLoggedInUserId);
+              address = addresses.find(a => a.id === input.addressId);
+            }
+
+            const partnerId = await createOrUpdatePartner(user, address || undefined, user.odooPartnerId || undefined);
+            if (!user.odooPartnerId || user.odooPartnerId !== partnerId) {
+              await storage.updateUserOdooPartnerId(user.id, partnerId);
+            }
+            await createSalesOrder(partnerId, orderItems, order.orderNo);
+          }
+        } catch (odooErr) {
+          console.error("[odoo] Failed to create order in Odoo:", (odooErr as Error).message);
+        }
+      }
+
       res.status(201).json(order);
     } catch (err) {
       res.status(400).json({ message: "Invalid request" });
@@ -129,7 +168,12 @@ export async function registerRoutes(
     }
   });
 
-  seedWithRetry();
+  seedWithRetry().then(() => {
+    syncProductsFromOdoo(
+      () => storage.getProducts(),
+      (id, data) => storage.updateProduct(id, data)
+    ).catch(() => {});
+  });
 
   return httpServer;
 }
@@ -161,6 +205,7 @@ async function seedDatabase() {
         sizes: ["235 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
+        defaultCode: "101003",
         nutrition: { fat: "0g", calories: "120 kcal", carbs: "30g" },
         ingredients: "Water, mixed fruit puree (mango, guava, orange), sugar, citric acid.",
         images: { packshot: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=800&auto=format&fit=crop&q=60", decorations: [] }
@@ -173,6 +218,7 @@ async function seedDatabase() {
         sizes: ["235 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
+        defaultCode: "101001",
         nutrition: { fat: "0g", calories: "140 kcal", carbs: "35g" },
         ingredients: "Water, mango puree, sugar, citric acid.",
         images: { packshot: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=800&auto=format&fit=crop&q=60", decorations: [] }
@@ -185,6 +231,7 @@ async function seedDatabase() {
         sizes: ["235 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
+        defaultCode: "101002",
         nutrition: { fat: "0g", calories: "110 kcal", carbs: "28g" },
         ingredients: "Water, guava puree, sugar, citric acid.",
         images: { packshot: "https://images.unsplash.com/photo-1596649299486-4cdea56fd59d?w=800&auto=format&fit=crop&q=60", decorations: [] }
@@ -197,6 +244,7 @@ async function seedDatabase() {
         sizes: ["235 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
+        defaultCode: "101004",
         nutrition: { fat: "0g", calories: "115 kcal", carbs: "29g", protein: "2g" },
         ingredients: "Water, orange juice concentrate, sugar, citric acid.",
         images: { packshot: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=800&auto=format&fit=crop&q=60", decorations: [] }

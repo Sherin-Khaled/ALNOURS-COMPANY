@@ -107,7 +107,7 @@ Preferred communication style: Simple, everyday language.
 - `GET /api/orders` | `POST /api/orders`
 - `GET /api/addresses` | `POST /api/addresses`
 
-**Seed data:** 4 Domty products (Cocktail, Mango, Guava, Orange) at 30 SAR each, sizes 235 ml / 1000 ml
+**Seed data:** 4 Domty products (Cocktail=101003, Mango=101001, Guava=101002, Orange=101004) at 30 SAR seed price; Odoo sync updates names, prices (currently 26 SAR from Odoo), descriptions, and images on startup
 
 ### Data Storage
 
@@ -137,8 +137,21 @@ Preferred communication style: Simple, everyday language.
 ### Styling: TailwindCSS, CVA, clsx, tailwind-merge, Google Fonts (Sora, Inter, Cairo, Tajawal)
 ### Dev: Vite, esbuild, tsx
 
+### Odoo ERP Integration (Live)
+
+- **Client:** `server/odoo.ts` — XML-RPC client for Odoo Online
+- **Auth:** Lazy authentication via `/xmlrpc/2/common`, cached UID
+- **Env secrets:** `ODOO_BASE_URL`, `ODOO_DB`, `ODOO_USERNAME`, `ODOO_API_KEY`
+- **Product sync:** On startup (after seeding), fetches `product.product` by `default_code` (101001–101004), updates local name, price, description, and base64 image (with MIME detection for PNG/JPEG/GIF/WebP)
+- **Checkout flow:** POST /api/orders creates local order, then (non-blocking):
+  1. Searches/creates `res.partner` by email (or updates existing by stored `odooPartnerId`)
+  2. Creates `sale.order` + `sale.order.line` with `client_order_ref` = local orderNo
+  3. Batches product ID lookups via `search_read` (avoids N+1)
+- **Schema additions:** `products.defaultCode` (text, maps to Odoo `default_code`), `users.odooPartnerId` (integer)
+- **Storage additions:** `updateProduct(id, data)`, `updateUserOdooPartnerId(id, partnerId)`
+- **Failure handling:** If Odoo is unreachable, sync silently fails and local seed/fallback data is used; checkout still succeeds locally
+
 ### Future / Planned
-- **Odoo ERP** — Backend for products, stock, customers, orders
 - **Stripe** — Payment processing
 - **Nodemailer** — Email notifications
 - **Route-based locale** (`/en/...`, `/ar/...`) — Currently context-based; route prefix planned

@@ -1,0 +1,72 @@
+Hi — now we’re ready to connect our Next.js website to Odoo Online.
+
+✅ Odoo environment (already added to Replit **Secrets**):
+
+* ODOO_BASE_URL
+* ODOO_DB
+* ODOO_USERNAME
+* ODOO_API_KEY
+  (Please read them from Secrets and **do not** hardcode them or print them in logs.)
+
+✅ Product mapping (use **Internal Reference / default_code** in Odoo):
+
+* Mango: 101001
+* Guava: 101002
+* Cocktail: 101003
+* Orange: 101004
+
+🎯 Goal of the integration:
+When a user purchases from our website, the order must be created inside Odoo so the company’s system (Sales/Inventory/etc.) sees it normally.
+
+### Required integration tasks
+
+1. **Read products from Odoo**
+
+* Fetch product info from Odoo for the products above using `default_code`.
+* From Odoo we want to use: **image + title/name + description + price + stock (if possible)**.
+* If stock is complex, start with price + image + name and we can add stock after.
+
+2. **Checkout → create/update customer in Odoo**
+   Keep the website auth/signup/login as-is (local auth).
+   No Odoo login integration now.
+
+On checkout:
+
+* Create or update customer in Odoo as `res.partner` using:
+
+  * name
+  * email
+  * phone
+  * shipping address (and billing if different)
+
+3. **Checkout → create Sales Order in Odoo**
+
+* Create `sale.order`
+* Create `sale.order.line` for each cart item (product + quantity + price if needed)
+  So every purchase done on our site is recorded in Odoo automatically.
+
+4. **Important: do NOT use Odoo for these**
+
+* Nutrition facts: will be handled in our code (frontend content), NOT from Odoo.
+* Flavor filters/categories: will be handled in our code, NOT from Odoo.
+
+5. **Auth**
+   Option A only for now:
+
+* Keep Signup/Login on our website exactly as it is.
+* Do not try to sync website users to Odoo users.
+
+### Expected output
+
+* A working integration in the repo with clean code structure (services/helpers), and clear env usage from Replit Secrets.
+* Basic error handling + minimal logging (no secrets).
+* Test flow:
+
+  1. Load product list/details from Odoo
+  2. Add to cart → checkout
+  3. Confirm inside Odoo that:
+
+     * partner created/updated
+     * sales order + lines created correctly
+
+If you need any extra Odoo fields or permissions, tell me exactly what to enable and where.
