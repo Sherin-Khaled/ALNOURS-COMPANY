@@ -100,7 +100,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
         </div>
 
         <img
-          src="https://images.unsplash.com/photo-1546173159-315724a31696?w=200&h=200&fit=crop&q=60"
+          src="client/public/images/Home/Fruits_splash.png"
           alt=""
           className="absolute object-cover rounded-full opacity-30 pointer-events-none"
           style={{
