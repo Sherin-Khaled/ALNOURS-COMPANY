@@ -48,6 +48,26 @@
       "badges": {
         "vatIncluded": "VAT included",
         "fastDelivery": "Fast Delivery"
+      },
+      "slides": {
+        "s1": {
+          "eyebrow": "Official Distributor",
+          "title": "Quality Delivered",
+          "subtitle": "Fresh juices, delivered across Riyadh & Jeddah.",
+          "body": "Shop in minutes—secure payment, VAT included, delivery or pickup."
+        },
+        "s2": {
+          "eyebrow": "Premium Selection",
+          "title": "Taste the Freshness",
+          "subtitle": "Domty premium drinks in every flavor you love.",
+          "body": "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml."
+        },
+        "s3": {
+          "eyebrow": "Fast & Reliable",
+          "title": "Delivered to Your Door",
+          "subtitle": "Reliable delivery across Saudi Arabia.",
+          "body": "Order online, pay securely, and get your drinks delivered fast."
+        }
       }
     },
     "featured": {
@@ -55,7 +75,7 @@
       "title": "Featured Products",
       "subtitle": "Best sellers & top picks this week.",
       "metaLine1": "Premium Drink",
-      "metaLine2": "235 ml & 1000 ml",
+      "metaLine2": "200 ml & 1000 ml",
       "price": "SAR 30"
     },
     "flavors": {
@@ -99,7 +119,7 @@
     "card": {
       "titleTemplate": "{flavor} Premium Drink",
       "metaLine1": "Premium Drink",
-      "metaLine2": "235 ml & 1000 ml",
+      "metaLine2": "200 ml & 1000 ml",
       "price": "SAR 30"
     },
     "whyAlnours": {
@@ -109,6 +129,27 @@
       "fastDeliveryDesc": "Reliable distribution across Saudi Arabia.",
       "securePayment": "Secure Payment",
       "securePaymentDesc": "Safe and encrypted checkout process."
+    },
+    "whyAlnoursTimeline": {
+      "eyebrow": "Why ALNOURS",
+      "title": "Easy ordering, reliable delivery.",
+      "steps": [
+        {
+          "eyebrow": "Why ALNOURS",
+          "title": "1. Official supply you can rely on",
+          "description": "Official distribution with reliable availability and consistent supply."
+        },
+        {
+          "eyebrow": "Why ALNOURS",
+          "title": "2. Domty quality, delivered fresh",
+          "description": "Premium Domty juices with clear ingredients and quality you can trust."
+        },
+        {
+          "eyebrow": "Why ALNOURS",
+          "title": "3. Fast fulfillment across Saudi Arabia",
+          "description": "Fast ordering and fulfillment across Saudi Arabia—based in Riyadh and serving major cities including Jeddah."
+        }
+      ]
     }
   },
 
@@ -174,17 +215,17 @@
       "body": "We distribute trusted FMCG brands across Saudi Arabia."
     },
     "domtyCard": {
-      "body": "Domty Premium Drinks are available in 235 ml and 1000 ml—ready to order online.",
+      "body": "Domty Premium Drinks are available in 200 ml and 1000 ml—ready to order online.",
       "cta": "Browse Domty products"
     },
     "note": "More brands coming soon.",
     "glance": {
       "eyebrow": "What's inside",
       "title": "Domty at a glance",
-      "body": "Premium drinks available in 235 ml and 1000 ml. Explore flavors and shop online.",
+      "body": "Premium drinks available in 200 ml and 1000 ml. Explore flavors and shop online.",
       "cards": {
         "flavors": "Flavors available — Cocktail, Mango, Guava, Orange",
-        "sizes": "Sizes — 235 ml • 1000 ml",
+        "sizes": "Sizes — 200 ml • 1000 ml",
         "info": "Clear product info — Ingredients & nutrition shown per product"
       },
       "cta": "Shop Domty products"
@@ -324,6 +365,20 @@
         "body": "Start shopping to place your first order.",
         "cta": "Shop products"
       }
+    },
+    "orderDetail": {
+      "title": "Order",
+      "backToOrders": "Back to Orders",
+      "notFound": "Order not found.",
+      "itemsTitle": "Items",
+      "noItems": "No item details available for this order.",
+      "summaryTitle": "Order Summary",
+      "paymentTitle": "Payment",
+      "method": "Method",
+      "paymentStatus": "Status",
+      "paid": "Paid",
+      "pending": "Pending",
+      "shippingTitle": "Shipping Address"
     },
     "addresses": {
       "title": "Addresses",

@@ -16,7 +16,7 @@ export default function Cart() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { data: products } = useProducts();
-  
+
   const [coupon, setCoupon] = useState("");
   const { subtotal, shipping, total } = getTotals();
 
@@ -59,22 +59,26 @@ export default function Cart() {
                 <div className="w-14 h-14 bg-neutral-50 rounded-md p-1 shrink-0">
                   <img src={item.product.images?.packshot} alt={item.product.name} className="w-full h-full object-contain" />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-neutral-950 text-body truncate">{item.product.name}</h3>
                   <p className="text-small text-neutral-500">{item.size}</p>
                 </div>
 
                 <div className="flex items-center gap-1 border border-neutral-200 rounded-md">
-                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     className="w-8 h-8 flex items-center justify-center hover:bg-neutral-50 transition-colors"
-                    data-testid={`qty-minus-${item.id}`}>
+                    data-testid={`qty-minus-${item.id}`}
+                  >
                     <Minus className="w-3 h-3" />
                   </button>
                   <span className="w-8 text-center font-semibold text-small">{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     className="w-8 h-8 flex items-center justify-center hover:bg-neutral-50 transition-colors"
-                    data-testid={`qty-plus-${item.id}`}>
+                    data-testid={`qty-plus-${item.id}`}
+                  >
                     <Plus className="w-3 h-3" />
                   </button>
                 </div>
@@ -83,9 +87,11 @@ export default function Cart() {
                   {item.product.currency} {item.product.price * item.quantity}
                 </span>
 
-                <button onClick={() => removeItem(item.id)}
+                <button
+                  onClick={() => removeItem(item.id)}
                   className="w-10 h-10 flex items-center justify-center text-neutral-500 hover:text-destructive hover:bg-destructive/10 rounded-md transition-colors"
-                  data-testid={`remove-${item.id}`}>
+                  data-testid={`remove-${item.id}`}
+                >
                   <Trash2 className="w-5 h-5" />
                 </button>
               </div>
@@ -94,9 +100,14 @@ export default function Cart() {
             <div className="pt-6">
               <p className="text-small text-neutral-500 mb-2">{t.cart.couponLine}</p>
               <div className="flex gap-3">
-                <input type="text" placeholder={t.cart.couponPlaceholder} value={coupon} onChange={e => setCoupon(e.target.value)}
-                  className="flex-1 h-11 px-4 rounded-md border border-neutral-200 focus:border-primary outline-none transition-all text-body" />
-                <Button variant="outline" className="h-11 px-6 rounded-md border-neutral-200 text-neutral-700 font-semibold">
+                <input
+                  type="text"
+                  placeholder={t.cart.couponPlaceholder}
+                  value={coupon}
+                  onChange={e => setCoupon(e.target.value)}
+                  className="flex-1 h-11 px-4 rounded-md border border-neutral-200 focus:border-primary outline-none transition-all text-body"
+                />
+                <Button variant="outline" className="h-11 px-6 rounded-md border-neutral-200 text-neutral-70 font-semibold">
                   {t.cart.apply}
                 </Button>
               </div>
@@ -106,7 +117,7 @@ export default function Cart() {
           <div className="lg:w-[360px] shrink-0">
             <div className="bg-neutral-50 p-8 rounded-lg border border-neutral-200 sticky top-24">
               <h3 className="text-h4 font-bold text-neutral-950 mb-6">{t.cart.summaryTitle}</h3>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-neutral-700 text-body">
                   <span>{t.cart.rows.shipping}</span>
@@ -122,11 +133,15 @@ export default function Cart() {
                 </div>
               </div>
 
-              <Button onClick={handleCheckout}
-                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body mb-4" data-testid="button-checkout">
+              {/* ✅ Proceed button text color forced to white */}
+              <Button
+                onClick={handleCheckout}
+                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover !text-white font-bold text-body mb-4"
+                data-testid="button-checkout"
+              >
                 {t.cta.proceedToCheckout}
               </Button>
-              
+
               <Link href="/products" className="block text-center text-primary font-semibold text-small hover:underline">
                 {t.cta.continueShopping}
               </Link>
@@ -139,6 +154,8 @@ export default function Cart() {
             <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.cart.upsell.eyebrow}</span>
             <h2 className="text-h3 text-neutral-950 mb-2">{t.cart.upsell.title}</h2>
             <p className="text-body text-neutral-500 mb-8">{t.cart.upsell.subtitle}</p>
+            {/* ✅ Fruit splash size for the 2nd section is controlled inside ProductCard:
+                set grid.fruitSize smaller (e.g. 140 or 160) in ProductCard.tsx (no position change needed). */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {upsellProducts.map(p => (
                 <ProductCard key={p.id} product={p} />

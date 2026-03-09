@@ -10,9 +10,9 @@ import { useToast } from "@/hooks/use-toast";
 export function About() {
   const { t } = useLanguage();
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-24 pb-16 bg-white">
       <SEO title={t.seo.about.title} description={t.seo.about.description} />
-      <section className="section-spacing bg-neutral-50">
+      <section className="section-spacing ">
         <div className="container-custom">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.about.hero.eyebrow}</span>
           <h1 className="text-h1 text-neutral-950 max-w-3xl">
@@ -25,7 +25,7 @@ export function About() {
             <Button asChild className="h-12 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold">
               <Link href="/products">{t.cta.shopProducts}</Link>
             </Button>
-            <Button asChild variant="outline" className="h-12 px-8 rounded-md border-neutral-200 text-neutral-700">
+            <Button asChild variant="outline" className="h-12 px-8 rounded-md border-neutral-200 text-neutral-700 hover:text-white hover:bg-[#0F3D91]">
               <Link href="/contact">{t.cta.contactUs}</Link>
             </Button>
           </div>
@@ -62,14 +62,14 @@ export function About() {
             {t.about.whatWeDo.body}
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             {[
               { title: t.about.whatWeDo.cards.distribution.title, desc: t.about.whatWeDo.cards.distribution.body, icon: Truck },
               { title: t.about.whatWeDo.cards.ordering.title, desc: t.about.whatWeDo.cards.ordering.body, icon: ShoppingCart },
               { title: t.about.whatWeDo.cards.fulfillment.title, desc: t.about.whatWeDo.cards.fulfillment.body, icon: Package }
             ].map((card, i) => (
               <div key={i} className="bg-[#EDF2FD] p-8 rounded-[20px] card-hover-shadow">
-                <card.icon className="w-8 h-8 text-primary mb-4" />
+                <card.icon className="w-8 h-8 text-[#0F3D91] mb-4 text-center" />
                 <h3 className="text-h4 text-neutral-950 mb-3">{card.title}</h3>
                 <p className="text-body text-neutral-700">{card.desc}</p>
               </div>
@@ -126,7 +126,7 @@ export function Contact() {
   return (
     <div className="min-h-screen pt-24 pb-16">
       <SEO title={t.seo.contact.title} description={t.seo.contact.description} />
-      <section className="section-spacing bg-neutral-50">
+      <section className="section-spacing bg-white">
         <div className="container-custom">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.contact.top.eyebrow}</span>
           <h1 className="text-h2 text-neutral-950 mb-4">{t.contact.top.title}</h1>
@@ -199,23 +199,23 @@ export function Contact() {
 function ContactInfo() {
   const { t } = useLanguage();
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 ">
       <div className="flex items-center gap-3 text-neutral-700">
-        <Mail className="w-5 h-5 text-secondary" />
+        <Mail className="w-5 h-5 text-[#0F3D91]" />
         <div>
           <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.mail}</span>
           <span className="text-small">hello@alnours.sa</span>
         </div>
       </div>
       <div className="flex items-center gap-3 text-neutral-700">
-        <Phone className="w-5 h-5 text-secondary" />
+        <Phone className="w-5 h-5 text-[#0F3D91]" />
         <div>
           <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.call}</span>
           <span className="text-small">+966 50 123 4567</span>
         </div>
       </div>
       <div className="flex items-center gap-3 text-neutral-700">
-        <MapPin className="w-5 h-5 text-secondary" />
+        <MapPin className="w-5 h-5 text-[#0F3D91]" />
         <div>
           <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.address}</span>
           <span className="text-small">Al Olaya, Riyadh</span>

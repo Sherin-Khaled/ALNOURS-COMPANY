@@ -1,0 +1,328 @@
+Please enhance the current website based on the notes below.
+Important: I already made some UI edits manually in the code, so do not overwrite, reset, or redesign any of the UI changes I already made unless a note below explicitly asks for that exact change.
+I want you to improve the current version carefully, keep the existing style direction, and make all updates in a polished, production-ready way with responsive behavior.
+
+Main priority
+
+The checkout flow is mostly working now, which is good:
+
+product selection
+
+add to cart
+
+checkout
+
+address page
+
+payment info
+
+order creation
+
+However, there is an issue:
+
+after the order is completed, the order status still stays “processing”
+
+this needs to be fixed so the order status updates correctly after the order is placed
+
+UI/UX + functionality updates
+1) Navbar behavior
+
+Make the navbar background transparent initially
+
+When the user starts scrolling, the navbar should get a white background with 80% opacity
+
+Keep the transition smooth and elegant
+
+2) Typography updates
+
+Please apply this text system consistently:
+
+Eyebrow text
+
+Font: Inter
+
+Weight: 600
+
+Style: Semi Bold
+
+Size: 14px
+
+Line height: 100%
+
+Letter spacing: 4%
+
+Case: Uppercase
+
+Home title
+
+H1
+
+Font size: 48px
+
+Color: #171D26
+
+Subtitle
+
+H5
+
+Font size: 24px
+
+Body text
+
+Font size: 18px
+
+Color: #171D26
+
+3) Product title formatting
+
+For product titles such as:
+“Domty Guava Nectar 200 ml (1×27)”
+
+I want this part:
+“200 ml (1×27)”
+
+to move to a new line
+
+with smaller text
+
+and lighter / less bold styling than the main product title
+
+4) Responsive images
+
+On smaller screen sizes and other device sizes:
+
+do not let images disappear
+
+instead, make them scale down proportionally
+
+keep layout balanced and responsive
+
+5) Hero section slider
+
+Make the hero section:
+
+contain 3 slides
+
+change automatically by time
+
+each slide should have its own content and image
+
+with smooth motion
+
+use a more polished / modern transition style than the current one
+
+6) Second section in home page background
+
+For the second section on the home page:
+
+use a linear gradient
+
+based on color: #9FBDF5
+
+gradient behavior:
+
+start with 0% opacity
+
+go to 100% opacity in the middle
+
+then return to 0% opacity
+
+it should blend smoothly with surrounding sections
+
+7) Hero section background style
+
+The hero section should have:
+
+a white main background
+
+plus a small mesh gradient / blurred motion accent
+
+using color: #9FBDF5
+
+this effect should be subtle, not covering the whole section
+
+8) Quantity controls near Add to Cart
+
+Add quantity controls:
+
+increase and decrease buttons
+
+positioned beside the “Add To Cart” button
+
+so the user can choose quantity before adding the product
+
+9) Fruit splash image sizing
+
+Make the fruits splash image smaller:
+
+in the Products page
+
+in “You might like” section on the Product Details page
+
+in “Recommended for you” section on the Cart page
+
+Also make sure the main product image and fruit splash image are proportioned better in these sections.
+
+10) Product details background image by product
+
+In Product Details page:
+
+the background image below each product image should be different for each product
+
+but all should keep the same styling system already used in the code
+
+For Mango product, use this image path:
+client/public/images/ProductDetails/Mango_Fruits1_1772994682996.png
+
+Please make this structure reusable so I can assign a different background image per product easily.
+
+11) Ingredients section content source
+
+In the Product Details page:
+
+the Ingredients section should display the product description from Odoo
+
+12) Footer spacing
+
+In the main footer:
+
+the spacing between the 1st and 2nd columns
+should match
+
+the spacing between the 3rd and 4th columns
+
+make the footer column layout visually balanced
+
+13) Global website background
+
+Make the base background color of the whole website:
+
+white
+
+except for sections that intentionally use the gradient background style
+
+keep those gradient sections as they are meant to be
+
+14) Login issue
+
+Sometimes when logging in:
+
+the site shows “welcome back”
+
+but does not redirect to the account page
+
+unless I try 2 or 3 more times
+
+Please fix this login flow so:
+
+successful login always redirects properly
+
+without needing repeated attempts
+
+15) Orders page “View” button
+
+On the orders page:
+
+the “View” button is not working
+
+please fix it so it opens the order details properly
+
+16) Arabic version layout and content issues
+
+Please fix Arabic version behavior carefully.
+
+Product card layout in Arabic
+
+In Arabic mode:
+
+text correctly moves to the right
+
+but product images do not move to the left as they should
+
+this should be fixed for all product cards across pages
+
+Product title translation
+
+In Arabic mode:
+
+product titles are still showing in English
+
+use the Arabic version of the product title instead
+
+17) Scroll-to-top on page navigation
+
+When navigating from one page to another:
+
+the new page currently opens at the same scroll position from the previous page
+
+instead, every new page should open from the top
+
+18) Products page second section not translated
+
+In Arabic version:
+
+the second section in the Products page is still not in Arabic
+
+please fully localize it
+
+19) Brand page Domty card layout
+
+In the Domty card on the Brand page:
+
+add a medium-sized image on the right side of the text
+
+keep about 48px spacing between text and image
+
+make it easy for me to assign the image path there
+
+20) White sections with subtle motion accents
+
+All pages should keep the same white background system except gradient sections.
+
+For sections with white background:
+
+add subtle blurred bubble/circle motion accents inside them
+
+keep it elegant and soft
+
+similar to the motion-blur decorative effect I referenced before
+
+do not overdo it
+
+21) Burger icon animation
+
+In navbar mobile view:
+
+when the burger icon is clicked
+
+it should smoothly transform into an “X”
+
+the middle line should disappear
+
+the top and bottom lines should animate into the X shape
+
+22) Company logo icon update
+
+Replace the current company icon/logo with:
+client/public/favicon.png
+
+Additional notes
+
+Please preserve the current UI direction and do not remove my custom UI edits
+
+Only adjust what is requested above
+
+Keep all changes responsive
+
+Keep Arabic and English versions both fully working
+
+Make the implementation clean and maintainable
+
+Reuse components where possible instead of hardcoding repeated logic
+
+Be careful not to break existing checkout, cart, localization, or Odoo integration while applying these improvements
+
+Please implement all of the above carefully in the existing codebase.
+
+If you want, I can also turn this into a more technical developer-style prompt with sections like:
+“bug fixes”, “UI changes”, “responsive fixes”, “Arabic localization fixes”, and “acceptance criteria” so Replit follows it even more accurately.

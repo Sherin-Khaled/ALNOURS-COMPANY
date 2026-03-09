@@ -68,7 +68,7 @@ Featured Products:
 - Eyebrow: New this week
 - Title: Featured Products
 - Subtitle: Best sellers & top picks this week.
-- Cards: {Flavor} Premium Drink, Meta “Premium Drink • 235 ml & 1000 ml”, Price SAR 30, Button Add To Cart
+- Cards: {Flavor} Premium Drink, Meta “Premium Drink • 200 ml & 1000 ml”, Price SAR 30, Button Add To Cart
 - CTA: View All
 Shop by Flavor:
 - Eyebrow: Browse
@@ -124,16 +124,16 @@ BRANDS
 - Eyebrow: Brands
 - Title: Our Brands
 - Body: We distribute trusted FMCG brands across Saudi Arabia.
-- Domty card body: Domty Premium Drinks are available in 235 ml and 1000 ml—ready to order online.
+- Domty card body: Domty Premium Drinks are available in 200 ml and 1000 ml—ready to order online.
 - CTA: Browse Domty products
 - Note: More brands coming soon.
 - “Domty at a glance” section:
   Eyebrow: What’s inside
   Title: Domty at a glance
-  Body: Premium drinks available in 235 ml and 1000 ml. Explore flavors and shop online.
+  Body: Premium drinks available in 200 ml and 1000 ml. Explore flavors and shop online.
   Cards:
    1) Flavors available — Cocktail, Mango, Guava, Orange
-   2) Sizes — 235 ml • 1000 ml
+   2) Sizes — 200 ml • 1000 ml
    3) Clear product info — Ingredients & nutrition shown per product
   CTA: Shop Domty products
 
@@ -237,7 +237,7 @@ Products (4):
 - mango-premium-drink
 - guava-premium-drink
 - orange-premium-drink
-All price SAR 30. Sizes 235 ml and 1000 ml.
+All price SAR 30. Sizes 200 ml and 1000 ml.
 Nutrition & ingredients use the data we already have; include fields in the mock objects:
 name, slug, flavor, category, sizes[], price, currency, nutrition{fat, calories, carbs, protein?}, ingredients (string), images{packshot, decorations}
 

@@ -2,9 +2,10 @@ import { useOrders } from "@/hooks/use-orders";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import type { Order } from "@shared/schema";
 
 export default function Orders() {
-  const { data: orders, isLoading } = useOrders();
+  const { data: orders, isLoading } = useOrders() as { data: Order[] | undefined; isLoading: boolean };
   const { t } = useLanguage();
 
   if (isLoading) return <div>{t.cta.loading}</div>;
@@ -50,7 +51,7 @@ export default function Orders() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <button className="text-primary font-semibold text-small hover:underline">{t.cta.view}</button>
+                    <Link href={`/account/orders/${order.id}`} className="text-primary font-semibold text-small hover:underline" data-testid={`link-view-order-${order.id}`}>{t.cta.view}</Link>
                   </td>
                 </tr>
               ))}

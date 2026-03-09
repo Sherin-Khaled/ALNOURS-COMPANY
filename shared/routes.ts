@@ -102,6 +102,15 @@ export const api = {
         401: errorSchemas.unauthorized,
       }
     },
+    get: {
+      method: 'GET' as const,
+      path: '/api/orders/:id' as const,
+      responses: {
+        200: z.custom<typeof orders.$inferSelect>(),
+        401: errorSchemas.unauthorized,
+        404: errorSchemas.notFound,
+      }
+    },
     create: {
       method: 'POST' as const,
       path: '/api/orders' as const,

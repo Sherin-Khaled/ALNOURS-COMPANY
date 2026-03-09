@@ -1,10 +1,10 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, User as UserIcon, Menu, X, Citrus } from "lucide-react";
+import { ShoppingBag, User as UserIcon } from "lucide-react";
 import { SiInstagram, SiFacebook, SiLinkedin } from "react-icons/si";
 import { useCart } from "@/store/use-cart";
 import { useAuth } from "@/hooks/use-auth";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { clsx } from "clsx";
 
 export function Navbar() {
@@ -13,6 +13,14 @@ export function Navbar() {
   const { data: user } = useAuth();
   const { locale, setLocale, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -25,13 +33,14 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-neutral-200 h-[56px] md:h-[64px] flex items-center">
+    <nav className={clsx(
+      "fixed top-0 left-0 right-0 z-50 h-[56px] md:h-[64px] flex items-center transition-all duration-300",
+      scrolled ? "bg-white/80 backdrop-blur-md border-b border-neutral-200 shadow-sm" : "bg-transparent"
+    )}>
       <div className="container-custom w-full">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group" data-testid="link-home-logo">
-            <div className="w-10 h-10 bg-primary text-white rounded-md flex items-center justify-center shadow-lg shadow-primary/20">
-              <Citrus className="w-6 h-6" />
-            </div>
+            <img src="/favicon.png" alt="ALNOURS" className="w-10 h-10 rounded-md" />
             <span className="font-sora font-bold text-[20px] md:text-[24px] tracking-tight text-neutral-950">
               ALNOURS
             </span>
@@ -117,11 +126,25 @@ export function Navbar() {
             </div>
 
             <button
-              className="md:hidden w-10 h-10 flex items-center justify-center text-neutral-700"
+              className="md:hidden w-10 h-10 flex items-center justify-center text-neutral-700 relative"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
+              aria-label="Toggle menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <div className="w-5 h-4 relative flex flex-col justify-between">
+                <span className={clsx(
+                  "block h-[2px] w-5 bg-current rounded-full transition-all duration-300 origin-center",
+                  mobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                )} />
+                <span className={clsx(
+                  "block h-[2px] w-5 bg-current rounded-full transition-all duration-200",
+                  mobileMenuOpen ? "opacity-0 scale-x-0" : "opacity-100"
+                )} />
+                <span className={clsx(
+                  "block h-[2px] w-5 bg-current rounded-full transition-all duration-300 origin-center",
+                  mobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                )} />
+              </div>
             </button>
           </div>
         </div>

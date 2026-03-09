@@ -1,4 +1,5 @@
 import { Switch, Route, useLocation } from "wouter";
+import { useEffect } from "react";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -20,6 +21,7 @@ import AccountLayout from "@/pages/account/AccountLayout";
 import AccountOverview from "@/pages/account/AccountOverview";
 import Profile from "@/pages/account/Profile";
 import Orders from "@/pages/account/Orders";
+import OrderDetail from "@/pages/account/OrderDetail";
 import Addresses from "@/pages/account/Addresses";
 import { About, Contact } from "@/pages/StaticPages";
 import Checkout from "@/pages/Checkout";
@@ -28,6 +30,11 @@ import ResetPassword from "@/pages/ResetPassword";
 
 function Router() {
   const [location] = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   const isAuthPage = location === "/login" || location === "/signup" || location === "/forgot-password" || location.startsWith("/reset-password");
 
   return (
@@ -55,6 +62,9 @@ function Router() {
           </Route>
           <Route path="/account/orders">
             <AccountLayout><Orders /></AccountLayout>
+          </Route>
+          <Route path="/account/orders/:id">
+            <AccountLayout><OrderDetail /></AccountLayout>
           </Route>
           <Route path="/account/addresses">
             <AccountLayout><Addresses /></AccountLayout>

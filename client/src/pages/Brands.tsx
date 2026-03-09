@@ -27,25 +27,34 @@ export default function Brands() {
         </div>
         </Reveal>
 
-        {/* Domty Card */}
-        <div className="bg-neutral-50 rounded-section p-8 md:p-12 mb-16 border border-neutral-200">
-          <div className="max-w-2xl">
-            <h2 className="text-h3 text-neutral-950 mb-4">Domty</h2>
-            <p className="text-body text-neutral-700 mb-8">
-              {t.brands.domtyCard.body}
-            </p>
-            <Button asChild className="h-[48px] px-8 bg-primary hover:bg-primary-hover text-white">
-              <Link href="/products">{t.brands.domtyCard.cta}</Link>
-            </Button>
+        <div className="bg-neutral-50 rounded-section p-8 md:p-12 mb-8 border border-neutral-200">
+          <div className="flex flex-col md:flex-row md:items-center gap-8 md:gap-12">
+            <div className="flex-1">
+              <h2 className="text-h3 text-neutral-950 mb-4">Domty</h2>
+              <p className="text-body text-neutral-700 mb-8">
+                {t.brands.domtyCard.body}
+              </p>
+              <Button asChild className="h-[48px] px-8 bg-primary hover:bg-primary-hover text-white">
+                <Link href="/products">{t.brands.domtyCard.cta}</Link>
+              </Button>
+            </div>
+            <div className="md:w-[280px] shrink-0">
+              <img
+                src="/images/Home/domty_juice_cocktail.png"
+                alt="Domty"
+                className="w-full max-w-[280px] h-auto object-contain mx-auto"
+                data-testid="img-domty-card"
+              />
+            </div>
           </div>
         </div>
 
-        <div className="mb-16 italic text-neutral-500">
+        <div className="mb-24 italic text-neutral-500 ">
           {t.brands.note}
         </div>
 
         {/* Domty at a glance */}
-        <div className="bg-white">
+        <div className="text-center">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.brands.glance.eyebrow}</span>
           <h2 className="text-h2 text-neutral-950 mb-4">{t.brands.glance.title}</h2>
           <p className="text-body text-neutral-500 mb-12">

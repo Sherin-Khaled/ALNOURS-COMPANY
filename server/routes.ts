@@ -124,6 +124,17 @@ export async function registerRoutes(
     res.status(200).json(orders);
   });
 
+  app.get(api.orders.get.path, async (req, res) => {
+    if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
+    const orderId = parseInt(req.params.id);
+    if (isNaN(orderId)) return res.status(400).json({ message: "Invalid order ID" });
+    const order = await storage.getOrderById(orderId);
+    if (!order || order.userId !== mockLoggedInUserId) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+    res.status(200).json(order);
+  });
+
   app.post(api.orders.create.path, async (req, res) => {
     if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
     try {
@@ -132,11 +143,20 @@ export async function registerRoutes(
       const allProducts = await storage.getProducts();
       let total = 0;
       const orderItems: { defaultCode: string; quantity: number; price: number }[] = [];
+      const storedItems: { productId: number; name: string; quantity: number; size: string; price: number; image?: string }[] = [];
 
       for (const item of input.items) {
         const product = allProducts.find(p => p.id === item.productId);
         const price = product ? product.price : 30;
         total += item.quantity * price;
+        storedItems.push({
+          productId: item.productId,
+          name: product?.name || "Unknown Product",
+          quantity: item.quantity,
+          size: item.size,
+          price,
+          image: product?.images?.packshot,
+        });
         if (product?.defaultCode) {
           orderItems.push({
             defaultCode: product.defaultCode,
@@ -150,10 +170,11 @@ export async function registerRoutes(
       const order = await storage.createOrder({
         userId: mockLoggedInUserId,
         total,
-        status: "Processing",
+        status: input.paymentMethod === "card" ? "Confirmed" : "Processing",
         paymentMethod: input.paymentMethod,
         paymentStatus: input.paymentMethod === "card" ? "paid" : "pending",
         shippingAddress: input.shippingAddress,
+        items: storedItems,
       });
 
       if (isOdooConfigured() && orderItems.length > 0) {
@@ -276,10 +297,11 @@ async function seedDatabase() {
     const productsData = [
       {
         name: "Cocktail Premium Drink",
+        nameAr: "مشروب كوكتيل بريميوم",
         slug: "cocktail-premium-drink",
         flavor: "Cocktail",
         category: "Juice",
-        sizes: ["235 ml", "1000 ml"],
+        sizes: ["200 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
         defaultCode: "101003",
@@ -289,10 +311,11 @@ async function seedDatabase() {
       },
       {
         name: "Mango Premium Drink",
+        nameAr: "مشروب مانجو بريميوم",
         slug: "mango-premium-drink",
         flavor: "Mango",
         category: "Juice",
-        sizes: ["235 ml", "1000 ml"],
+        sizes: ["200 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
         defaultCode: "101001",
@@ -302,10 +325,11 @@ async function seedDatabase() {
       },
       {
         name: "Guava Premium Drink",
+        nameAr: "مشروب جوافة بريميوم",
         slug: "guava-premium-drink",
         flavor: "Guava",
         category: "Juice",
-        sizes: ["235 ml", "1000 ml"],
+        sizes: ["200 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
         defaultCode: "101002",
@@ -315,10 +339,11 @@ async function seedDatabase() {
       },
       {
         name: "Orange Premium Drink",
+        nameAr: "مشروب برتقال بريميوم",
         slug: "orange-premium-drink",
         flavor: "Orange",
         category: "Juice",
-        sizes: ["235 ml", "1000 ml"],
+        sizes: ["200 ml", "1000 ml"],
         price: 30,
         currency: "SAR",
         defaultCode: "101004",

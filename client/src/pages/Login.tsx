@@ -20,7 +20,7 @@ export default function Login() {
     try {
       await login({ email, password });
       toast({ title: t.auth.login.welcomeToast });
-      setLocation("/account");
+      setTimeout(() => setLocation("/account"), 100);
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
     }

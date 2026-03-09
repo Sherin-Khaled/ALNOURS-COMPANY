@@ -22,13 +22,14 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
     <footer className="mt-16">
       <div className="bg-neutral-50 border-t border-neutral-200 pt-16 pb-10">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             <div>
-              <div className="flex items-center gap-2 mb-5">
-                <div className="w-9 h-9 bg-primary rounded-md flex items-center justify-center">
-                  <Citrus className="w-5 h-5 text-white" />
+              <div className="  mb-2">
+                <div className="">
+                  {/* <Citrus className="w-5 h-5 text-white" /> */}
+                  <img src="/favicon.png" alt="Logo" className="w-12 h-12 " />
                 </div>
-                <span className="font-sora font-bold text-[20px] tracking-tight text-neutral-950">ALNOURS</span>
+                <h2 className="font-inter mt-1 font-bold text-[20px] text-[#0F3D91]">ALNOURS</h2>
               </div>
               <p className="text-small text-neutral-500 leading-relaxed max-w-[280px]">
                 {t.footer.aboutText}
@@ -36,7 +37,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
             </div>
 
             <div>
-              <h4 className="font-sora font-bold text-[16px] text-neutral-950 mb-5">{t.footer.explore}</h4>
+              <h4 className="font-sora font-semibold text-[16px] text-neutral-900 mb-5">{t.footer.explore}</h4>
               <ul className="space-y-3 text-small">
                 <li><Link href="/" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.home}</Link></li>
                 <li><Link href="/products" className="text-neutral-500 hover:text-primary transition-colors">{t.footer.links.products}</Link></li>
@@ -79,14 +80,14 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
         </div>
       </div>
 
-      <div className="bg-neutral-950 py-6">
+      <div className="bg-[#061737] py-8">
         <div className="container-custom">
           <div className="flex flex-col items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-white/10 rounded-md flex items-center justify-center">
-                <Citrus className="w-4 h-4 text-white" />
-              </div>
-              <span className="font-sora font-bold text-[16px] text-white tracking-tight">ALNOURS</span>
+              
+                <img src="/images/logo_miniFooter.png" alt="Logo" className="w-8 h-8 " />
+              {/* 
+              <span className="font-sora font-bold text-[16px] text-white tracking-tight">ALNOURS</span> */}
             </div>
 
             <div className="flex items-center gap-4">

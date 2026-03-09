@@ -7,6 +7,7 @@ import { Reveal } from "@/components/Reveal";
 import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { GradientMesh } from "@/components/GradientMesh";
+import { SubtleAccent } from "@/components/SubtleAccent";
 import { useRef, useEffect, useCallback, useState } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import clsx from "clsx";
@@ -239,59 +240,141 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
 
 function HeroSection() {
   const { t } = useLanguage();
+  const [activeSlide, setActiveSlide] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const SLIDE_INTERVAL = 5000;
+
+  const slides = [
+    {
+      ...(t.home.hero.slides?.s1 ?? { eyebrow: t.home.hero.eyebrow, title: t.home.hero.title, subtitle: t.home.hero.subtitle, body: t.home.hero.body }),
+      bgImg: "/images/Home/fruits_1772895415704.png",
+      fgImg: "/images/Home/domty_juice_cocktail.png",
+      bgAlt: "Fresh fruits",
+      fgAlt: "Premium drink",
+    },
+    {
+      ...(t.home.hero.slides?.s2 ?? { eyebrow: "Premium Selection", title: "Taste the Freshness", subtitle: "Domty premium drinks in every flavor you love.", body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml." }),
+      bgImg: "/images/Home/Fruits_splash.png",
+      fgImg: "/images/Home/domty_juice_cocktail.png",
+      bgAlt: "Fruit splash",
+      fgAlt: "Premium drink",
+    },
+    {
+      ...(t.home.hero.slides?.s3 ?? { eyebrow: "Fast & Reliable", title: "Delivered to Your Door", subtitle: "Reliable delivery across Saudi Arabia.", body: "Order online, pay securely, and get your drinks delivered fast." }),
+      bgImg: "/images/Home/HowWeWork/Delivery_1772913744069.png",
+      fgImg: "/images/Home/first_card_1772910142939.png",
+      bgAlt: "Fast delivery",
+      fgAlt: "Products",
+    },
+  ];
+
+  const resetTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, SLIDE_INTERVAL);
+  }, [slides.length]);
+
+  useEffect(() => {
+    resetTimer();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [resetTimer]);
+
+  const goToSlide = (idx: number) => {
+    setActiveSlide(idx);
+    resetTimer();
+  };
+
+  const slide = slides[activeSlide];
 
   return (
     <section className="relative overflow-hidden bg-neutral-50" style={{ paddingTop: 170, paddingBottom: 96 }}>
       <GradientMesh />
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
-          <Reveal>
-            <div>
-              <span className="text-[18px] font-bold text-[#248399] uppercase tracking-wider mb-4 block">
-                {t.home.hero.eyebrow}
-              </span>
-              <h1 className="text-h1 text-neutral-950 mb-4">{t.home.hero.title}</h1>
-              <h2 className="text-h3 text-neutral-700 mb-6 font-normal">{t.home.hero.subtitle}</h2>
-              <p className="text-body text-neutral-500 mb-10 max-w-xl">{t.home.hero.body}</p>
+          <div>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeSlide}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -24 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <span className="text-[18px] font-bold text-[#248399] uppercase tracking-wider mb-4 block">
+                  {slide.eyebrow}
+                </span>
+                <h1 className="text-h1 text-neutral-950 mb-4">{slide.title}</h1>
+                <h2 className="text-h3 text-neutral-700 mb-6 font-normal">{slide.subtitle}</h2>
+                <p className="text-body text-neutral-500 mb-10 max-w-xl">{slide.body}</p>
+              </motion.div>
+            </AnimatePresence>
 
-              <div className="flex flex-wrap gap-4 mb-24">
-                <Button asChild className="h-[48px] px-8 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold btn-styled">
-                  <Link href="/products">{t.cta.shopProducts}</Link>
-                </Button>
-                <Button asChild className="h-[48px] px-8 rounded-pill border-neutral-200 text-black bg-white hover:bg-primary hover:text-white btn-styled">
-                  <Link href="/contact">{t.cta.contactUs}</Link>
-                </Button>
+            <div className="flex flex-wrap gap-4 mb-12">
+              <Button asChild className="h-[48px] px-8 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold btn-styled">
+                <Link href="/products">{t.cta.shopProducts}</Link>
+              </Button>
+              <Button asChild className="h-[48px] px-8 rounded-pill border-neutral-200 text-black bg-white hover:bg-primary hover:text-white btn-styled">
+                <Link href="/contact">{t.cta.contactUs}</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-3 mb-8">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  data-testid={`button-hero-slide-${idx}`}
+                  className={clsx(
+                    "rounded-full transition-all duration-300",
+                    idx === activeSlide
+                      ? "w-8 h-2 bg-primary"
+                      : "w-2 h-2 bg-neutral-300 hover:bg-neutral-400"
+                  )}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-8">
+              <div className="flex items-center gap-3">
+                <div className="w-[1px] h-[40px] bg-[#248399]" />
+                <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.vatIncluded}</span>
               </div>
-
-              <div className="flex flex-wrap gap-8">
-                <div className="flex items-center gap-3">
-                  <div className="w-[1px] h-[40px] bg-[#248399]" />
-                  <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.vatIncluded}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-[1px] h-[40px] bg-[#248399]" />
-                  <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.fastDelivery}</span>
-                </div>
+              <div className="flex items-center gap-3">
+                <div className="w-[1px] h-[40px] bg-[#248399]" />
+                <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.fastDelivery}</span>
               </div>
             </div>
-          </Reveal>
+          </div>
 
-          <Reveal delay={200}>
-            <div className="relative hidden lg:flex items-center justify-center" style={{ minHeight: 501 }}>
-              <img
-                src="/images/Home/fruits_1772895415704.png"
-                alt="Fresh fruits"
-                className="absolute rounded-section object-cover"
-                style={{ width: 531, height: 501, right: 0, bottom: 0 }}
-              />
-              <img
-                src="/images/Home/domty_juice_cocktail.png"
-                alt="Premium drink"
-                className="relative z-10 object-cover rounded-lg"
-                style={{ width: 203, height: 467 }}
-              />
-            </div>
-          </Reveal>
+          <div className="relative hidden lg:flex items-center justify-center" style={{ minHeight: 501 }}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeSlide}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="relative w-full h-full flex items-center justify-center"
+                style={{ minHeight: 501 }}
+              >
+                <img
+                  src={slide.bgImg}
+                  alt={slide.bgAlt}
+                  className="absolute rounded-section object-cover"
+                  style={{ width: 531, height: 501, right: 0, bottom: 0, maxWidth: "100%" }}
+                />
+                <img
+                  src={slide.fgImg}
+                  alt={slide.fgAlt}
+                  className="relative z-10 object-cover rounded-lg"
+                  style={{ width: 203, height: 467, maxWidth: "50%" }}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
@@ -417,7 +500,7 @@ export default function Home() {
       eyebrow: "STEP 2",
       title: t.home.howItWorks.steps.s2_title,
       description: t.home.howItWorks.steps.s2_body,
-      imageSrc: "/images/Home/HowWeWork/Shopping_page_1772913744071.png",
+      imageSrc: "/images/Home/HowWeWork/rupixen-Q59HmzK38eQ-unsplash_1772913744070.jpg",
     },
     {
       id: 3,
@@ -441,8 +524,9 @@ export default function Home() {
       <HeroSection />
       <FeaturedSection />
 
-      <section className="section-spacing bg-white">
-        <div className="container-custom">
+      <section className="relative section-spacing bg-white overflow-hidden">
+        <SubtleAccent />
+        <div className="container-custom relative z-10">
           <Reveal>
             <div className="text-center mb-12">
               <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.home.flavors.eyebrow}</span>
@@ -469,8 +553,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section-spacing bg-white">
-        <div className="container-custom">
+      <section className="relative section-spacing bg-white overflow-hidden">
+        <SubtleAccent />
+        <div className="container-custom relative z-10">
           <Reveal>
             <div className="text-center">
               <h2 className="text-h2 text-neutral-950">{t.home.howItWorks.title}</h2>

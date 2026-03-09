@@ -49,9 +49,9 @@ export function GradientMesh({ enabled = true, className = "" }: GradientMeshPro
         const radius = Math.min(w, h) * blob.r;
 
         const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-        gradient.addColorStop(0, "rgba(15, 61, 145, 0.07)");
-        gradient.addColorStop(0.5, "rgba(15, 61, 145, 0.03)");
-        gradient.addColorStop(1, "rgba(15, 61, 145, 0)");
+        gradient.addColorStop(0, "rgba(159, 189, 245, 0.15)");
+        gradient.addColorStop(0.5, "rgba(159, 189, 245, 0.06)");
+        gradient.addColorStop(1, "rgba(159, 189, 245, 0)");
 
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, w, h);

@@ -56,7 +56,7 @@ Title: Featured Products
 
 Subtitle: Best sellers & top picks this week.
 
-Card meta template: Premium Drink • 235 ml & 1000 ml
+Card meta template: Premium Drink • 200 ml & 1000 ml
 
 Card price template: SAR 30
 
@@ -132,7 +132,7 @@ Product card template
 
 Title: {Flavor} Premium Drink
 
-Meta: Premium Drink • 235 ml & 1000 ml
+Meta: Premium Drink • 200 ml & 1000 ml
 
 Price: SAR 30
 
@@ -238,7 +238,7 @@ Body: We distribute trusted FMCG brands across Saudi Arabia.
 
 Domty Card
 
-Body: Domty Premium Drinks are available in 235 ml and 1000 ml—ready to order online.
+Body: Domty Premium Drinks are available in 200 ml and 1000 ml—ready to order online.
 
 CTA: Browse Domty products
 
@@ -252,13 +252,13 @@ Eyebrow: What’s inside
 
 Title: Domty at a glance
 
-Body: Premium drinks available in 235 ml and 1000 ml. Explore flavors and shop online.
+Body: Premium drinks available in 200 ml and 1000 ml. Explore flavors and shop online.
 
 Cards:
 
 Flavors available — Cocktail, Mango, Guava, Orange
 
-Sizes — 235 ml • 1000 ml
+Sizes — 200 ml • 1000 ml
 
 Clear product info — Ingredients & nutrition shown per product
 

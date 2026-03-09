@@ -286,10 +286,10 @@ Logout:
 
 (Use in Odoo import + UI)
 
-* Cocktail Premium Drink — 46 kcal — Fat 0% — Carb 12% — sizes 235/1000
-* Mango Premium Drink — 48 kcal — Fat 1% — Carb 17% — sizes 235/1000
-* Guava Premium Drink — 52 kcal — Fat 0% — Carb 13% — Protein 3% — sizes 235/1000
-* Orange Premium Drink — 54 kcal — Carb 13% — sizes 235/1000
+* Cocktail Premium Drink — 46 kcal — Fat 0% — Carb 12% — sizes 200/1000
+* Mango Premium Drink — 48 kcal — Fat 1% — Carb 17% — sizes 200/1000
+* Guava Premium Drink — 52 kcal — Fat 0% — Carb 13% — Protein 3% — sizes 200/1000
+* Orange Premium Drink — 54 kcal — Carb 13% — sizes 200/1000
 
 ---
 

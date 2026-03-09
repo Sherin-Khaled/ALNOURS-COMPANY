@@ -30,6 +30,7 @@ export const addresses = pgTable("addresses", {
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
+  nameAr: text("name_ar"),
   slug: text("slug").notNull().unique(),
   flavor: text("flavor").notNull(),
   category: text("category").notNull(),
@@ -69,6 +70,14 @@ export const orders = pgTable("orders", {
     country: string;
     postalCode?: string;
   }>(),
+  items: jsonb("items").$type<{
+    productId: number;
+    name: string;
+    quantity: number;
+    size: string;
+    price: number;
+    image?: string;
+  }[]>(),
 });
 
 // Zod schemas

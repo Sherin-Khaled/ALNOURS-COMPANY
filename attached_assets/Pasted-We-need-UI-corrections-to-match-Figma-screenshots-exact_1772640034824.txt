@@ -20,7 +20,7 @@ CARD SPEC (Featured carousel card)
   - Title must show FULL (no early truncation). Increase text container width to allow title.
   - Meta must be TWO LINES exactly:
     Line 1: "Premium Drink"
-    Line 2: "235 ml & 1000 ml"
+    Line 2: "200 ml & 1000 ml"
   - Price row below meta.
 - Replace old button behavior with ADD button behavior below (see section 2).
 - Cards row: auto-scroll horizontally over time (slow) + user can scroll horizontally.
@@ -122,7 +122,7 @@ IMPLEMENTATION NOTES (IMPORTANT)
   - Title: allow full width; clamp to 2 lines max if needed.
   - Meta: ALWAYS 2 lines exactly:
     line1 "Premium Drink"
-    line2 "235 ml & 1000 ml"
+    line2 "200 ml & 1000 ml"
 - Provide final list of files changed.
 
 STOP after completing these items. Do not start other pages.

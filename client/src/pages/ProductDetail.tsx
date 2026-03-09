@@ -9,14 +9,20 @@ import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { ProductCard } from "@/components/ProductCard";
 
+const fruitBgMap: Record<string, string> = {
+  mango: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
+  cocktail: "/images/ProductDetails/fruits_1772994682995.png",
+  guava: "/images/ProductDetails/fruits3_1772994682996.png",
+  orange: "/images/ProductDetails/fruits_small_pieces_1772994682994.png",
+};
+
 export default function ProductDetail() {
   const [, params] = useRoute("/products/:slug");
   const { data: product, isLoading } = useProduct(params?.slug || "");
   const { data: allProducts } = useProducts();
   const { addItem } = useCart();
   const { toast } = useToast();
-  const { t } = useLanguage();
-  
+  const { t, locale } = useLanguage();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [ingredientsExpanded, setIngredientsExpanded] = useState(false);
@@ -59,10 +65,10 @@ export default function ProductDetail() {
 
             <div className="relative flex items-center justify-center min-h-[400px]">
               <img
-                src="https://images.unsplash.com/photo-1546173159-315724a31696?w=400&h=400&fit=crop&q=60"
+                src={fruitBgMap[(product.flavor || "").toLowerCase()] || "/images/Home/Fruits_splash.png"}
                 alt=""
-                className="absolute w-[280px] h-[280px] md:w-[320px] md:h-[320px] object-cover rounded-full opacity-25 pointer-events-none"
-                style={{ right: "5%", bottom: "5%", zIndex: 10 }}
+                className="absolute w-[280px] h-[280px] md:w-[320px] md:h-[320px] object-cover rounded-full opacity-100 pointer-events-none"
+                style={{ right: "18%", bottom: "5%", zIndex: 10 }}
                 data-testid="detail-fruit-image"
               />
               <img 
@@ -75,7 +81,7 @@ export default function ProductDetail() {
 
             <div className="flex flex-col">
               <span className="text-label text-neutral-500 uppercase tracking-wider mb-2 block">{t.pdp.brand}</span>
-              <h1 className="text-[32px] md:text-[28px] lg:text-[32px] font-bold text-neutral-950 mb-2" data-testid="text-product-name">{product.name}</h1>
+              <h1 className="text-[32px] md:text-[28px] lg:text-[32px] font-bold text-neutral-950 mb-2" data-testid="text-product-name">{(locale === "ar" && (product as any).nameAr) ? (product as any).nameAr : product.name}</h1>
               <p className="text-body text-neutral-500 mb-6">{t.pdp.meta}</p>
               
               <div className="text-[24px] font-bold text-neutral-950 mb-8" data-testid="text-product-price">
@@ -83,7 +89,7 @@ export default function ProductDetail() {
               </div>
 
               <div className="space-y-8">
-                <div>
+                {/* <div>
                   <h3 className="text-label text-neutral-950 mb-3">{t.pdp.availableSizes}</h3>
                   <div className="flex gap-3 flex-wrap">
                     {product.sizes.map(size => (
@@ -101,9 +107,28 @@ export default function ProductDetail() {
                       </button>
                     ))}
                   </div>
-                </div>
+                </div> */}
 
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                  <div className="flex items-center border border-neutral-200 rounded-md overflow-hidden">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-10 h-[48px] flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-700"
+                      data-testid="button-qty-minus"
+                    >
+                      <span className="text-lg font-bold">−</span>
+                    </button>
+                    <span className="w-12 h-[48px] flex items-center justify-center font-semibold text-lg text-neutral-950 border-x border-neutral-200" data-testid="text-quantity">
+                      {quantity}
+                    </span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-10 h-[48px] flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-700"
+                      data-testid="button-qty-plus"
+                    >
+                      <span className="text-lg font-bold">+</span>
+                    </button>
+                  </div>
                   <Button 
                     onClick={handleAdd}
                     data-testid="button-add-to-cart"
@@ -128,7 +153,7 @@ export default function ProductDetail() {
                 <div className="pt-8 border-t border-neutral-200">
                   <h3 className="text-label text-neutral-950 mb-2 uppercase">{t.pdp.ingredients.label}</h3>
                   <p className={`text-body text-neutral-700 ${ingredientsExpanded ? '' : 'line-clamp-2'}`} data-testid="text-ingredients">
-                    {product.ingredients}
+                    {product.description || product.ingredients}
                   </p>
                   <button className="text-primary font-semibold mt-2 hover:underline" data-testid="button-view-ingredients" onClick={() => setIngredientsExpanded(!ingredientsExpanded)}>
                     {ingredientsExpanded ? t.pdp.ingredients.viewLess : t.pdp.ingredients.viewFull}

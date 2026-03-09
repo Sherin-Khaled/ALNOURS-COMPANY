@@ -11,7 +11,7 @@
     --font-cairo: 'Cairo', sans-serif;
     --font-tajawal: 'Tajawal', sans-serif;
 
-    --background: 210 40% 98%;
+    --background: 0 0% 100%;
     --foreground: 217 33% 17%;
 
     --primary: 218 81% 31%;
@@ -34,6 +34,8 @@
     --border: 214 32% 91%;
     --input: 214 32% 91%;
     --ring: 218 81% 31%;
+
+    --text-primary: 221 39% 11%;
 
     --radius-button: 14px;
     --radius-card: 20px;
@@ -75,8 +77,18 @@
   }
 
   .featured-gradient-bg {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 80%, transparent 100%);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(159, 189, 245, 0) 0%,
+      rgba(159, 189, 245, 0.45) 30%,
+      rgba(159, 189, 245, 0.7) 50%,
+      rgba(159, 189, 245, 0.45) 70%,
+      rgba(159, 189, 245, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
     animation: gradientShift 8s ease-in-out infinite;
   }
 
@@ -84,6 +96,18 @@
     0%, 100% { opacity: 0.7; }
     50% { opacity: 1; }
   }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(20px, -15px) scale(1.05); }
+  66% { transform: translate(-15px, 10px) scale(0.95); }
+}
+
+@keyframes float-slow-reverse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, 15px) scale(0.95); }
+  66% { transform: translate(15px, -10px) scale(1.05); }
 }
 
 @layer utilities {
@@ -111,13 +135,13 @@
     display: none;
   }
 
-  .text-h1 { @apply text-[48px] leading-[56px] font-bold; }
+  .text-h1 { @apply text-[48px] leading-[56px] font-bold; color: hsl(var(--text-primary)); }
   .text-h2 { @apply text-[40px] leading-[48px] font-bold; }
   .text-h3 { @apply text-[32px] leading-[40px] font-semibold; }
-  .text-body { @apply text-[18px] leading-[32px] font-normal; }
+  .text-body { @apply text-[18px] leading-[32px] font-normal; color: hsl(var(--text-primary)); }
   .text-small { @apply text-[14px] leading-[22px]; }
   .text-h4 { @apply text-[24px] leading-[32px] font-semibold; }
-  .text-label { @apply text-[13px] leading-[18px] font-semibold; }
+  .text-label { font-family: var(--font-inter); @apply text-[14px] leading-[14px] font-semibold uppercase tracking-[0.04em]; }
 
   @media (max-width: 1024px) {
     .text-h1 { @apply text-[40px] leading-[48px]; }

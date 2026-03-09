@@ -11,51 +11,63 @@ interface ProductCardProps {
 const variantStyles = {
   featured: {
     width: 251,
-    height: 216,
+    minHeight: 210,
     imgHeight: 180,
     imgRight: -16,
     imgTop: 8,
-    fruitSize: 120,
+    fruitSize: 160, // ✅ width only
     fruitRight: -8,
     fruitBottom: -10,
-    textMaxW: "65%",
+    textMaxW: "68%",
     titleClass: "text-[14px] leading-[18px] font-semibold line-clamp-2",
     buttonVariant: "compact" as const,
     padding: "p-4",
   },
   grid: {
     width: undefined,
-    height: 270,
+    minHeight: 230,
     imgHeight: 230,
     imgRight: -20,
     imgTop: 10,
-    fruitSize: 160,
+    fruitSize: 180, // ✅ width only - reduced for better proportion
     fruitRight: -10,
-    fruitBottom: -20,
-    textMaxW: "60%",
+    fruitBottom: -18,
+    textMaxW: "66%",
     titleClass: "text-[18px] leading-[24px] font-semibold line-clamp-2",
     buttonVariant: "full" as const,
     padding: "p-6",
   },
   related: {
     width: 280,
-    height: 230,
+    minHeight: 220,
     imgHeight: 190,
     imgRight: -16,
     imgTop: 8,
-    fruitSize: 130,
+    fruitSize: 170, // ✅ width only - reduced for better proportion
     fruitRight: -8,
     fruitBottom: -12,
-    textMaxW: "58%",
+    textMaxW: "64%",
     titleClass: "text-[15px] leading-[20px] font-semibold line-clamp-2",
     buttonVariant: "compact" as const,
     padding: "p-4",
   },
 };
 
+// Helper function to parse product name and extract size info
+function parsProductName(name: string): { title: string; size?: string } {
+  const sizeMatch = name.match(/^(.+?)\s+(\d+\s*ml\s*\([^)]+\))$/i);
+  if (sizeMatch) {
+    return { title: sizeMatch[1], size: sizeMatch[2] };
+  }
+  return { title: name };
+}
+
 export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
   const s = variantStyles[variant];
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+  const isRtl = locale === "ar";
+  const displayName = (isRtl && (product as any).nameAr) ? (product as any).nameAr : product.name;
+  const { title, size } = parsProductName(displayName);
 
   return (
     <Link
@@ -66,64 +78,79 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
       <div
         className={`relative rounded-[20px] overflow-visible ${s.padding}`}
         style={{
-          height: s.height,
+          minHeight: s.minHeight,
           width: s.width,
           backgroundColor: "rgba(237,242,253,0.5)",
         }}
       >
-        <div
-          className="flex flex-col h-full relative z-10"
-          style={{ maxWidth: s.textMaxW }}
-        >
-          <h3 className={`${s.titleClass} text-neutral-950`}>
-            {product.name}
-          </h3>
-          <div className="mt-1">
-            <p className="text-[12px] leading-[16px] text-neutral-500">
-              {t.product.premiumDrink}
-            </p>
-            <p className="text-[12px] leading-[16px] text-neutral-500">
-              {product.sizes.join(" & ")}
-            </p>
+        <div className="relative z-20 flex flex-col gap-3" style={{ maxWidth: s.textMaxW }}>
+          <div>
+            <h3 className={`${s.titleClass} text-neutral-950`}>{title}</h3>
+            {size && (
+              <p className="text-[13px] leading-[17px] text-neutral-400 font-normal">{size}</p>
+            )}
           </div>
-          <div className="mt-auto flex items-end justify-between">
-            <div>
-              <span className="text-[11px] text-neutral-500">
-                {product.currency}
-              </span>
-              <span className="text-[20px] font-bold text-neutral-950 ml-1">
-                {product.price}
-              </span>
+
+          <div className="space-y-1">
+            <p className="text-[12px] leading-[16px] text-neutral-500">{t.product.premiumDrink}</p>
+            <p className="text-[12px] leading-[16px] text-neutral-500">{product.sizes.join(" & ")}</p>
+          </div>
+
+          <div className="pt-2 flex flex-col gap-3">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[11px] text-neutral-500">{product.currency}</span>
+              <span className="text-[20px] font-bold text-neutral-950">{product.price}</span>
             </div>
-            <AddButton variant={s.buttonVariant} product={product} />
+
+            <div className="w-fit">
+              <AddButton variant={s.buttonVariant} product={product} />
+            </div>
           </div>
         </div>
 
-        <img
-          src="client/public/images/Home/Fruits_splash.png"
-          alt=""
-          className="absolute object-cover rounded-full opacity-30 pointer-events-none"
+        <div
+          className="absolute pointer-events-none select-none"
           style={{
-            width: s.fruitSize,
-            height: s.fruitSize,
-            right: s.fruitRight,
-            bottom: s.fruitBottom,
-            zIndex: 15,
-          }}
-        />
-
-        <img
-          src={product.images?.packshot}
-          alt={product.name}
-          className="absolute object-contain group-hover:scale-105 transition-transform duration-500 pointer-events-none"
-          style={{
-            height: s.imgHeight,
-            right: s.imgRight,
+            ...(isRtl ? { left: s.imgRight } : { right: s.imgRight }),
             top: s.imgTop,
-            zIndex: 20,
-            width: "auto",
+            zIndex: 30,
+            height: s.imgHeight,
           }}
-        />
+        >
+          <div className="relative h-full">
+            {/* ✅ Fruit splash: width fixed, height auto, ratio-safe */}
+            <img
+              src="/images/Home/Fruits_splash.png"
+              alt=""
+              className="fruit-splash absolute pointer-events-none select-none"
+              style={{
+                width: s.fruitSize,      // ✅ 262
+                height: "auto",          // ✅ keeps aspect ratio
+                maxWidth: "none",        // ✅ prevents global max-width squeezing
+                maxHeight: "none",       // ✅ prevents global max-height squeezing
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 10,
+                opacity: 0.9,
+                display: "block",
+              }}
+            />
+
+            {/* Packshot */}
+            <img
+              src={product.images?.packshot}
+              alt={product.name}
+              className="relative object-contain pointer-events-none select-none group-hover:scale-105 transition-transform duration-500"
+              style={{
+                height: s.imgHeight,
+                width: "auto",
+                zIndex: 30,
+                display: "block",
+              }}
+            />
+          </div>
+        </div>
       </div>
     </Link>
   );
