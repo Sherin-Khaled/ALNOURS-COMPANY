@@ -14,7 +14,7 @@ export default function Brands() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-16">
+    <div className="min-h-screen pt-32 pb-16">
       <SEO title={t.seo.brands.title} description={t.seo.brands.description} />
       <div className="container-custom">
         <Reveal>
@@ -40,9 +40,9 @@ export default function Brands() {
             </div>
             <div className="md:w-[280px] shrink-0">
               <img
-                src="/images/Home/domty_juice_cocktail.png"
+                src="/images/brands/Domty_logo_1773156841205.png"
                 alt="Domty"
-                className="w-full max-w-[280px] h-auto object-contain mx-auto"
+                className="w-full max-w-[180px] h-auto object-contain mx-auto"
                 data-testid="img-domty-card"
               />
             </div>

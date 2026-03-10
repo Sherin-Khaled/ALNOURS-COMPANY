@@ -85,7 +85,7 @@ Preferred communication style: Simple, everyday language.
 - `client/src/pages/StaticPages.tsx` — About + Contact pages (contact form wired to POST /api/contact → Odoo CRM lead)
 - `client/src/components/SubtleAccent.tsx` — Animated blurred floating circles for white section backgrounds
 - `client/src/pages/Home.tsx` — Hero (3-slide auto-slider, GradientMesh), Featured Products (#9FBDF5 gradient bg), Shop by Flavor (SubtleAccent), How it works (SubtleAccent)
-- `client/src/pages/ProductDetail.tsx` — Per-product fruit bg image, layered drink+fruit images, quantity +/- controls, expandable ingredients (uses Odoo description), "You might like" related products
+- `client/src/pages/ProductDetail.tsx` — Per-product fruit bg image, layered drink+fruit images, circular quantity +/- controls (rounded-full with hover:border-primary), expandable ingredients (uses Odoo description), "You might like" related products
 - `client/src/pages/Brands.tsx` — "Domty at a glance" cards with image on Domty card
 - `client/src/pages/account/OrderDetail.tsx` — Order detail page showing items, summary, payment, shipping
 - `client/src/pages/Checkout.tsx` — Multi-step checkout: Shipping → Payment (Card test mode / COD) → Review & Confirm
@@ -94,7 +94,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Navbar Behavior
 - **Scroll effect:** Transparent at top of page; on scroll, gains white bg with 80% opacity + blur (smooth transition)
-- **Logo:** Uses `/favicon.png` image
+- **Logo:** Uses `/images/Alnours_logo.png` image
 - **Burger menu:** CSS animated burger-to-X transformation
 - **Guest (not signed in):** Social icons (Instagram, Facebook, LinkedIn) + Cart icon + "Sign in" button + Language toggle
 - **Signed in:** Cart icon + Account icon + Language toggle (no social icons, no sign in)

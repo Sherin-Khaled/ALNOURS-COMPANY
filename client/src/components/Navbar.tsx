@@ -39,11 +39,8 @@ export function Navbar() {
     )}>
       <div className="container-custom w-full">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group" data-testid="link-home-logo">
-            <img src="/favicon.png" alt="ALNOURS" className="w-10 h-10 rounded-md" />
-            <span className="font-sora font-bold text-[20px] md:text-[24px] tracking-tight text-neutral-950">
-              ALNOURS
-            </span>
+          <Link href="/" className="flex items-center group" data-testid="link-home-logo">
+            <img src="/images/Alnours_logo.png" alt="ALNOURS" className="h-9 md:h-11 w-auto object-contain" />
           </Link>
 
           <div className="hidden md:flex items-center gap-6">

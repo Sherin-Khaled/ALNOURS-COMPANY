@@ -314,7 +314,7 @@ export default function Products() {
           </div>
         )}
 
-        <section className="mt-24 border-t border-neutral-200 pt-16">
+        <section className="mt-24 border-t  pt-16">
           <Reveal>
             <div className="text-center">
               <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.products.whyAlnoursTimeline.eyebrow}</span>

@@ -15,11 +15,11 @@ const variantStyles = {
     imgHeight: 180,
     imgRight: -16,
     imgTop: 8,
-    fruitSize: 160, // ✅ width only
+    fruitSize: 160,
     fruitRight: -8,
     fruitBottom: -10,
     textMaxW: "68%",
-    titleClass: "text-[14px] leading-[18px] font-semibold line-clamp-2",
+    titleClass: "text-[14px] leading-[18px] font-semibold line-clamp-1",
     buttonVariant: "compact" as const,
     padding: "p-4",
   },
@@ -67,7 +67,9 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
   const { locale, t } = useLanguage();
   const isRtl = locale === "ar";
   const displayName = (isRtl && (product as any).nameAr) ? (product as any).nameAr : product.name;
-  const { title, size } = parsProductName(displayName);
+  const parsed = parsProductName(displayName);
+  const title = parsed.title;
+  const size = parsed.size || (product.sizes?.length ? product.sizes.join(" & ") : undefined);
 
   return (
     <Link
@@ -93,7 +95,6 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
 
           <div className="space-y-1">
             <p className="text-[12px] leading-[16px] text-neutral-500">{t.product.premiumDrink}</p>
-            <p className="text-[12px] leading-[16px] text-neutral-500">{product.sizes.join(" & ")}</p>
           </div>
 
           <div className="pt-2 flex flex-col gap-3">

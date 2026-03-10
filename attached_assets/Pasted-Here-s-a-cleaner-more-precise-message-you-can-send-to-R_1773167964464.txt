@@ -1,0 +1,182 @@
+Here’s a cleaner, more precise message you can send to Replit:
+
+---
+
+Please continue refining the website, but **do not change anything outside the points below** and **do not overwrite the UI work that is already correct**.
+Some parts were done well, but some parts still need to be fixed carefully.
+
+## 1) Button stroke / border style
+
+I want **all buttons across the website** to have the same elegant stroked border style inspired by the reference CSS style I shared, but adapted to **our brand colors**.
+
+### Requirements:
+
+* Apply this to all main buttons consistently
+* Keep the current button shapes and general style direction
+* The **stroke/border** should feel refined and slightly premium, not harsh
+* Use a **gradient border/stroke look** based on our palette:
+
+  * from `#EDF2FD`
+  * to `#0F3D91`
+* You can use intermediate shades from the same range to make it look natural
+* The final result should feel soft, glossy, and balanced with our UI, not too heavy
+
+## 2) Gradient section animation
+
+I want the gradient sections to feel more alive and premium, using the same motion idea as the animation code I shared.
+
+### Requirements:
+
+* Apply animated background movement similar to:
+
+  * background-position moving left to right and back
+  * smooth loop
+  * duration around **26s**
+  * easing similar to the sample
+* Use our colors instead of the original:
+
+  * primary shades from `#EDF2FD` to `#0F3D91`
+  * also add a subtle amount of the secondary shades:
+
+    * `#EFF9FB`
+    * `#41B6D2`
+    * `#2FA9C6`
+* Keep the effect elegant and soft, not too strong
+* The gradient sections should still feel clean and premium
+
+## 3) Hero section image fixes
+
+Please update the hero section on the Home page:
+
+### Required:
+
+* **Second slide drink image** should be the **mango juice drink**
+* **Third slide drink image** should be the **orange juice drink**
+* Make **all hero images slightly smaller**
+* Make them **load faster** when the website opens
+* For the **third slide**, make sure this image fits correctly:
+
+  * `fruits3_1773154648555.png`
+* The fitting should look polished, not cropped badly or stretched
+
+## 4) Products section cards on Home page
+
+In the Home page products section:
+
+* make all product cards have the **same height**
+* to help with that, make product names like:
+
+  * `Domty Cocktail Nectar`
+    stay in **one line only** in that cards section
+* this change is only for that cards section where needed, so the cards stay aligned and equal height
+
+## 5) Flavors section image layout
+
+In the Flavors section:
+
+* I want it to show the 4 images like in the reference screenshot
+* some fruit parts can visually go outside the image itself
+* but this must **not affect the spacing between cards**
+* the distance between the 4 items must stay **equal and consistent**
+
+### Use these image paths:
+
+* `client/public/images/Home/Flavors/first_card_1773156175998.png`
+* `client/public/images/Home/Flavors/mango_1773156175999.png`
+* `client/public/images/Home/Flavors/guava_1773156175999.png`
+* `client/public/images/Home/Flavors/orange_1773156175999.png`
+
+### Important:
+
+* I already added these paths, but the images still do not appear
+* please fix the path/rendering issue correctly
+* do not break the section layout
+
+## 6) Contact Us section hover behavior
+
+In the **Contact us** section on both:
+
+* About page
+* Contact Us page
+
+I want the contact info cards/items to behave like this:
+
+* normal state: no extra white hover card effect
+* on hover only:
+
+  * white background appears
+  * soft shadow appears
+* keep it elegant and subtle
+
+## 7) “What we do” section fixes
+
+In the **What we do** section:
+
+* center the icons inside each card
+* increase the height of the gradient background in this section a little bit
+* keep spacing and alignment clean
+
+## 8) Text on dark blue backgrounds
+
+Anywhere there is a **dark blue background**:
+
+* make the text color **white**
+* ensure contrast is clear and readable everywhere
+
+## 9) Quantity buttons in Product Detail page
+
+In the Product Detail page:
+
+* make the increase/decrease quantity buttons match the style in the second screenshot
+* also place quantity controls beside the **Add** button
+* you can use small circles/buttons if that helps match the design better
+* make it polished and user-friendly
+
+## 10) Product cards text under title
+
+In the product cards, replace:
+
+* `235 ml & 1000 ml`
+
+with:
+
+* `200 ml (1×27)`
+
+### Important:
+
+* this text should come from **Odoo**
+* because the product title in Odoo already contains:
+
+  * product name
+  * plus `200 ml (1×27)`
+* so please extract/use the correct packaging text from Odoo data rather than hardcoding random text
+
+## 11) Navbar logo
+
+In the navbar:
+
+* replace the current icon + company name combination
+* use this logo image instead:
+
+  * `client/public/images/Alnours_logo.png`
+
+### Important:
+
+* use the logo image itself as the navbar brand
+* keep it clean, aligned, and responsive
+* do not distort it
+
+## Important implementation notes
+
+* Please keep everything else that is already correct
+* Do not redesign unrelated sections
+* Do not change spacing, components, or styles unless one of the notes above requires it
+* Make all updates responsive
+* Keep English and Arabic versions working correctly
+* Keep the implementation clean and reusable, not hardcoded in a messy way
+
+Please apply these fixes carefully and only to the requested areas.
+
+---
+
+If you want, I can also turn this into a stricter **developer checklist version** so Replit can follow it point by point with less chance of missing anything.

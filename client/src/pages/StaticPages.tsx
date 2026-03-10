@@ -53,8 +53,8 @@ export function About() {
         </div>
       </section>
 
-      <section className="section-spacing relative overflow-hidden">
-        <div className="featured-gradient-bg" />
+      <section className="relative overflow-hidden" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
+        <div className="featured-gradient-bg" style={{ top: "-2rem", bottom: "-2rem" }} />
         <div className="container-custom relative z-10">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.about.whatWeDo.eyebrow}</span>
           <h2 className="text-h2 text-neutral-950 mb-4">{t.about.whatWeDo.title}</h2>
@@ -68,8 +68,8 @@ export function About() {
               { title: t.about.whatWeDo.cards.ordering.title, desc: t.about.whatWeDo.cards.ordering.body, icon: ShoppingCart },
               { title: t.about.whatWeDo.cards.fulfillment.title, desc: t.about.whatWeDo.cards.fulfillment.body, icon: Package }
             ].map((card, i) => (
-              <div key={i} className="bg-[#EDF2FD] p-8 rounded-[20px] card-hover-shadow">
-                <card.icon className="w-8 h-8 text-[#0F3D91] mb-4 text-center" />
+              <div key={i} className="bg-[#EDF2FD] p-8 rounded-[20px] card-hover-shadow flex flex-col items-center">
+                <card.icon className="w-8 h-8 text-[#0F3D91] mb-4" />
                 <h3 className="text-h4 text-neutral-950 mb-3">{card.title}</h3>
                 <p className="text-body text-neutral-700">{card.desc}</p>
               </div>
@@ -199,28 +199,20 @@ export function Contact() {
 function ContactInfo() {
   const { t } = useLanguage();
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 ">
-      <div className="flex items-center gap-3 text-neutral-700">
-        <Mail className="w-5 h-5 text-[#0F3D91]" />
-        <div>
-          <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.mail}</span>
-          <span className="text-small">hello@alnours.sa</span>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      {[
+        { icon: Mail, label: t.about.contactCta.labels.mail, value: "hello@alnours.sa" },
+        { icon: Phone, label: t.about.contactCta.labels.call, value: "+966 50 123 4567" },
+        { icon: MapPin, label: t.about.contactCta.labels.address, value: "Al Olaya, Riyadh" },
+      ].map((item, i) => (
+        <div key={i} className="flex items-center gap-3 text-neutral-700 p-4 rounded-[16px] transition-all duration-300 hover:bg-white hover:shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+          <item.icon className="w-5 h-5 text-[#0F3D91] shrink-0" />
+          <div>
+            <span className="text-label text-neutral-500 block">{item.label}</span>
+            <span className="text-small">{item.value}</span>
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-3 text-neutral-700">
-        <Phone className="w-5 h-5 text-[#0F3D91]" />
-        <div>
-          <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.call}</span>
-          <span className="text-small">+966 50 123 4567</span>
-        </div>
-      </div>
-      <div className="flex items-center gap-3 text-neutral-700">
-        <MapPin className="w-5 h-5 text-[#0F3D91]" />
-        <div>
-          <span className="text-label text-neutral-500 block">{t.about.contactCta.labels.address}</span>
-          <span className="text-small">Al Olaya, Riyadh</span>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
@@ -237,7 +229,7 @@ function ContactCTASection() {
         </p>
 
         <div className="flex flex-wrap gap-4 mb-12">
-          <Button asChild className="h-12 px-8 rounded-md bg-secondary hover:bg-secondary/90 text-white font-semibold">
+          <Button asChild className="h-12 px-8 rounded-md bg-[#0F3D91] hover:bg-[#0A285E] text-white font-semibold">
             <a href="https://wa.me/966501234567" target="_blank" rel="noopener noreferrer">
               <MessageCircle className="w-5 h-5 mr-2" /> {t.cta.whatsappUs}
             </a>

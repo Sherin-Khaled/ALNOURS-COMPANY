@@ -13,7 +13,7 @@ const fruitBgMap: Record<string, string> = {
   mango: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
   cocktail: "/images/ProductDetails/fruits_1772994682995.png",
   guava: "/images/ProductDetails/fruits3_1772994682996.png",
-  orange: "/images/ProductDetails/fruits_small_pieces_1772994682994.png",
+  orange: "/images/ProductDetails/Orange_fruits_1773165244565.png",
 };
 
 export default function ProductDetail() {
@@ -109,30 +109,30 @@ export default function ProductDetail() {
                   </div>
                 </div> */}
 
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <div className="flex items-center border border-neutral-200 rounded-md overflow-hidden">
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
                     <button
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-[48px] flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-700"
+                      className="w-10 h-10 rounded-full border-2 border-neutral-200 flex items-center justify-center hover:border-primary hover:text-primary transition-all text-neutral-600 bg-white"
                       data-testid="button-qty-minus"
                     >
-                      <span className="text-lg font-bold">−</span>
+                      <span className="text-lg font-bold leading-none">−</span>
                     </button>
-                    <span className="w-12 h-[48px] flex items-center justify-center font-semibold text-lg text-neutral-950 border-x border-neutral-200" data-testid="text-quantity">
+                    <span className="w-8 text-center font-bold text-xl text-neutral-950 tabular-nums" data-testid="text-quantity">
                       {quantity}
                     </span>
                     <button
                       onClick={() => setQuantity(quantity + 1)}
-                      className="w-10 h-[48px] flex items-center justify-center hover:bg-neutral-50 transition-colors text-neutral-700"
+                      className="w-10 h-10 rounded-full border-2 border-neutral-200 flex items-center justify-center hover:border-primary hover:text-primary transition-all text-neutral-600 bg-white"
                       data-testid="button-qty-plus"
                     >
-                      <span className="text-lg font-bold">+</span>
+                      <span className="text-lg font-bold leading-none">+</span>
                     </button>
                   </div>
                   <Button 
                     onClick={handleAdd}
                     data-testid="button-add-to-cart"
-                    className="h-[48px] px-10 bg-primary hover:bg-primary-hover text-white rounded-md font-bold text-lg flex-1"
+                    className="h-[48px] px-10 bg-primary hover:bg-primary-hover text-white rounded-pill font-bold text-lg flex-1 btn-styled"
                   >
                     {t.cta.addToCart}
                   </Button>

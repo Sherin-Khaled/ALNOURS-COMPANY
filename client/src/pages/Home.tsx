@@ -9,7 +9,13 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { GradientMesh } from "@/components/GradientMesh";
 import { SubtleAccent } from "@/components/SubtleAccent";
 import { useRef, useEffect, useCallback, useState } from "react";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
+} from "framer-motion";
 import clsx from "clsx";
 
 type Step = {
@@ -17,7 +23,7 @@ type Step = {
   eyebrow: string;
   title: string;
   description: string;
-  imageSrc?: string; // optional
+  imageSrc?: string;
 };
 
 function ProcessTimeline({ steps }: { steps: Step[] }) {
@@ -76,7 +82,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
   const Mobile = (
     <div className="md:hidden">
       <div className="container-custom">
-        <div className="space-y-6">
+        <div className="space-y-6 mt-10">
           {steps.map((step, i) => (
             <div
               key={step.id}
@@ -88,7 +94,9 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
             >
               <div className="flex items-center gap-3">
                 <div className="h-[40px] w-[40px] rounded-full bg-primary flex items-center justify-center">
-                  <span className="font-semibold text-[16px] leading-[20px] text-white">{i + 1}</span>
+                  <span className="font-semibold text-[16px] leading-[20px] text-white">
+                    {i + 1}
+                  </span>
                 </div>
 
                 <p className="text-[12px] leading-[16px] uppercase tracking-[0.14em] text-primary">
@@ -96,13 +104,25 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                 </p>
               </div>
 
-              <h3 className="mt-4 font-bold text-[22px] leading-[30px] text-neutral-950">{step.title}</h3>
+              <h3 className="mt-4 font-bold text-[22px] leading-[30px] text-neutral-950">
+                {step.title}
+              </h3>
 
-              <p className="mt-2 text-[16px] leading-[26px] text-neutral-700">{step.description}</p>
+              <p className="mt-2 text-[16px] leading-[26px] text-neutral-700">
+                {step.description}
+              </p>
 
               {step.imageSrc ? (
-                <div className="mt-4 relative w-full overflow-hidden rounded-section shadow-xl aspect-[3/2] bg-white">
-                  <img src={step.imageSrc} alt={step.title} className="w-full h-full object-cover" />
+                <div className="mt-4 relative w-full overflow-hidden rounded-section shadow-xl aspect-[4/3] bg-white flex items-center justify-center">
+                  <img
+                    src={step.imageSrc}
+                    alt={step.title}
+                    className={clsx(
+                      "max-w-full max-h-full",
+                      step.id === 1 ? "object-contain" : "object-cover"
+                    )}
+                    style={{ width: "100%", height: "100%" }}
+                  />
                 </div>
               ) : null}
             </div>
@@ -132,7 +152,8 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                     const isVisited = i < currentStepIndex;
 
                     const innerBg = isActive || isVisited ? "bg-primary" : "bg-neutral-200";
-                    const numberColor = isActive || isVisited ? "text-white" : "text-neutral-500";
+                    const numberColor =
+                      isActive || isVisited ? "text-white" : "text-neutral-500";
 
                     return (
                       <button
@@ -143,14 +164,21 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                         aria-current={isActive ? "step" : undefined}
                         aria-label={`Go to step ${i + 1}`}
                       >
-                        {isActive && <div className="absolute inset-0 rounded-full border-2 border-primary" />}
+                        {isActive && (
+                          <div className="absolute inset-0 rounded-full border-2 border-primary" />
+                        )}
                         <div
                           className={clsx(
                             "h-[40px] w-[40px] rounded-full flex items-center justify-center transition-colors duration-300",
                             innerBg
                           )}
                         >
-                          <span className={clsx("font-semibold text-[16px] leading-[20px]", numberColor)}>
+                          <span
+                            className={clsx(
+                              "font-semibold text-[16px] leading-[20px]",
+                              numberColor
+                            )}
+                          >
                             {i + 1}
                           </span>
                         </div>
@@ -184,7 +212,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
             </div>
 
             <div className="flex justify-end">
-              <div className="w-full max-w-[520px]">
+              <div className="w-full max-w-[420px] flex justify-end">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={steps[currentStepIndex]?.id ?? currentStepIndex}
@@ -192,18 +220,21 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.02 }}
                     transition={{ duration: 0.45 }}
-                    className="relative w-full overflow-hidden rounded-section shadow-2xl bg-white border border-neutral-100"
+                    className="relative overflow-hidden rounded-section shadow-xl bg-white border border-neutral-100"
+                    style={{ width: 340 }}
                   >
-                    <div className="relative w-full aspect-[16/10]">
+                    <div className="relative w-full aspect-[4/3] bg-white flex items-center justify-center">
                       {steps[currentStepIndex].imageSrc ? (
                         <img
                           src={steps[currentStepIndex].imageSrc}
                           alt={steps[currentStepIndex].title}
-                          className="absolute inset-0 w-full h-full object-cover"
+                          className={clsx(
+                            "max-w-full max-h-full",
+                            steps[currentStepIndex].id === 1 ? "object-contain" : "object-cover"
+                          )}
+                          style={{ width: "100%", height: "100%" }}
                         />
-                      ) : (
-                        <div className="absolute inset-0 bg-neutral-50" />
-                      )}
+                      ) : null}
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -230,12 +261,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
     </div>
   );
 
-  return (
-    <div className="relative">
-      {Mobile}
-      {Desktop}
-    </div>
-  );
+  return <div className="relative">{Mobile}{Desktop}</div>;
 }
 
 function HeroSection() {
@@ -246,25 +272,40 @@ function HeroSection() {
 
   const slides = [
     {
-      ...(t.home.hero.slides?.s1 ?? { eyebrow: t.home.hero.eyebrow, title: t.home.hero.title, subtitle: t.home.hero.subtitle, body: t.home.hero.body }),
+      ...(t.home.hero.slides?.s1 ?? {
+        eyebrow: t.home.hero.eyebrow,
+        title: t.home.hero.title,
+        subtitle: t.home.hero.subtitle,
+        body: t.home.hero.body,
+      }),
       bgImg: "/images/Home/fruits_1772895415704.png",
       fgImg: "/images/Home/domty_juice_cocktail.png",
       bgAlt: "Fresh fruits",
       fgAlt: "Premium drink",
     },
     {
-      ...(t.home.hero.slides?.s2 ?? { eyebrow: "Premium Selection", title: "Taste the Freshness", subtitle: "Domty premium drinks in every flavor you love.", body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml." }),
-      bgImg: "/images/Home/Fruits_splash.png",
-      fgImg: "/images/Home/domty_juice_cocktail.png",
+      ...(t.home.hero.slides?.s2 ?? {
+        eyebrow: "Premium Selection",
+        title: "Taste the Freshness",
+        subtitle: "Domty premium drinks in every flavor you love.",
+        body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml.",
+      }),
+      bgImg: "/images/Home/fruit2_1773154059103.png",
+      fgImg: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
       bgAlt: "Fruit splash",
-      fgAlt: "Premium drink",
+      fgAlt: "Mango juice drink",
     },
     {
-      ...(t.home.hero.slides?.s3 ?? { eyebrow: "Fast & Reliable", title: "Delivered to Your Door", subtitle: "Reliable delivery across Saudi Arabia.", body: "Order online, pay securely, and get your drinks delivered fast." }),
-      bgImg: "/images/Home/HowWeWork/Delivery_1772913744069.png",
-      fgImg: "/images/Home/first_card_1772910142939.png",
+      ...(t.home.hero.slides?.s3 ?? {
+        eyebrow: "Fast & Reliable",
+        title: "Delivered to Your Door",
+        subtitle: "Reliable delivery across Saudi Arabia.",
+        body: "Order online, pay securely, and get your drinks delivered fast.",
+      }),
+      bgImg: "/images/Home/fruits3_1773154648555.png",
+      fgImg: "/images/ProductDetails/Orange_fruits_1773165244565.png",
       bgAlt: "Fast delivery",
-      fgAlt: "Products",
+      fgAlt: "Orange juice drink",
     },
   ];
 
@@ -277,7 +318,9 @@ function HeroSection() {
 
   useEffect(() => {
     resetTimer();
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [resetTimer]);
 
   const goToSlide = (idx: number) => {
@@ -288,7 +331,10 @@ function HeroSection() {
   const slide = slides[activeSlide];
 
   return (
-    <section className="relative overflow-hidden bg-neutral-50" style={{ paddingTop: 170, paddingBottom: 96 }}>
+    <section
+      className="relative overflow-hidden "
+      style={{ paddingTop: 170, paddingBottom: 96 }}
+    >
       <GradientMesh />
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
@@ -311,10 +357,16 @@ function HeroSection() {
             </AnimatePresence>
 
             <div className="flex flex-wrap gap-4 mb-12">
-              <Button asChild className="h-[48px] px-8 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold btn-styled">
+              <Button
+                asChild
+                className="h-[48px] px-8 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold btn-styled"
+              >
                 <Link href="/products">{t.cta.shopProducts}</Link>
               </Button>
-              <Button asChild className="h-[48px] px-8 rounded-pill border-neutral-200 text-black bg-white hover:bg-primary hover:text-white btn-styled">
+              <Button
+                asChild
+                className="h-[48px] px-8 rounded-pill border-neutral-200 text-black bg-white hover:bg-primary hover:text-white btn-styled"
+              >
                 <Link href="/contact">{t.cta.contactUs}</Link>
               </Button>
             </div>
@@ -340,16 +392,23 @@ function HeroSection() {
             <div className="flex flex-wrap gap-8">
               <div className="flex items-center gap-3">
                 <div className="w-[1px] h-[40px] bg-[#248399]" />
-                <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.vatIncluded}</span>
+                <span className="text-[18px] font-medium text-[#248399]">
+                  {t.home.hero.badges.vatIncluded}
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-[1px] h-[40px] bg-[#248399]" />
-                <span className="text-[18px] font-medium text-[#248399]">{t.home.hero.badges.fastDelivery}</span>
+                <span className="text-[18px] font-medium text-[#248399]">
+                  {t.home.hero.badges.fastDelivery}
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="relative hidden lg:flex items-center justify-center" style={{ minHeight: 501 }}>
+          <div
+            className="relative hidden lg:flex items-center justify-center"
+            style={{ minHeight: 501 }}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSlide}
@@ -363,14 +422,16 @@ function HeroSection() {
                 <img
                   src={slide.bgImg}
                   alt={slide.bgAlt}
+                  loading="eager"
                   className="absolute rounded-section object-cover"
-                  style={{ width: 531, height: 501, right: 0, bottom: 0, maxWidth: "100%" }}
+                  style={{ width: 440, height: 420, right: 0, bottom: 0, maxWidth: "100%" }}
                 />
                 <img
                   src={slide.fgImg}
                   alt={slide.fgAlt}
-                  className="relative z-10 object-cover rounded-lg"
-                  style={{ width: 203, height: 467, maxWidth: "50%" }}
+                  loading="eager"
+                  className="relative z-10 object-contain rounded-lg"
+                  style={{ width: 170, height: 390, maxWidth: "50%" }}
                 />
               </motion.div>
             </AnimatePresence>
@@ -389,13 +450,19 @@ function FeaturedSection() {
   const isPausedRef = useRef(false);
   const manualTimerRef = useRef<ReturnType<typeof setTimeout>>();
 
-  const pauseAuto = useCallback(() => { isPausedRef.current = true; }, []);
-  const resumeAuto = useCallback(() => { isPausedRef.current = false; }, []);
+  const pauseAuto = useCallback(() => {
+    isPausedRef.current = true;
+  }, []);
+  const resumeAuto = useCallback(() => {
+    isPausedRef.current = false;
+  }, []);
 
   const pauseForManualScroll = useCallback(() => {
     isPausedRef.current = true;
     clearTimeout(manualTimerRef.current);
-    manualTimerRef.current = setTimeout(() => { isPausedRef.current = false; }, 2000);
+    manualTimerRef.current = setTimeout(() => {
+      isPausedRef.current = false;
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -429,13 +496,14 @@ function FeaturedSection() {
 
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* ✅ gradient background restored (kept) */}
       <div className="featured-gradient-bg" />
 
       <div className="container-custom relative z-10">
         <Reveal>
           <div className="mb-12">
-            <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.home.featured.eyebrow}</span>
+            <span className="text-label text-primary uppercase tracking-wider mb-2 block">
+              {t.home.featured.eyebrow}
+            </span>
             <h2 className="text-h2 text-neutral-950">{t.home.featured.title}</h2>
             <p className="text-body text-neutral-500 mt-2">{t.home.featured.subtitle}</p>
           </div>
@@ -444,7 +512,7 @@ function FeaturedSection() {
         <Reveal delay={150}>
           {isLoading ? (
             <div className="flex gap-10">
-              {[1, 2, 3, 4].map(i => (
+              {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="shrink-0" style={{ width: 251, height: 216 }}>
                   <div className="w-full h-full bg-neutral-100 animate-pulse rounded-lg" />
                 </div>
@@ -474,7 +542,8 @@ function FeaturedSection() {
           <div className="mt-12 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
               <Link href="/products">
-                {t.cta.viewAll} <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                {t.cta.viewAll}
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </Button>
           </div>
@@ -512,15 +581,36 @@ export default function Home() {
   ];
 
   const flavorTiles = [
-    { key: "cocktail", href: "/products?flavor=cocktail", alt: "Cocktail", img: "/images/Home/Flavors/cocktail.png" },
-    { key: "mango", href: "/products?flavor=mango", alt: "Mango", img: "/images/Home/Flavors/mango.png" },
-    { key: "guava", href: "/products?flavor=guava", alt: "Guava", img: "/images/Home/Flavors/guava.png" },
-    { key: "orange", href: "/products?flavor=orange", alt: "Orange", img: "/images/Home/Flavors/orange.png" },
+    {
+      key: "cocktail",
+      href: "/products?flavor=cocktail",
+      alt: "Cocktail",
+      img: "/images/Home/Flavors/first_card_1773156175998.png",
+    },
+    {
+      key: "mango",
+      href: "/products?flavor=mango",
+      alt: "Mango",
+      img: "/images/Home/Flavors/mango_1773156175999.png",
+    },
+    {
+      key: "guava",
+      href: "/products?flavor=guava",
+      alt: "Guava",
+      img: "/images/Home/Flavors/guava_1773156175999.png",
+    },
+    {
+      key: "orange",
+      href: "/products?flavor=orange",
+      alt: "Orange",
+      img: "/images/Home/Flavors/orange_1773156175999.png",
+    },
   ];
 
   return (
     <div className="min-h-screen">
       <SEO title={t.seo.home.title} description={t.seo.home.description} />
+
       <HeroSection />
       <FeaturedSection />
 
@@ -529,20 +619,28 @@ export default function Home() {
         <div className="container-custom relative z-10">
           <Reveal>
             <div className="text-center mb-12">
-              <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.home.flavors.eyebrow}</span>
+              <span className="text-label text-primary uppercase tracking-wider mb-2 block">
+                {t.home.flavors.eyebrow}
+              </span>
               <h2 className="text-h2 text-neutral-950">{t.home.flavors.title}</h2>
               <p className="text-body text-neutral-500 mt-2">{t.home.flavors.subtitle}</p>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
             {flavorTiles.map((item, i) => (
               <Reveal key={item.key} delay={i * 100}>
                 <Link href={item.href}>
-                  <div className="w-full max-w-[360px] cursor-pointer transition-all active:scale-95">
-                    <div className="rounded-section overflow-hidden shadow-2xl border border-neutral-100 bg-white">
-                      <div className="relative w-full aspect-[4/3]">
-                        <img src={item.img} alt={item.alt} className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="w-full max-w-[260px] cursor-pointer transition-all active:scale-95">
+                    <div className="relative overflow-visible">
+                      <div className="relative w-full aspect-[3/4] flex items-center justify-center">
+                        <img
+                          src={item.img}
+                          alt={item.alt}
+                          className="w-full h-full object-contain"
+                          style={{ transform: "scale(1.1)" }}
+                          loading="eager"
+                        />
                       </div>
                     </div>
                   </div>
@@ -553,17 +651,18 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative section-spacing bg-white overflow-hidden">
-        <SubtleAccent />
-        <div className="container-custom relative z-10">
-          <Reveal>
-            <div className="text-center">
-              <h2 className="text-h2 text-neutral-950">{t.home.howItWorks.title}</h2>
-              <p className="text-body text-neutral-500 mt-2">{t.home.howItWorks.subtitle}</p>
-            </div>
-          </Reveal>
+      <section className="bg-white">
+        <div className="container-custom">
+          <section className="mt-24 border-t border-neutral-200 pt-16">
+            <Reveal>
+              <div className="text-center">
+                <h2 className="text-h2 text-neutral-950">{t.home.howItWorks.title}</h2>
+                <p className="text-body text-neutral-500 mt-2">{t.home.howItWorks.subtitle}</p>
+              </div>
+            </Reveal>
 
-          <ProcessTimeline steps={howSteps} />
+            <ProcessTimeline steps={howSteps} />
+          </section>
         </div>
       </section>
     </div>
