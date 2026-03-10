@@ -290,10 +290,10 @@ function HeroSection() {
         subtitle: "Domty premium drinks in every flavor you love.",
         body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml.",
       }),
-      bgImg: "/images/Home/fruit2_1773154059103.png",
-      fgImg: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
+      bgImg: "/images/Home/Fruits_splash.png",
+      fgImg: "/images/Home/domty_juice_cocktail.png",
       bgAlt: "Fruit splash",
-      fgAlt: "Mango juice drink",
+      fgAlt: "Premium drink",
     },
     {
       ...(t.home.hero.slides?.s3 ?? {
@@ -302,10 +302,10 @@ function HeroSection() {
         subtitle: "Reliable delivery across Saudi Arabia.",
         body: "Order online, pay securely, and get your drinks delivered fast.",
       }),
-      bgImg: "/images/Home/fruits3_1773154648555.png",
-      fgImg: "/images/ProductDetails/Orange_fruits_1773165244565.png",
+      bgImg: "/images/Home/HowWeWork/Delivery_1772913744069.png",
+      fgImg: "/images/Home/first_card_1772910142939.png",
       bgAlt: "Fast delivery",
-      fgAlt: "Orange juice drink",
+      fgAlt: "Products",
     },
   ];
 
@@ -424,14 +424,14 @@ function HeroSection() {
                   alt={slide.bgAlt}
                   loading="eager"
                   className="absolute rounded-section object-cover"
-                  style={{ width: 440, height: 420, right: 0, bottom: 0, maxWidth: "100%" }}
+                  style={{ width: 480, height: 460, right: 0, bottom: 0, maxWidth: "100%" }}
                 />
                 <img
                   src={slide.fgImg}
                   alt={slide.fgAlt}
                   loading="eager"
                   className="relative z-10 object-contain rounded-lg"
-                  style={{ width: 170, height: 390, maxWidth: "50%" }}
+                  style={{ width: 185, height: 420, maxWidth: "50%" }}
                 />
               </motion.div>
             </AnimatePresence>
@@ -496,7 +496,7 @@ function FeaturedSection() {
 
   return (
     <section className="relative py-20 overflow-hidden">
-      <div className="featured-gradient-bg" />
+      <div className="featured-gradient-bg"><span className="fluid-blob-c" /></div>
 
       <div className="container-custom relative z-10">
         <Reveal>

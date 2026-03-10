@@ -59,7 +59,7 @@ export default function ProductDetail() {
       />
 
       <div className="relative">
-        <div className="featured-gradient-bg" />
+        <div className="featured-gradient-bg"><span className="fluid-blob-c" /></div>
         <div className="container-custom relative z-10 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
 

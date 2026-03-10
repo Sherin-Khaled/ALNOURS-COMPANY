@@ -54,7 +54,7 @@ export function About() {
       </section>
 
       <section className="relative overflow-hidden" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
-        <div className="featured-gradient-bg" style={{ top: "-2rem", bottom: "-2rem" }} />
+        <div className="featured-gradient-bg" style={{ top: "-2rem", bottom: "-2rem" }}><span className="fluid-blob-c" /></div>
         <div className="container-custom relative z-10">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.about.whatWeDo.eyebrow}</span>
           <h2 className="text-h2 text-neutral-950 mb-4">{t.about.whatWeDo.title}</h2>

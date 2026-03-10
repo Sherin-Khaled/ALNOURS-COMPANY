@@ -1,0 +1,98 @@
+The gradient background animation is working, but it still needs refinement so it fits the design of the website better.
+
+Right now the gradient looks like a **solid colored section**, while the rest of the website uses a **clean white background**, so the transition between sections feels a bit heavy. I want the gradient to feel **lighter, more fluid, and naturally blended with the white background**.
+
+Please update the gradient section with the following improvements:
+
+### 1. Fade the gradient into the white background
+
+The gradient section should **blend with the white sections above and below it**.
+
+So the opacity should behave like this vertically:
+
+* **Top of section:** opacity `0`
+* **Middle of section:** gradient visible
+* **Bottom of section:** opacity `0`
+
+This will make the gradient feel like a soft atmosphere behind the content instead of a colored block.
+
+### 2. Adjust the gradient color balance
+
+Keep the same brand palette but make the colors **lighter and softer**.
+
+Use mostly these tones:
+
+* `#EDF2FD`
+* `#DCEAFE`
+* `#CFE3FB`
+* `#9FBDF5` (only slightly)
+
+And use the secondary colors very subtly:
+
+* `#EFF9FB`
+* `#41B6D2`
+* `#2FA9C6`
+
+The section should feel like **white with soft blue fluid light**, not a strong blue background.
+
+### 3. Improve the fluid motion
+
+Instead of a single animated gradient, please use **2–3 blurred gradient layers** to create a smoother liquid motion.
+
+Requirements:
+
+* very soft opacity
+* large blurred shapes
+* slow movement
+* different animation durations
+* smooth infinite motion
+* motion should be subtle and elegant
+
+The goal is a **premium fluid background effect**, not a noticeable animated banner.
+
+### 4. Keep content readable
+
+Make sure:
+
+* text remains clearly readable
+* product cards remain visually dominant
+* the background never becomes too strong or distracting
+
+---
+
+## Hero Section Fix
+
+I also noticed that the **images in the hero slides were changed and their positions were modified**.
+
+Please **restore the hero section images exactly as they were originally in my code**.
+Do **not replace or move them**.
+
+What I want is only the following adjustments:
+
+* keep the **same images and same layout I already set in the code**
+* make the images **slightly smaller in size**
+* optimize them so they **load faster**
+
+For the **third slide specifically**:
+
+* the **fruit splash image under the product** should **fit nicely inside the frame**
+* it should **not be full size or overflowing**
+* it should look balanced under the drink product image
+
+So please **revert the hero images back to the original ones in my code**, then only adjust the **size slightly smaller and improve fitting**, without changing the design.
+
+---
+
+### Goal
+
+The gradient section should feel:
+
+* soft
+* fluid
+* airy
+* premium
+* naturally blended with the white background of the website.
+
+And the **hero section images should return to the original layout**, only slightly resized and optimized.
+
+Please **only refine these parts and do not change other sections that are already correct**.
