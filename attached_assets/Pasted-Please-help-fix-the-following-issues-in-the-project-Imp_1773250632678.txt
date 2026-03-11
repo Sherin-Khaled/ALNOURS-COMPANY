@@ -1,0 +1,198 @@
+Please help fix the following issues in the project.
+
+Important:
+Do **not change the design, layout, styles, or functionality that are already correct**. Only fix the specific items listed below.
+
+---
+
+# 1. Forgot Password Issue
+
+When a user clicks **“Forgot Password”** and enters their email address, **no email is sent to Gmail**.
+
+Please check:
+
+* the email sending configuration
+* backend API connection with Odoo
+* SMTP/email service setup
+* whether the reset password endpoint is working
+
+The system should send the **password reset email correctly to the user's Gmail**.
+
+---
+
+# 2. Website Horizontal Padding
+
+The horizontal padding of the website is currently **96px**.
+
+Please change the **global left and right padding to 72px instead of 96px**.
+
+This should apply to:
+
+* the whole layout
+* the navbar
+* all sections that use the main container
+
+Only adjust the padding value. Do not modify other spacing.
+
+---
+
+# 3. Space Between Product Cards and "View All"
+
+In the **Featured Products section**, the distance between the **product cards** and the **“View All” button** should be:
+
+**40px**
+
+Currently it is larger. Please adjust only this spacing.
+
+---
+
+# 4. Product Page – Flavor Filter
+
+The **flavor category filter** on the products page is **not working**.
+
+Please fix the filtering logic so that:
+
+* clicking a flavor filters products correctly
+* the filtering works with the existing product data
+* it stays compatible with Odoo backend data
+
+---
+
+# 5. Product Cards Width
+
+Please **slightly decrease the width of each product card** in the products page so they fit more comfortably in the layout.
+
+Do not change the card design, only reduce the width a little.
+
+---
+
+# 6. Login & Sign Up Page Improvements
+
+Apply the following updates to **both login and sign up pages**.I already send you an image of the login that i want to do our page like it in our chat.
+
+### Left Square Layout
+
+The left square should:
+
+* be **8px away from the top, left, and bottom of the page**
+* contain a **fluid aurora gradient motion background**
+
+Gradient style should resemble a **soft aurora fluid motion**.
+
+---
+
+### Company Logo Position
+
+The company logo icon should be placed:
+
+* **32px from the left**
+* **32px from the top**
+
+inside the left square, this is path of the logo: client/public/images/logo_miniFooter.png
+
+---
+
+### Text Content Position
+
+The text content inside the left square should be:
+
+* **32px from the left**
+* **64px from the bottom**
+* text color should be **white**
+
+---
+
+### Background of the Page
+
+The login and signup page background should include **subtle fluid gradient motion colors** (very soft, not distracting).
+
+---
+
+### Back Arrow Button
+
+Add a **small arrow icon at the top left of the page**.
+
+When the user clicks it:
+
+→ it should redirect back to the **Home page**.
+
+---
+
+# 7. Address Editing (Account Page)
+
+On the **Address page**, the user should be able to edit their saved address.
+
+Add:
+
+* a **small edit icon at the top-right of the address card**
+
+When clicked:
+
+* the user can edit their address
+* the new address should update in **Odoo user data**
+
+If the user previously made an order, the updated address should still be correctly linked to the user account.
+
+---
+
+# 8. Order Status Problem
+
+Currently when the user:
+
+1. makes an order
+2. enters address
+3. enters payment information
+
+the order status remains:
+
+**Processing**
+
+It should change to:
+
+**Verified**
+
+Please fix the logic that updates the order status after successful checkout.
+
+---
+
+# 9. Login Button Bug
+
+When the user clicks **Sign In**, nothing happens until they click the button multiple times.
+
+Please fix this so:
+
+* the login works with **one click**
+* after login the user is redirected to the **Account page immediately**
+
+---
+
+# 10. Arabic About Page Issue
+
+On the **About page (Arabic version)**:
+
+In the **second section**, the text inside the white background area **has disappeared**.
+
+Please restore and display the text correctly.
+
+---
+
+# 11. Website Performance Optimization
+
+The website currently loads **very slowly**, especially images.
+
+Please improve performance without changing the design.
+
+Possible improvements:
+
+* convert images to **WebP**
+* optimize image sizes
+* enable proper lazy loading
+* ensure images keep their visual quality
+
+Important:
+
+Do **not change any styles or layouts** during this optimization.
+
+---
+
+Thank you. Please implement these fixes carefully while keeping the existing design intact.

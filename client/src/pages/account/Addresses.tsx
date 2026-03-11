@@ -1,25 +1,47 @@
-import { useAddresses, useCreateAddress } from "@/hooks/use-addresses";
+import { useAddresses, useCreateAddress, useUpdateAddress } from "@/hooks/use-addresses";
 import { useState } from "react";
-import { MapPin, Plus } from "lucide-react";
+import { MapPin, Plus, Pencil, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import type { Address } from "@shared/schema";
+
+type FormData = { title: string; fullName: string; phone: string; city: string; addressLine: string; isDefault: boolean };
+const emptyForm: FormData = { title: "", fullName: "", phone: "", city: "", addressLine: "", isDefault: false };
 
 export default function Addresses() {
   const { data: addresses, isLoading } = useAddresses();
-  const { mutateAsync: createAddress, isPending } = useCreateAddress();
+  const { mutateAsync: createAddress, isPending: isCreating } = useCreateAddress();
+  const { mutateAsync: updateAddress, isPending: isUpdating } = useUpdateAddress();
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
   const { toast } = useToast();
   const { t } = useLanguage();
+  const [formData, setFormData] = useState<FormData>(emptyForm);
 
-  const [formData, setFormData] = useState({ title: "", fullName: "", phone: "", city: "", addressLine: "", isDefault: false });
+  const openAdd = () => {
+    setEditingId(null);
+    setFormData(emptyForm);
+    setShowForm(true);
+  };
+
+  const openEdit = (addr: Address) => {
+    setEditingId(addr.id);
+    setFormData({ title: addr.title, fullName: addr.fullName, phone: addr.phone, city: addr.city, addressLine: addr.addressLine, isDefault: addr.isDefault ?? false });
+    setShowForm(true);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await createAddress(formData);
+      if (editingId !== null) {
+        await updateAddress({ id: editingId, data: formData });
+      } else {
+        await createAddress(formData);
+      }
       setShowForm(false);
-      setFormData({ title: "", fullName: "", phone: "", city: "", addressLine: "", isDefault: false });
+      setEditingId(null);
+      setFormData(emptyForm);
       toast({ title: t.account.addresses.saved });
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });
@@ -36,7 +58,7 @@ export default function Addresses() {
           <p className="text-body text-neutral-500">{t.account.addresses.subtitle}</p>
         </div>
         {!showForm && (
-          <Button onClick={() => setShowForm(true)}
+          <Button onClick={openAdd}
             className="h-11 px-6 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold"
             data-testid="button-add-address">
             <Plus className="w-4 h-4 mr-2" /> {t.account.addresses.addNew}
@@ -46,7 +68,14 @@ export default function Addresses() {
 
       {showForm && (
         <form onSubmit={handleSubmit} className="bg-neutral-50 rounded-lg p-8 border border-neutral-200 mb-8 space-y-6">
-          <h3 className="font-sora font-bold text-h4 text-neutral-950">{t.account.addresses.newAddress}</h3>
+          <div className="flex justify-between items-center">
+            <h3 className="font-sora font-bold text-h4 text-neutral-950">
+              {editingId !== null ? "Edit Address" : t.account.addresses.newAddress}
+            </h3>
+            <button type="button" onClick={() => { setShowForm(false); setEditingId(null); }} className="text-neutral-400 hover:text-neutral-700">
+              <X className="w-5 h-5" />
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="text-label text-neutral-700 mb-2 block">{t.account.addresses.form.fullName}</label>
@@ -69,10 +98,9 @@ export default function Addresses() {
             <label className="text-label text-neutral-700 mb-2 block">{t.account.addresses.form.addressLine}</label>
             <textarea required rows={3} value={formData.addressLine} onChange={e=>setFormData({...formData, addressLine: e.target.value})} className="w-full px-4 py-3 rounded-md border border-neutral-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all resize-none text-body"></textarea>
           </div>
-          
           <div className="flex justify-end gap-4">
-            <Button type="button" variant="outline" onClick={() => setShowForm(false)} className="h-11 px-6 rounded-md border-neutral-200 text-neutral-700">{t.cta.cancel}</Button>
-            <Button type="submit" disabled={isPending} className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-save-address">
+            <Button type="button" variant="outline" onClick={() => { setShowForm(false); setEditingId(null); }} className="h-11 px-6 rounded-md border-neutral-200 text-neutral-700">{t.cta.cancel}</Button>
+            <Button type="submit" disabled={isCreating || isUpdating} className="h-11 px-8 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold" data-testid="button-save-address">
               {t.account.addresses.form.save}
             </Button>
           </div>
@@ -87,10 +115,20 @@ export default function Addresses() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {addresses?.map(addr => (
-            <div key={addr.id} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 relative">
-              {addr.isDefault && <span className="absolute top-4 right-4 bg-primary text-white text-label px-3 py-1 rounded-pill">{t.account.addresses.default}</span>}
-              <h4 className="font-semibold text-neutral-950 flex items-center gap-2 mb-3 text-body">
-                <MapPin className="w-4 h-4 text-primary" /> {addr.title}
+            <div key={addr.id} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 relative group">
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                {addr.isDefault && <span className="bg-primary text-white text-label px-3 py-1 rounded-pill">{t.account.addresses.default}</span>}
+                <button
+                  onClick={() => openEdit(addr)}
+                  className="p-1.5 rounded-md text-neutral-400 hover:text-primary hover:bg-primary/10 transition-colors"
+                  data-testid={`button-edit-address-${addr.id}`}
+                  title="Edit address"
+                >
+                  <Pencil className="w-4 h-4" />
+                </button>
+              </div>
+              <h4 className="font-semibold text-neutral-950 flex items-center gap-2 mb-3 text-body pr-20">
+                <MapPin className="w-4 h-4 text-primary flex-shrink-0" /> {addr.title}
               </h4>
               <div className="text-small text-neutral-700 space-y-1">
                 <p className="font-medium text-neutral-950">{addr.fullName}</p>

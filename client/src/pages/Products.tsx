@@ -248,14 +248,23 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
 export default function Products() {
   const { data: products, isLoading } = useProducts();
   const { t } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
   const categories = [
-    { key: "all" as const, label: t.products.filters.all },
-    { key: "cocktail" as const, label: t.products.filters.cocktail },
-    { key: "mango" as const, label: t.products.filters.mango },
-    { key: "orange" as const, label: t.products.filters.orange },
-    { key: "guava" as const, label: t.products.filters.guava },
+    { key: "all", label: t.products.filters.all },
+    { key: "cocktail", label: t.products.filters.cocktail },
+    { key: "mango", label: t.products.filters.mango },
+    { key: "orange", label: t.products.filters.orange },
+    { key: "guava", label: t.products.filters.guava },
   ];
+
+  const filteredProducts = activeCategory === "all"
+    ? products
+    : products?.filter(p =>
+        p.flavor?.toLowerCase().includes(activeCategory.toLowerCase()) ||
+        p.category?.toLowerCase().includes(activeCategory.toLowerCase()) ||
+        p.name?.toLowerCase().includes(activeCategory.toLowerCase())
+      );
 
   const whySteps: Step[] = t.products.whyAlnoursTimeline.steps.map((step, idx) => ({
     id: idx + 1,
@@ -289,8 +298,10 @@ export default function Products() {
           {categories.map((cat) => (
             <button
               key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              data-testid={`button-filter-${cat.key}`}
               className={`h-[40px] px-6 rounded-pill font-medium transition-all ${
-                cat.key === "all"
+                activeCategory === cat.key
                   ? "bg-primary text-white"
                   : "bg-neutral-50 text-neutral-700 hover:bg-neutral-200"
               }`}
@@ -301,16 +312,21 @@ export default function Products() {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[1, 2, 3, 4].map((i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="h-[300px] bg-neutral-50 animate-pulse rounded-lg"></div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {products?.map((product) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts?.map((product) => (
               <ProductCard key={product.id} product={product} variant="grid" />
             ))}
+            {filteredProducts?.length === 0 && (
+              <div className="col-span-full text-center py-16 text-neutral-500 text-body">
+                {t.products.noResults || "No products found for this filter."}
+              </div>
+            )}
           </div>
         )}
 

@@ -5,6 +5,40 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import crypto from "crypto";
 import { syncProductsFromOdoo, createOrUpdatePartner, createSalesOrder, isOdooConfigured, createCrmLead } from "./odoo";
+import nodemailer from "nodemailer";
+
+function createMailTransporter() {
+  const host = process.env.SMTP_HOST;
+  const port = parseInt(process.env.SMTP_PORT || "587");
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  if (!host || !user || !pass) return null;
+  return nodemailer.createTransport({ host, port, secure: port === 465, auth: { user, pass } });
+}
+
+async function sendPasswordResetEmail(toEmail: string, token: string, baseUrl: string) {
+  const transporter = createMailTransporter();
+  if (!transporter) {
+    console.warn("[mail] SMTP not configured — reset link not sent. Set SMTP_HOST, SMTP_USER, SMTP_PASS env vars.");
+    return;
+  }
+  const resetUrl = `${baseUrl}/reset-password?token=${token}`;
+  const from = process.env.SMTP_FROM || process.env.SMTP_USER;
+  await transporter.sendMail({
+    from: `ALNOURS <${from}>`,
+    to: toEmail,
+    subject: "Reset your ALNOURS password",
+    html: `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:32px">
+        <img src="${baseUrl}/images/Alnours_logo.png" alt="ALNOURS" style="height:40px;margin-bottom:24px" />
+        <h2 style="color:#0F3D91;margin-bottom:12px">Reset your password</h2>
+        <p style="color:#555;margin-bottom:24px">Click the button below to reset your password. This link expires in 1 hour.</p>
+        <a href="${resetUrl}" style="display:inline-block;background:#0F3D91;color:#fff;padding:14px 28px;border-radius:100px;text-decoration:none;font-weight:600">Reset Password</a>
+        <p style="color:#aaa;font-size:12px;margin-top:32px">If you didn't request this, you can safely ignore this email.</p>
+      </div>
+    `,
+  });
+}
 
 export async function registerRoutes(
   httpServer: Server,
@@ -79,6 +113,9 @@ export async function registerRoutes(
       const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
       const expiry = new Date(Date.now() + 60 * 60 * 1000);
       await storage.updateUser(user.id, { resetToken: hashedToken, resetTokenExpiry: expiry } as any);
+      const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+      const baseUrl = `${protocol}://${req.headers.host}`;
+      await sendPasswordResetEmail(user.email, token, baseUrl);
       console.log(`[auth] Password reset requested for ${user.email}`);
       res.status(200).json({ message: "If that email exists, a reset link has been sent." });
     } catch (err) {
@@ -170,7 +207,7 @@ export async function registerRoutes(
       const order = await storage.createOrder({
         userId: mockLoggedInUserId,
         total,
-        status: input.paymentMethod === "card" ? "Confirmed" : "Processing",
+        status: "Verified",
         paymentMethod: input.paymentMethod,
         paymentStatus: input.paymentMethod === "card" ? "paid" : "pending",
         shippingAddress: input.shippingAddress,
@@ -234,6 +271,19 @@ export async function registerRoutes(
         userId: mockLoggedInUserId
       });
       res.status(201).json(address);
+    } catch (err) {
+      res.status(400).json({ message: "Invalid request" });
+    }
+  });
+
+  app.patch('/api/addresses/:id', async (req, res) => {
+    if (!mockLoggedInUserId) return res.status(401).json({ message: "Not authenticated" });
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) return res.status(400).json({ message: "Invalid address ID" });
+      const input = api.addresses.update.input.parse(req.body);
+      const address = await storage.updateAddress(id, mockLoggedInUserId, input);
+      res.status(200).json(address);
     } catch (err) {
       res.status(400).json({ message: "Invalid request" });
     }

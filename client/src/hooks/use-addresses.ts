@@ -30,3 +30,20 @@ export function useCreateAddress() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [api.addresses.list.path] }),
   });
 }
+
+export function useUpdateAddress() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, data }: { id: number; data: z.infer<typeof api.addresses.update.input> }) => {
+      const res = await fetch(`/api/addresses/${id}`, {
+        method: 'PATCH',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to update address");
+      return await res.json();
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [api.addresses.list.path] }),
+  });
+}

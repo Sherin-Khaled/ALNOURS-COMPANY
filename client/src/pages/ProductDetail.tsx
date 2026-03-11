@@ -67,6 +67,7 @@ export default function ProductDetail() {
               <img
                 src={fruitBgMap[(product.flavor || "").toLowerCase()] || "/images/Home/Fruits_splash.png"}
                 alt=""
+                loading="lazy"
                 className="absolute w-[280px] h-[280px] md:w-[320px] md:h-[320px] object-cover rounded-full opacity-100 pointer-events-none"
                 style={{ right: "18%", bottom: "5%", zIndex: 10 }}
                 data-testid="detail-fruit-image"
@@ -74,6 +75,7 @@ export default function ProductDetail() {
               <img 
                 src={product.images?.packshot} 
                 alt={product.name}
+                loading="eager"
                 className="relative z-20 max-h-[380px] w-auto object-contain drop-shadow-lg"
                 data-testid="detail-packshot-image"
               />

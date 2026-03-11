@@ -117,6 +117,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                   <img
                     src={step.imageSrc}
                     alt={step.title}
+                    loading="lazy"
                     className={clsx(
                       "max-w-full max-h-full",
                       step.id === 1 ? "object-contain" : "object-cover"
@@ -228,6 +229,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                         <img
                           src={steps[currentStepIndex].imageSrc}
                           alt={steps[currentStepIndex].title}
+                          loading="lazy"
                           className={clsx(
                             "max-w-full max-h-full",
                             steps[currentStepIndex].id === 1 ? "object-contain" : "object-cover"
@@ -290,8 +292,8 @@ function HeroSection() {
         subtitle: "Domty premium drinks in every flavor you love.",
         body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml.",
       }),
-      bgImg: "/images/Home/Fruits_splash.png",
-      fgImg: "/images/Home/domty_juice_cocktail.png",
+      bgImg: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
+      fgImg: "/images/Home/Mango_Domty_Juice_1773174061407.png",
       bgAlt: "Fruit splash",
       fgAlt: "Premium drink",
     },
@@ -302,8 +304,8 @@ function HeroSection() {
         subtitle: "Reliable delivery across Saudi Arabia.",
         body: "Order online, pay securely, and get your drinks delivered fast.",
       }),
-      bgImg: "/images/Home/HowWeWork/Delivery_1772913744069.png",
-      fgImg: "/images/Home/first_card_1772910142939.png",
+      bgImg: "/images/Home/fruit2_1773154059103.png",
+      fgImg: "/images/Home/Orange_juice_1773174061408.png",
       bgAlt: "Fast delivery",
       fgAlt: "Products",
     },
@@ -332,10 +334,10 @@ function HeroSection() {
 
   return (
     <section
-      className="relative overflow-hidden "
+      className="relative overflow-hidden"
       style={{ paddingTop: 170, paddingBottom: 96 }}
     >
-      <GradientMesh />
+      {/* <GradientMesh /> */}
       <div className="container-custom relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-32 items-center">
           <div>
@@ -350,8 +352,8 @@ function HeroSection() {
                 <span className="text-[18px] font-bold text-[#248399] uppercase tracking-wider mb-4 block">
                   {slide.eyebrow}
                 </span>
-                <h1 className="text-h1 text-neutral-950 mb-4">{slide.title}</h1>
-                <h2 className="text-h3 text-neutral-700 mb-6 font-normal">{slide.subtitle}</h2>
+                <h1 className="text-h2 text-neutral-950 mb-4">{slide.title}</h1>
+                <h2 className="text-h4 text-neutral-700 mb-6 font-normal">{slide.subtitle}</h2>
                 <p className="text-body text-neutral-500 mb-10 max-w-xl">{slide.body}</p>
               </motion.div>
             </AnimatePresence>
@@ -453,6 +455,7 @@ function FeaturedSection() {
   const pauseAuto = useCallback(() => {
     isPausedRef.current = true;
   }, []);
+
   const resumeAuto = useCallback(() => {
     isPausedRef.current = false;
   }, []);
@@ -482,6 +485,7 @@ function FeaturedSection() {
       }
       animFrame = requestAnimationFrame(step);
     }
+
     animFrame = requestAnimationFrame(step);
 
     const handleWheel = () => pauseForManualScroll();
@@ -495,8 +499,17 @@ function FeaturedSection() {
   }, [featured.length, pauseForManualScroll]);
 
   return (
-    <section className="relative py-20 overflow-hidden">
-      <div className="featured-gradient-bg"><span className="fluid-blob-c" /></div>
+    <section className="relative py-20 overflow-hidden bg-white">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <GradientMesh className="opacity-100" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 18%, rgba(255,255,255,0.12) 82%, rgba(255,255,255,0) 100%)",
+          }}
+        />
+      </div>
 
       <div className="container-custom relative z-10">
         <Reveal>
@@ -510,36 +523,44 @@ function FeaturedSection() {
         </Reveal>
 
         <Reveal delay={150}>
-          {isLoading ? (
-            <div className="flex gap-10">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="shrink-0" style={{ width: 251, height: 216 }}>
-                  <div className="w-full h-full bg-neutral-100 animate-pulse rounded-lg" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div
-              ref={scrollRef}
-              className="flex gap-10 overflow-x-auto scrollbar-hide pb-4"
-              onMouseEnter={pauseAuto}
-              onMouseLeave={resumeAuto}
-              onTouchStart={pauseAuto}
-              onTouchEnd={resumeAuto}
-              onPointerDown={pauseForManualScroll}
-              style={{ scrollBehavior: "auto" }}
-            >
-              {[...featured, ...featured, ...featured].map((product, idx) => (
-                <div key={`${product.id}-${idx}`} className="shrink-0" style={{ width: 251 }}>
-                  <ProductCard variant="featured" product={product} />
-                </div>
-              ))}
-            </div>
-          )}
+          <div className="min-h-[360px]">
+            {isLoading ? (
+              <div className="flex gap-10 items-stretch overflow-hidden">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="shrink-0" style={{ width: 251, height: 320 }}>
+                    <div className="w-full h-full bg-neutral-100 animate-pulse rounded-lg" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                ref={scrollRef}
+                className="flex gap-10 items-stretch overflow-x-auto overflow-y-hidden scrollbar-hide "
+                onMouseEnter={pauseAuto}
+                onMouseLeave={resumeAuto}
+                onTouchStart={pauseAuto}
+                onTouchEnd={resumeAuto}
+                onPointerDown={pauseForManualScroll}
+                style={{ scrollBehavior: "auto" }}
+              >
+                {[...featured, ...featured, ...featured].map((product, idx) => (
+                  <div
+                    key={`${product.id}-${idx}`}
+                    className="shrink-0 flex"
+                    style={{ width: 251, minHeight: 320 }}
+                  >
+                    <div className="w-full h-full">
+                      <ProductCard variant="featured" product={product} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </Reveal>
 
         <Reveal delay={300}>
-          <div className="mt-12 text-center">
+          <div className="mt-10 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
               <Link href="/products">
                 {t.cta.viewAll}
@@ -627,11 +648,11 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4  place-items-center">
             {flavorTiles.map((item, i) => (
               <Reveal key={item.key} delay={i * 100}>
                 <Link href={item.href}>
-                  <div className="w-full max-w-[260px] cursor-pointer transition-all active:scale-95">
+                  <div className="w-full max-w-[320px] cursor-pointer transition-all active:scale-95">
                     <div className="relative overflow-visible">
                       <div className="relative w-full aspect-[3/4] flex items-center justify-center">
                         <img

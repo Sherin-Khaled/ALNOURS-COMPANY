@@ -176,9 +176,66 @@
   66% { transform: translate(15px, -10px) scale(1.05); }
 }
 
+@keyframes aurora-shift-a {
+  0%   { transform: translate(0%, 0%) scale(1); }
+  33%  { transform: translate(8%, -6%) scale(1.1); }
+  66%  { transform: translate(-5%, 8%) scale(0.95); }
+  100% { transform: translate(0%, 0%) scale(1); }
+}
+@keyframes aurora-shift-b {
+  0%   { transform: translate(0%, 0%) scale(1.05); }
+  33%  { transform: translate(-10%, 5%) scale(0.9); }
+  66%  { transform: translate(6%, -8%) scale(1.12); }
+  100% { transform: translate(0%, 0%) scale(1.05); }
+}
+@keyframes aurora-shift-c {
+  0%   { transform: translate(0%, 0%) scale(0.95); }
+  50%  { transform: translate(5%, 10%) scale(1.1); }
+  100% { transform: translate(0%, 0%) scale(0.95); }
+}
+
+.auth-page-bg {
+  background: radial-gradient(ellipse at 20% 30%, #dce8fc 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 70%, #e0f2f9 0%, transparent 55%),
+              radial-gradient(ellipse at 55% 10%, #eff6ff 0%, transparent 60%),
+              #f5f8ff;
+}
+
+.auth-aurora-bg {
+  background: linear-gradient(160deg, #4e7de0 0%, #2a58c8 35%, #1a3ea8 65%, #0f2d85 100%);
+  overflow: hidden;
+}
+.auth-aurora-bg::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(ellipse at 30% 40%, rgba(130,180,255,0.55) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 20%, rgba(100,160,255,0.4) 0%, transparent 50%);
+  filter: blur(40px);
+  animation: aurora-shift-a 18s ease-in-out infinite;
+}
+.auth-aurora-bg::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(ellipse at 80% 80%, rgba(100,200,255,0.35) 0%, transparent 55%),
+              radial-gradient(ellipse at 20% 70%, rgba(160,120,255,0.2) 0%, transparent 50%);
+  filter: blur(50px);
+  animation: aurora-shift-b 24s ease-in-out infinite;
+}
+
+.auth-page-bg-blob {
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(ellipse at 60% 30%, rgba(80,150,255,0.25) 0%, transparent 55%);
+  filter: blur(60px);
+  animation: aurora-shift-c 30s ease-in-out infinite;
+  pointer-events: none;
+}
+
 @layer utilities {
   .container-custom {
-    @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-[1200px];
+    @apply mx-auto px-4 sm:px-10 lg:px-[72px] max-w-[1600px];
   }
 
   .section-spacing {

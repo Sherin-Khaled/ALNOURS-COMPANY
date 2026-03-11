@@ -156,6 +156,17 @@ export const api = {
         400: errorSchemas.validation,
         401: errorSchemas.unauthorized,
       }
+    },
+    update: {
+      method: 'PATCH' as const,
+      path: '/api/addresses/:id' as const,
+      input: insertAddressSchema.partial(),
+      responses: {
+        200: z.custom<typeof addresses.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: errorSchemas.unauthorized,
+        404: errorSchemas.notFound,
+      }
     }
   },
   contact: {

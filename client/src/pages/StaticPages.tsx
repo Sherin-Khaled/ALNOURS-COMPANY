@@ -8,7 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
 
 export function About() {
-  const { t } = useLanguage();
+  const { t, dir } = useLanguage();
   return (
     <div className="min-h-screen pt-24 pb-16 bg-white">
       <SEO title={t.seo.about.title} description={t.seo.about.description} />
@@ -42,7 +42,10 @@ export function About() {
               </p>
             </div>
             <div className="relative">
-              <div className="bg-[#0F3D91] text-white p-8 rounded-tl-[16px] rounded-bl-[16px] rounded-tr-none rounded-br-none" style={{ marginRight: '-9999px', paddingRight: 'calc(9999px + 32px)' }}>
+              <div
+                className={`bg-[#0F3D91] text-white p-8 ${dir === "rtl" ? "rounded-tr-[16px] rounded-br-[16px] rounded-tl-none rounded-bl-none" : "rounded-tl-[16px] rounded-bl-[16px] rounded-tr-none rounded-br-none"}`}
+                style={dir === "rtl" ? { marginLeft: '-9999px', paddingLeft: 'calc(9999px + 32px)' } : { marginRight: '-9999px', paddingRight: 'calc(9999px + 32px)' }}
+              >
                 <h2 className="text-h3 text-white mb-4">{t.about.coverage.title}</h2>
                 <p className="text-body text-white/90">
                   {t.about.coverage.body}

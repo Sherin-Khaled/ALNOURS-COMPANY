@@ -123,6 +123,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
             <img
               src="/images/Home/Fruits_splash.png"
               alt=""
+              loading="lazy"
               className="fruit-splash absolute pointer-events-none select-none"
               style={{
                 width: s.fruitSize,      // ✅ 262
@@ -142,6 +143,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
             <img
               src={product.images?.packshot}
               alt={product.name}
+              loading="lazy"
               className="relative object-contain pointer-events-none select-none group-hover:scale-105 transition-transform duration-500"
               style={{
                 height: s.imgHeight,
