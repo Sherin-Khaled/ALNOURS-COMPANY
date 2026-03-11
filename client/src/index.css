@@ -235,7 +235,7 @@
 
 @layer utilities {
   .container-custom {
-    @apply mx-auto px-4 sm:px-10 lg:px-[72px] max-w-[1600px];
+    @apply mx-auto px-4 sm:px-10 lg:px-[84px] max-w-[1600px];
   }
 
   .section-spacing {

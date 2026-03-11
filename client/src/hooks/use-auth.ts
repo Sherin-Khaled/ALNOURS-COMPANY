@@ -31,7 +31,10 @@ export function useLogin() {
       }
       return await res.json();
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [api.auth.me.path] }),
+    onSuccess: (data) => {
+      queryClient.setQueryData([api.auth.me.path], data);
+      queryClient.invalidateQueries({ queryKey: [api.auth.me.path] });
+    },
   });
 }
 

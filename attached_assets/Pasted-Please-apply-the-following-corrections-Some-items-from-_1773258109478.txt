@@ -1,0 +1,123 @@
+Please apply the following corrections. Some items from my previous request were not implemented correctly.
+
+Important:
+Do **not modify any styles, layouts, or components that are already correct**. Only fix the specific points below.
+
+---
+
+# 1. Website Horizontal Padding
+
+Previously I asked for **72px**, but that turned out to be too small.
+
+Please change the **global horizontal padding to 84px** instead.
+
+This must apply to:
+
+* the whole website layout
+* the navbar
+* all sections using the main container
+
+Do not change any other spacing.
+
+---
+
+# 2. Order Status Still Not Updating
+
+The issue with order status is **still not fixed**.
+
+Current behavior:
+
+1. User places an order
+2. User enters address
+3. User enters payment information
+
+But the order status remains:
+
+**Processing**
+
+It should automatically change to:
+
+**Verified**
+
+Please check the logic between the checkout process and the Odoo backend and ensure the order status updates correctly after successful payment.
+
+---
+
+# 3. Space Between Product Cards and "View All"
+
+The space between:
+
+**product cards → "View All" button**
+
+is still too large.
+
+Please **decrease this space more** so the button sits closer to the product cards.
+
+---
+
+# 4. Flavor Cards Spacing (Home Page)
+
+In the **third section of the Home page (Shop by Flavor)** the space between the flavor cards is still too large.
+
+Please reduce the **horizontal spacing between the cards** so the layout matches the reference design.
+
+The spacing should look like the first reference image I attached.
+
+Do not change card size or design, only reduce the space between them.
+
+---
+
+# 5. Hero Section Fruit Background Position
+
+The fruit splash background under the product image in the hero section was moved.
+
+Please fix this.
+
+The fruit background image should be:
+
+* **centered directly below the product image**
+* aligned with the **center of the bottle**
+* slightly underneath the product
+* not shifted sideways
+
+Keep the same images and layout that already exist in my code.
+
+Only adjust the position.
+
+---
+
+# 6. Login Button Bug (Still Not Fixed)
+
+The login problem still exists.
+
+Current behavior:
+
+User clicks **Sign In** → nothing happens.
+
+The user must click the button multiple times before the login works.
+
+Please fix this so:
+
+* login works with **one click**
+* the user is redirected **immediately to the Account page**
+
+---
+
+# 7. Sign Up Page Layout
+
+Please update the **Sign Up page layout** so it matches the second reference image.
+
+Requirements:
+
+* Use the **same layout structure as the Login page**
+* The left gradient panel should match the Login page style
+* Keep the same spacing and structure
+
+Important:
+
+* **Do not change anything in the Login page**
+* Only update the **Sign Up page** to visually match it.
+
+---
+
+Thank you. Please only correct these specific items without modifying other working parts of the website.

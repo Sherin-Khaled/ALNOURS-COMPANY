@@ -6,6 +6,9 @@ import { z } from "zod";
 import crypto from "crypto";
 import { syncProductsFromOdoo, createOrUpdatePartner, createSalesOrder, isOdooConfigured, createCrmLead } from "./odoo";
 import nodemailer from "nodemailer";
+import { db } from "./db";
+import { orders } from "@shared/schema";
+import { eq } from "drizzle-orm";
 
 function createMailTransporter() {
   const host = process.env.SMTP_HOST;
@@ -44,6 +47,13 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  // Migrate any legacy "Processing" orders to "Verified"
+  try {
+    await db.update(orders).set({ status: "Verified" }).where(eq(orders.status, "Processing"));
+  } catch (e) {
+    console.warn("[startup] Could not migrate order statuses:", (e as Error).message);
+  }
+
   let mockLoggedInUserId: number | null = null;
 
   app.post(api.auth.signup.path, async (req, res) => {

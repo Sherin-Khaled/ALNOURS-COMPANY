@@ -426,7 +426,7 @@ function HeroSection() {
                   alt={slide.bgAlt}
                   loading="eager"
                   className="absolute rounded-section object-cover"
-                  style={{ width: 480, height: 460, right: 0, bottom: 0, maxWidth: "100%" }}
+                  style={{ width: 480, height: 460, left: "50%", transform: "translateX(-50%)", bottom: 0, maxWidth: "100%" }}
                 />
                 <img
                   src={slide.fgImg}
@@ -560,7 +560,7 @@ function FeaturedSection() {
         </Reveal>
 
         <Reveal delay={300}>
-          <div className="mt-10 text-center">
+          <div className="mt-3 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
               <Link href="/products">
                 {t.cta.viewAll}
@@ -648,11 +648,11 @@ export default function Home() {
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4  place-items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 place-items-center gap-x-0">
             {flavorTiles.map((item, i) => (
               <Reveal key={item.key} delay={i * 100}>
                 <Link href={item.href}>
-                  <div className="w-full max-w-[320px] cursor-pointer transition-all active:scale-95">
+                  <div className="w-full max-w-[260px] cursor-pointer transition-all active:scale-95">
                     <div className="relative overflow-visible">
                       <div className="relative w-full aspect-[3/4] flex items-center justify-center">
                         <img
