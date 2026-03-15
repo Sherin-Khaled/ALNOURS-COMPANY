@@ -40,6 +40,10 @@ export default function Login() {
         <div className="auth-left-panel md:w-[420px] relative flex-shrink-0 p-2 hidden md:block">
           <div className="relative w-full h-full rounded-[18px] overflow-hidden" style={{ minHeight: 520 }}>
             <div className="auth-aurora-bg absolute inset-0 rounded-[18px]" />
+            <span className="auth-aurora-item auth-aurora-item--1" />
+  <span className="auth-aurora-item auth-aurora-item--2" />
+  <span className="auth-aurora-item auth-aurora-item--3" />
+  <span className="auth-aurora-item auth-aurora-item--4" />
             <div className="relative z-10 h-full flex flex-col p-8" style={{ minHeight: 520 }}>
               <div style={{ paddingTop: 0, paddingLeft: 0 }}>
                 <img src={logoMin} alt="Alnours" className="h-10 w-auto object-contain" />
@@ -91,7 +95,7 @@ export default function Login() {
                 <Link href="/forgot-password" className="text-[13px] text-primary hover:underline font-medium" data-testid="link-forgot-password">{t.auth.login.forgot}</Link>
               </div>
               <Button type="submit" disabled={isPending}
-                className="w-full h-12 rounded-pill bg-primary hover:bg-primary-hover text-white font-semibold text-body"
+                className="w-full h-12 rounded-pill bg-primary hover:bg-primary-hover !text-white font-semibold text-body"
                 data-testid="button-signin"
               >
                 {isPending ? t.cta.signingIn : t.auth.login.button}

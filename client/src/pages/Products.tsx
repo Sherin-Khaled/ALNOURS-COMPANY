@@ -312,19 +312,19 @@ export default function Products() {
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 max-w-[920px] mx-auto justify-items-center">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-[300px] bg-neutral-50 animate-pulse rounded-lg"></div>
+              <div key={i} className="h-[300px] w-full max-w-[420px] bg-neutral-50 animate-pulse rounded-lg"></div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 max-w-[920px] mx-auto justify-items-center">
             {filteredProducts?.map((product) => (
               <ProductCard key={product.id} product={product} variant="grid" />
             ))}
             {filteredProducts?.length === 0 && (
               <div className="col-span-full text-center py-16 text-neutral-500 text-body">
-                {t.products.noResults || "No products found for this filter."}
+                {(t.products as { noResults?: string }).noResults || "No products found for this filter."}
               </div>
             )}
           </div>

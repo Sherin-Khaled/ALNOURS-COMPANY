@@ -58,8 +58,14 @@ export default function ProductDetail() {
         description={t.seo.productDetail.description.replace("{name}", product.name)}
       />
 
-      <div className="relative">
-        <div className="featured-gradient-bg"><span className="fluid-blob-c" /></div>
+      <div className="featured-gradient-bg">
+        <span className="mesh-aurora mesh-aurora-1" />
+        <span className="mesh-aurora mesh-aurora-2" />
+        <span className="mesh-aurora mesh-aurora-3" />
+        <span className="mesh-aurora mesh-aurora-4" />
+      </div>
+
+      <div>
         <div className="container-custom relative z-10 py-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-start">
 
@@ -69,7 +75,7 @@ export default function ProductDetail() {
                 alt=""
                 loading="lazy"
                 className="absolute w-[280px] h-[280px] md:w-[320px] md:h-[320px] object-cover rounded-full opacity-100 pointer-events-none"
-                style={{ right: "18%", bottom: "5%", zIndex: 10 }}
+                style={{ right: "23%", bottom: "5%", zIndex: 10 }}
                 data-testid="detail-fruit-image"
               />
               <img 

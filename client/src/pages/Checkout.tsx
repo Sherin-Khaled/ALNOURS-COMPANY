@@ -226,7 +226,7 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <Button onClick={handleNextStep} className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body" data-testid="button-continue-payment">
+                <Button onClick={handleNextStep} className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover !text-white font-bold text-body" data-testid="button-continue-payment">
                   {t.checkout.continueToPayment}
                 </Button>
               </div>
@@ -299,7 +299,7 @@ export default function Checkout() {
                   </div>
                 )}
 
-                <Button onClick={handleNextStep} className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-body" data-testid="button-continue-review">
+                <Button onClick={handleNextStep} className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover !text-white font-bold text-body" data-testid="button-continue-review">
                   {t.checkout.reviewOrder}
                 </Button>
               </div>

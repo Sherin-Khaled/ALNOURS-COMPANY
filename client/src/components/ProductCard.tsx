@@ -70,18 +70,19 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
   const parsed = parsProductName(displayName);
   const title = parsed.title;
   const size = parsed.size || (product.sizes?.length ? product.sizes.join(" & ") : undefined);
+  const linkClassName = variant === "grid" ? "group block w-full max-w-[420px] mx-auto" : "group block";
 
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group block"
+      className={linkClassName}
       data-testid={`product-card-${product.id}`}
     >
       <div
-        className={`relative rounded-[20px] overflow-visible ${s.padding}`}
+        className={`relative w-full rounded-[20px] overflow-visible ${s.padding}`}
         style={{
           minHeight: s.minHeight,
-          width: s.width,
+          width: variant === "grid" ? "100%" : s.width,
           backgroundColor: "rgba(237,242,253,0.5)",
         }}
       >
@@ -121,9 +122,10 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
           <div className="relative h-full">
             {/* ✅ Fruit splash: width fixed, height auto, ratio-safe */}
             <img
-              src="/images/Home/Fruits_splash.png"
+              src="/images/Home/optimized/fruit-splash.png"
               alt=""
               loading="lazy"
+              decoding="async"
               className="fruit-splash absolute pointer-events-none select-none"
               style={{
                 width: s.fruitSize,      // ✅ 262
@@ -144,6 +146,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
               src={product.images?.packshot}
               alt={product.name}
               loading="lazy"
+              decoding="async"
               className="relative object-contain pointer-events-none select-none group-hover:scale-105 transition-transform duration-500"
               style={{
                 height: s.imgHeight,

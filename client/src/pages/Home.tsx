@@ -5,8 +5,8 @@ import { useProducts } from "@/hooks/use-products";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import { SEO } from "@/components/SEO";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { GradientMesh } from "@/components/GradientMesh";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { SubtleAccent } from "@/components/SubtleAccent";
 import { useRef, useEffect, useCallback, useState } from "react";
 import {
@@ -40,29 +40,9 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
   const railScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
   const bottomScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const [showBottomProgress, setShowBottomProgress] = useState(true);
-  const hideTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
-    };
-  }, []);
-
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     const idx = Math.min(Math.floor(latest * steps.length), lastIdx);
     setCurrentStepIndex((prev) => (prev === idx ? prev : idx));
-
-    if (hideTimerRef.current) {
-      window.clearTimeout(hideTimerRef.current);
-      hideTimerRef.current = null;
-    }
-
-    if (idx === lastIdx) {
-      hideTimerRef.current = window.setTimeout(() => setShowBottomProgress(false), 450);
-    } else {
-      setShowBottomProgress(true);
-    }
   });
 
   const scrollToStep = (idx: number) => {
@@ -134,7 +114,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
   );
 
   const Desktop = (
-    <div ref={containerRef} className="hidden md:block h-[320vh] relative">
+    <div ref={containerRef} className="hidden md:block h-[220vh] lg:h-[240vh] relative">
       <div className="sticky top-0 h-screen">
         <div className="container-custom h-full flex flex-col justify-center">
           <div className="grid items-start gap-10 md:grid-cols-2">
@@ -251,7 +231,7 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                   className={clsx(
                     "absolute left-0 bottom-0 h-[2px] w-full bg-primary rounded-full origin-left",
                     "transition-[opacity] duration-700",
-                    showBottomProgress ? "opacity-100" : "opacity-0"
+                    currentStepIndex === lastIdx ? "opacity-0" : "opacity-100"
                   )}
                   style={{ scaleX: bottomScaleX }}
                 />
@@ -280,8 +260,8 @@ function HeroSection() {
         subtitle: t.home.hero.subtitle,
         body: t.home.hero.body,
       }),
-      bgImg: "/images/Home/fruits_1772895415704.png",
-      fgImg: "/images/Home/domty_juice_cocktail.png",
+      bgImg: "/images/Home/optimized/hero-cocktail-bg.png",
+      fgImg: "/images/Home/optimized/hero-cocktail-packshot.png",
       bgAlt: "Fresh fruits",
       fgAlt: "Premium drink",
     },
@@ -292,8 +272,8 @@ function HeroSection() {
         subtitle: "Domty premium drinks in every flavor you love.",
         body: "Cocktail, Mango, Guava, Orange—available in 200 ml and 1000 ml.",
       }),
-      bgImg: "/images/ProductDetails/Mango_Fruits1_1772994682996.png",
-      fgImg: "/images/Home/Mango_Domty_Juice_1773174061407.png",
+      bgImg: "/images/Home/optimized/hero-mango-bg.png",
+      fgImg: "/images/Home/optimized/hero-mango-packshot.png",
       bgAlt: "Fruit splash",
       fgAlt: "Premium drink",
     },
@@ -304,8 +284,8 @@ function HeroSection() {
         subtitle: "Reliable delivery across Saudi Arabia.",
         body: "Order online, pay securely, and get your drinks delivered fast.",
       }),
-      bgImg: "/images/Home/fruit2_1773154059103.png",
-      fgImg: "/images/Home/Orange_juice_1773174061408.png",
+      bgImg: "/images/Home/optimized/hero-orange-bg.png",
+      fgImg: "/images/Home/optimized/hero-orange-packshot.png",
       bgAlt: "Fast delivery",
       fgAlt: "Products",
     },
@@ -425,6 +405,9 @@ function HeroSection() {
                   src={slide.bgImg}
                   alt={slide.bgAlt}
                   loading="eager"
+                  decoding="async"
+                  width={480}
+                  height={460}
                   className="absolute rounded-section object-cover"
                   style={{ width: 480, height: 460, left: "50%", transform: "translateX(-50%)", bottom: 0, maxWidth: "100%" }}
                 />
@@ -432,6 +415,9 @@ function HeroSection() {
                   src={slide.fgImg}
                   alt={slide.fgAlt}
                   loading="eager"
+                  decoding="async"
+                  width={185}
+                  height={420}
                   className="relative z-10 object-contain rounded-lg"
                   style={{ width: 185, height: 420, maxWidth: "50%" }}
                 />
@@ -448,9 +434,12 @@ function FeaturedSection() {
   const { data: products, isLoading } = useProducts();
   const featured = products?.slice(0, 4) || [];
   const { t } = useLanguage();
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPausedRef = useRef(false);
   const manualTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const animationFrameRef = useRef<number>();
+  const oneSetWidthRef = useRef(0);
 
   const pauseAuto = useCallback(() => {
     isPausedRef.current = true;
@@ -472,44 +461,96 @@ function FeaturedSection() {
     const container = scrollRef.current;
     if (!container || featured.length === 0) return;
 
-    let animFrame: number;
-    const cardW = 251 + 40;
-    const setWidth = cardW * featured.length;
+    const COPIES = 5;
 
-    function step() {
-      if (!isPausedRef.current && container) {
-        container.scrollLeft += 0.5;
-        if (container.scrollLeft >= setWidth) {
-          container.scrollLeft -= setWidth;
-        }
+    const measure = () => {
+      oneSetWidthRef.current = container.scrollWidth / COPIES;
+
+      // Start in the middle copy, not near either end
+      if (oneSetWidthRef.current > 0) {
+        container.scrollLeft = oneSetWidthRef.current * 2;
       }
-      animFrame = requestAnimationFrame(step);
-    }
+    };
 
-    animFrame = requestAnimationFrame(step);
+    const normalize = () => {
+      const oneSetWidth = oneSetWidthRef.current;
+      if (!oneSetWidth) return;
 
-    const handleWheel = () => pauseForManualScroll();
+      // Keep scrollLeft safely inside the middle zone
+      const minSafe = oneSetWidth;
+      const maxSafe = oneSetWidth * 3;
+
+      if (container.scrollLeft < minSafe) {
+        container.scrollLeft += oneSetWidth;
+      } else if (container.scrollLeft > maxSafe) {
+        container.scrollLeft -= oneSetWidth;
+      }
+    };
+
+    const step = () => {
+      if (!container) return;
+
+      if (!isPausedRef.current) {
+        container.scrollLeft += 0.5;
+
+        // normalize immediately after moving, before getting near real end
+        normalize();
+      }
+
+      animationFrameRef.current = requestAnimationFrame(step);
+    };
+
+    const handleScroll = () => {
+      normalize();
+    };
+
+    const handleWheel = () => {
+      pauseForManualScroll();
+      normalize();
+    };
+
+    const handleResize = () => {
+      const prevRatio =
+        oneSetWidthRef.current > 0 ? container.scrollLeft / oneSetWidthRef.current : 2;
+
+      measure();
+
+      if (oneSetWidthRef.current > 0) {
+        container.scrollLeft = oneSetWidthRef.current * Math.max(1, Math.min(3, prevRatio));
+      }
+    };
+
+    // wait one frame so layout is fully ready before measuring
+    const initId = requestAnimationFrame(() => {
+      measure();
+      animationFrameRef.current = requestAnimationFrame(step);
+    });
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
     container.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(animFrame);
+      cancelAnimationFrame(initId);
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+      container.removeEventListener("scroll", handleScroll);
       container.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("resize", handleResize);
       clearTimeout(manualTimerRef.current);
     };
   }, [featured.length, pauseForManualScroll]);
 
+  const loopedProducts = [
+    ...featured,
+    ...featured,
+    ...featured,
+    ...featured,
+    ...featured,
+  ];
+
   return (
     <section className="relative py-20 overflow-hidden bg-white">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <GradientMesh className="opacity-100" />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.12) 18%, rgba(255,255,255,0.12) 82%, rgba(255,255,255,0) 100%)",
-          }}
-        />
-      </div>
+      <GradientMesh className="z-0" />
 
       <div className="container-custom relative z-10">
         <Reveal>
@@ -523,9 +564,9 @@ function FeaturedSection() {
         </Reveal>
 
         <Reveal delay={150}>
-          <div className="min-h-[360px]">
+          <div>
             {isLoading ? (
-              <div className="flex gap-10 items-stretch overflow-hidden">
+              <div className="flex gap-8 items-stretch overflow-hidden justify-center">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="shrink-0" style={{ width: 251, height: 320 }}>
                     <div className="w-full h-full bg-neutral-100 animate-pulse rounded-lg" />
@@ -535,7 +576,7 @@ function FeaturedSection() {
             ) : (
               <div
                 ref={scrollRef}
-                className="flex gap-10 items-stretch overflow-x-auto overflow-y-hidden scrollbar-hide "
+                className="flex gap-8 items-stretch overflow-x-auto overflow-y-hidden scrollbar-hide"
                 onMouseEnter={pauseAuto}
                 onMouseLeave={resumeAuto}
                 onTouchStart={pauseAuto}
@@ -543,13 +584,13 @@ function FeaturedSection() {
                 onPointerDown={pauseForManualScroll}
                 style={{ scrollBehavior: "auto" }}
               >
-                {[...featured, ...featured, ...featured].map((product, idx) => (
+                {loopedProducts.map((product, idx) => (
                   <div
                     key={`${product.id}-${idx}`}
                     className="shrink-0 flex"
-                    style={{ width: 251, minHeight: 320 }}
+                    style={{ width: 251 }}
                   >
-                    <div className="w-full h-full">
+                    <div className="w-full">
                       <ProductCard variant="featured" product={product} />
                     </div>
                   </div>
@@ -560,7 +601,7 @@ function FeaturedSection() {
         </Reveal>
 
         <Reveal delay={300}>
-          <div className="mt-3 text-center">
+          <div className="mt-0 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
               <Link href="/products">
                 {t.cta.viewAll}
@@ -574,6 +615,7 @@ function FeaturedSection() {
   );
 }
 
+
 export default function Home() {
   const { t } = useLanguage();
 
@@ -583,21 +625,21 @@ export default function Home() {
       eyebrow: "STEP 1",
       title: t.home.howItWorks.steps.s1_title,
       description: t.home.howItWorks.steps.s1_body,
-      imageSrc: "/images/Home/HowWeWork/Shopping_page_1772916371562.png",
+      imageSrc: "/images/Home/optimized/timeline-shopping.jpg",
     },
     {
       id: 2,
       eyebrow: "STEP 2",
       title: t.home.howItWorks.steps.s2_title,
       description: t.home.howItWorks.steps.s2_body,
-      imageSrc: "/images/Home/HowWeWork/rupixen-Q59HmzK38eQ-unsplash_1772913744070.jpg",
+      imageSrc: "/images/Home/optimized/timeline-payment.jpg",
     },
     {
       id: 3,
       eyebrow: "STEP 3",
       title: t.home.howItWorks.steps.s3_title,
       description: t.home.howItWorks.steps.s3_body,
-      imageSrc: "/images/Home/HowWeWork/Delivery_1772913744069.png",
+      imageSrc: "/images/Home/optimized/timeline-delivery.jpg",
     },
   ];
 
@@ -644,30 +686,32 @@ export default function Home() {
                 {t.home.flavors.eyebrow}
               </span>
               <h2 className="text-h2 text-neutral-950">{t.home.flavors.title}</h2>
-              <p className="text-body text-neutral-500 mt-2">{t.home.flavors.subtitle}</p>
+              <p className="text-body text-neutral-500 mt-2 mb-4">{t.home.flavors.subtitle}</p>
             </div>
           </Reveal>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 place-items-center gap-x-0">
-            {flavorTiles.map((item, i) => (
-              <Reveal key={item.key} delay={i * 100}>
-                <Link href={item.href}>
-                  <div className="w-full max-w-[260px] cursor-pointer transition-all active:scale-95">
-                    <div className="relative overflow-visible">
-                      <div className="relative w-full aspect-[3/4] flex items-center justify-center">
-                        <img
-                          src={item.img}
-                          alt={item.alt}
-                          className="w-full h-full object-contain"
-                          style={{ transform: "scale(1.1)" }}
-                          loading="eager"
-                        />
+          <div className="flex justify-center">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 md:gap-x-0 lg:gap-x-0 gap-y-6 w-fit">
+              {flavorTiles.map((item, i) => (
+                <Reveal key={item.key} delay={i * 100}>
+                  <Link href={item.href}>
+                    <div className="w-[220px] sm:w-[240px] lg:w-[380px] cursor-pointer transition-all active:scale-95">
+                      <div className="relative overflow-visible">
+                        <div className="relative w-full aspect-[3/4] flex items-center justify-center">
+                          <img
+                            src={item.img}
+                            alt={item.alt}
+                            className="w-full h-full object-contain"
+                            style={{ transform: "scale(1.1)" }}
+                            loading="lazy"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+                  </Link>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>

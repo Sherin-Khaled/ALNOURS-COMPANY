@@ -6,6 +6,7 @@ import { SEO } from "@/components/SEO";
 import { Reveal } from "@/components/Reveal";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useToast } from "@/hooks/use-toast";
+import { GradientMesh } from "@/components/GradientMesh";
 
 export function About() {
   const { t, dir } = useLanguage();
@@ -32,7 +33,7 @@ export function About() {
         </div>
       </section>
 
-      <section className="section-spacing bg-white overflow-hidden">
+      <section className="section-spacing bg-white overflow-hidden my-16">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
@@ -47,7 +48,7 @@ export function About() {
                 style={dir === "rtl" ? { marginLeft: '-9999px', paddingLeft: 'calc(9999px + 32px)' } : { marginRight: '-9999px', paddingRight: 'calc(9999px + 32px)' }}
               >
                 <h2 className="text-h3 text-white mb-4">{t.about.coverage.title}</h2>
-                <p className="text-body text-white/90">
+                <p className="text-body !text-white" style={{ opacity: 0.9 }}>
                   {t.about.coverage.body}
                 </p>
               </div>
@@ -56,12 +57,13 @@ export function About() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
-        <div className="featured-gradient-bg" style={{ top: "-2rem", bottom: "-2rem" }}><span className="fluid-blob-c" /></div>
-        <div className="container-custom relative z-10">
+      <section className="relative overflow-hidden my-16" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
+        {/* <div className="featured-gradient-bg" style={{ top: "-2rem", bottom: "-2rem" }}><span className="fluid-blob-c" /></div> */}
+        <GradientMesh className="z-0" />
+        <div className="container-custom relative z-10 text-center">
           <span className="text-label text-primary uppercase tracking-wider mb-2 block">{t.about.whatWeDo.eyebrow}</span>
           <h2 className="text-h2 text-neutral-950 mb-4">{t.about.whatWeDo.title}</h2>
-          <p className="text-body text-neutral-500 max-w-2xl mb-12">
+          <p className="text-body text-neutral-500 max-w-2xl mb-12 mx-auto">
             {t.about.whatWeDo.body}
           </p>
 

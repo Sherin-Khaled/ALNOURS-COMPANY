@@ -299,7 +299,7 @@
     }
   },
 
-  "auth": {
+   "auth": {
     "login": {
       "welcomeTitle": "Welcome back",
       "welcomeBody": "Sign in to track orders, manage addresses, and checkout faster.",

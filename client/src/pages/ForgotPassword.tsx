@@ -16,31 +16,47 @@ export default function ForgotPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsPending(true);
+
     try {
       const res = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.message || t.forgotPassword.errorTitle);
+      }
+
       setSent(true);
-      toast({ title: t.forgotPassword.successTitle, description: data.message });
-    } catch {
-      toast({ title: t.forgotPassword.errorTitle, variant: "destructive" });
+      toast({
+        title: t.forgotPassword.successTitle,
+        description: data?.message,
+      });
+    } catch (error) {
+      toast({
+        title: t.forgotPassword.errorTitle,
+        description:
+          error instanceof Error ? error.message : t.forgotPassword.errorTitle,
+        variant: "destructive",
+      });
     } finally {
       setIsPending(false);
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4" style={{ background: "linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 50%, #F0F9FF 100%)" }}>
       <SEO title={t.forgotPassword.seoTitle} description={t.forgotPassword.seoDesc} />
       <div className="w-full max-w-md bg-white rounded-modal shadow-[0_24px_64px_rgba(0,0,0,0.08)] p-8 md:p-10">
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
-            <Citrus className="w-6 h-6 text-primary" />
+          <div className="">
+            <img src="/favicon.png" alt="Logo" className="w-6 h-6 " />
           </div>
-          <span className="font-sora font-bold text-h4 text-neutral-950">ALNOURS</span>
+          <span className="font-sora font-bold text-h4 text-primary">ALNOURS</span>
         </div>
 
         {sent ? (
@@ -53,7 +69,7 @@ export default function ForgotPassword() {
           </div>
         ) : (
           <>
-            <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.forgotPassword.title}</h2>
+            <h2 className="font-sora text-h4 text-neutral-950 mb-2">{t.forgotPassword.title}</h2>
             <p className="text-body text-neutral-500 mb-6">{t.forgotPassword.body}</p>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
@@ -65,7 +81,7 @@ export default function ForgotPassword() {
                 />
               </div>
               <Button type="submit" disabled={isPending}
-                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body"
+                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover !text-white font-semibold text-body"
                 data-testid="button-send-reset">
                 {isPending ? t.cta.processing : t.forgotPassword.button}
               </Button>

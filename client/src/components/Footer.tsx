@@ -50,7 +50,7 @@ export function Footer({ minimal = false }: { minimal?: boolean }) {
             <div>
               <h4 className="font-sora font-bold text-[16px] text-neutral-950 mb-5">{t.footer.contact}</h4>
               <ul className="space-y-3 text-small text-neutral-500">
-                <li>hello@alnours.sa</li>
+                <li>rouk@alnours-sa.com</li>
                 <li>+966 50 123 4567</li>
                 <li>Al Olaya Dist, Riyadh, Saudi Arabia</li>
               </ul>
