@@ -11,9 +11,12 @@ export interface CartItem {
 
 interface CartStore {
   items: CartItem[];
+  promoCode: string | null;
   addItem: (product: Product, size: string, quantity: number) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  setPromoCode: (promoCode: string | null) => void;
+  clearPromoCode: () => void;
   clearCart: () => void;
   getTotals: () => { subtotal: number; shipping: number; total: number };
 }
@@ -22,6 +25,7 @@ export const useCart = create<CartStore>()(
   persist(
     (set, get) => ({
       items: [],
+      promoCode: null,
       
       addItem: (product, size, quantity) => {
         set((state) => {
@@ -41,9 +45,13 @@ export const useCart = create<CartStore>()(
       },
       
       removeItem: (id) => {
-        set((state) => ({
-          items: state.items.filter((i) => i.id !== id)
-        }));
+        set((state) => {
+          const items = state.items.filter((i) => i.id !== id);
+          return {
+            items,
+            promoCode: items.length > 0 ? state.promoCode : null,
+          };
+        });
       },
       
       updateQuantity: (id, quantity) => {
@@ -54,8 +62,14 @@ export const useCart = create<CartStore>()(
           )
         }));
       },
+
+      setPromoCode: (promoCode) => set({
+        promoCode: promoCode?.trim() ? promoCode.trim().toUpperCase() : null,
+      }),
+
+      clearPromoCode: () => set({ promoCode: null }),
       
-      clearCart: () => set({ items: [] }),
+      clearCart: () => set({ items: [], promoCode: null }),
       
       getTotals: () => {
         const { items } = get();

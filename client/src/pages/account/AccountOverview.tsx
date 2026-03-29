@@ -5,7 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AccountOverview() {
   const { data: user } = useAuth();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const isRtl = locale === "ar";
   
   if (!user) return null;
 
@@ -25,12 +26,22 @@ export default function AccountOverview() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map(card => (
           <Link key={card.href} href={card.href}>
-            <div className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 card-hover-shadow cursor-pointer group transition-all h-full">
+            <div className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 card-hover-shadow cursor-pointer group transition-all h-full text-start">
               <card.icon className="w-8 h-8 text-primary mb-4" />
               <h3 className="font-semibold text-neutral-950 text-body mb-1">{card.title}</h3>
               <p className="text-neutral-500 text-small mb-4">{card.desc}</p>
-              <span className="text-primary font-semibold text-small flex items-center gap-1 group-hover:gap-2 transition-all">
-                {t.cta.view} <ArrowRight className="w-4 h-4" />
+              <span className="text-primary font-semibold text-small inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                {isRtl ? (
+                  <>
+                    <ArrowRight className="w-4 h-4" />
+                    {t.cta.view}
+                  </>
+                ) : (
+                  <>
+                    {t.cta.view}
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </span>
             </div>
           </Link>

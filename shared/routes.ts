@@ -1,5 +1,23 @@
 import { z } from 'zod';
-import { insertUserSchema, users, products, orders, addresses, insertAddressSchema } from './schema';
+import { insertUserSchema, users, products, orders, addresses, insertAddressSchema, paymentStatusValues } from './schema';
+
+const checkoutItemsSchema = z.array(z.object({
+  productId: z.number().int().positive(),
+  quantity: z.number().int().positive().max(99),
+  size: z.string().trim().min(1).max(100),
+})).min(1).max(100);
+
+const promoCodeSchema = z.string().trim().min(1).max(50);
+
+const shippingAddressSchema = z.object({
+  fullName: z.string().trim().min(1).max(200),
+  email: z.string().trim().email().max(320),
+  phone: z.string().trim().min(1).max(50),
+  street: z.string().trim().min(1).max(500),
+  city: z.string().trim().min(1).max(100),
+  country: z.string().trim().min(1).max(100),
+  postalCode: z.string().trim().max(50).optional(),
+});
 
 export const errorSchemas = {
   validation: z.object({
@@ -45,6 +63,34 @@ export const api = {
       path: '/api/auth/me' as const,
       responses: {
         200: z.custom<typeof users.$inferSelect>(),
+        401: errorSchemas.unauthorized,
+      }
+    },
+    updateProfile: {
+      method: 'PATCH' as const,
+      path: '/api/auth/profile' as const,
+      input: z.object({
+        firstName: z.string().min(1),
+        lastName: z.string().optional(),
+        email: z.string().email(),
+        phone: z.string().min(1),
+      }),
+      responses: {
+        200: z.custom<typeof users.$inferSelect>(),
+        400: errorSchemas.validation,
+        401: errorSchemas.unauthorized,
+      }
+    },
+    changePassword: {
+      method: 'POST' as const,
+      path: '/api/auth/change-password' as const,
+      input: z.object({
+        currentPassword: z.string().min(1),
+        newPassword: z.string().min(6),
+      }),
+      responses: {
+        200: z.object({ message: z.string() }),
+        400: errorSchemas.validation,
         401: errorSchemas.unauthorized,
       }
     },
@@ -115,21 +161,10 @@ export const api = {
       method: 'POST' as const,
       path: '/api/orders' as const,
       input: z.object({
-        items: z.array(z.object({
-          productId: z.number(),
-          quantity: z.number(),
-          size: z.string()
-        })),
-        shippingAddress: z.object({
-          fullName: z.string().min(1),
-          email: z.string().email(),
-          phone: z.string().min(1),
-          street: z.string().min(1),
-          city: z.string().min(1),
-          country: z.string().min(1),
-          postalCode: z.string().optional(),
-        }),
+        items: checkoutItemsSchema,
+        shippingAddress: shippingAddressSchema,
         paymentMethod: z.enum(["card", "cod"]),
+        promoCode: promoCodeSchema.optional(),
       }),
       responses: {
         201: z.custom<typeof orders.$inferSelect>(),
@@ -137,6 +172,83 @@ export const api = {
         401: errorSchemas.unauthorized,
       }
     }
+  },
+  payments: {
+    moyasar: {
+      config: {
+        method: 'GET' as const,
+        path: '/api/payments/moyasar/config' as const,
+        responses: {
+          200: z.object({
+            publishableKey: z.string(),
+          }),
+          503: errorSchemas.validation,
+        }
+      },
+      create: {
+        method: 'POST' as const,
+        path: '/api/payments/moyasar/create' as const,
+        input: z.object({
+          items: checkoutItemsSchema,
+          shippingAddress: shippingAddressSchema,
+          promoCode: promoCodeSchema.optional(),
+          token: z.string().min(1),
+        }),
+        responses: {
+          200: z.object({
+            checkoutSessionId: z.number(),
+            paymentId: z.string(),
+            paymentStatus: z.enum(paymentStatusValues),
+            transactionUrl: z.string().url(),
+          }),
+          400: errorSchemas.validation,
+          401: errorSchemas.unauthorized,
+          404: errorSchemas.notFound,
+        }
+      },
+      verify: {
+        method: 'POST' as const,
+        path: '/api/payments/moyasar/verify' as const,
+        input: z.object({
+          checkoutSessionId: z.number().optional(),
+          orderId: z.number().optional(),
+          paymentId: z.string().min(1),
+        }),
+        responses: {
+          200: z.object({
+            checkoutSessionId: z.number().nullable(),
+            orderId: z.number().nullable(),
+            orderNo: z.string().nullable(),
+            paymentId: z.string(),
+            paymentStatus: z.enum(paymentStatusValues),
+            moyasarStatus: z.string(),
+          }),
+          400: errorSchemas.validation,
+          401: errorSchemas.unauthorized,
+          404: errorSchemas.notFound,
+        }
+      }
+    }
+  },
+  promos: {
+    apply: {
+      method: "POST" as const,
+      path: "/api/promos/apply" as const,
+      input: z.object({
+        items: checkoutItemsSchema,
+        promoCode: promoCodeSchema,
+      }),
+      responses: {
+        200: z.object({
+          promoCode: z.string(),
+          subtotal: z.number().int().nonnegative(),
+          shipping: z.number().int().nonnegative(),
+          discount: z.number().int().nonnegative(),
+          total: z.number().int().nonnegative(),
+        }),
+        400: errorSchemas.validation,
+      },
+    },
   },
   addresses: {
     list: {

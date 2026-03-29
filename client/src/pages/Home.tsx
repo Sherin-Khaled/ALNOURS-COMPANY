@@ -26,6 +26,234 @@ type Step = {
   imageSrc?: string;
 };
 
+// function ProcessTimeline({ steps }: { steps: Step[] }) {
+//   const containerRef = useRef<HTMLDivElement>(null);
+
+//   const { scrollYProgress } = useScroll({
+//     target: containerRef,
+//     offset: ["start start", "end end"],
+//   });
+
+//   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+//   const lastIdx = steps.length - 1;
+
+//   const railScaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
+//   const bottomScaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+//   useMotionValueEvent(scrollYProgress, "change", (latest) => {
+//     const idx = Math.min(Math.floor(latest * steps.length), lastIdx);
+//     setCurrentStepIndex((prev) => (prev === idx ? prev : idx));
+//   });
+
+//   const scrollToStep = (idx: number) => {
+//     const el = containerRef.current;
+//     if (!el) return;
+
+//     const rect = el.getBoundingClientRect();
+//     const top = rect.top + window.scrollY;
+//     const totalScrollable = el.offsetHeight - window.innerHeight;
+
+//     const progress = steps.length <= 1 ? 0 : idx / (steps.length - 1);
+//     const targetY = top + totalScrollable * progress;
+
+//     window.scrollTo({ top: targetY, behavior: "smooth" });
+//   };
+
+//   const Mobile = (
+//     <div className="md:hidden">
+//       <div className="container-custom">
+//         <div className="space-y-6 mt-10">
+//           {steps.map((step, i) => (
+//             <div
+//               key={step.id}
+//               className={clsx(
+//                 "rounded-section p-6",
+//                 "bg-neutral-50 border border-neutral-100",
+//                 "transition hover:shadow-lg"
+//               )}
+//             >
+//               <div className="flex items-center gap-3">
+//                 <div className="h-[40px] w-[40px] rounded-full bg-primary flex items-center justify-center">
+//                   <span className="font-semibold text-[16px] leading-[20px] text-white">
+//                     {i + 1}
+//                   </span>
+//                 </div>
+
+//                 <p className="text-[12px] leading-[16px] uppercase tracking-[0.14em] text-primary">
+//                   {step.eyebrow}
+//                 </p>
+//               </div>
+
+//               <h3 className="mt-4 font-bold text-[22px] leading-[30px] text-neutral-950">
+//                 {step.title}
+//               </h3>
+
+//               <p className="mt-2 text-[16px] leading-[26px] text-neutral-700">
+//                 {step.description}
+//               </p>
+
+//               {step.imageSrc ? (
+//                 <div
+//                   className={clsx(
+//                     "mt-4 relative w-full overflow-hidden rounded-section shadow-xl aspect-[4/3] bg-white flex items-center justify-center",
+//                     step.id === 1 && "p-4"
+//                   )}
+//                 >
+//                   <img
+//                     src={step.imageSrc}
+//                     alt={step.title}
+//                     loading="lazy"
+//                     className={clsx(
+//                       "max-w-full max-h-full",
+//                       step.id === 1 ? "object-contain" : "object-cover"
+//                     )}
+//                     style={{ width: "100%", height: "100%" }}
+//                   />
+//                 </div>
+//               ) : null}
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+//     </div>
+//   );
+
+//   const Desktop = (
+//     <div ref={containerRef} className="hidden md:block h-[220vh] lg:h-[240vh] relative">
+//       <div className="sticky top-0 h-screen">
+//         <div className="container-custom h-full flex flex-col justify-center">
+//           <div className="grid items-start gap-10 md:grid-cols-2">
+//             <div className="grid grid-cols-[64px_1fr] items-start gap-4">
+//               <div className="relative flex flex-col items-center" aria-label="Process steps">
+//                 <div className="absolute top-[24px] bottom-[24px] w-[2px] bg-primary/30" />
+
+//                 <motion.div
+//                   className="absolute top-[24px] bottom-[24px] w-[2px] bg-primary origin-top"
+//                   style={{ scaleY: railScaleY }}
+//                 />
+
+//                 <div className="flex flex-col items-center gap-[56px]">
+//                   {steps.map((step, i) => {
+//                     const isActive = i === currentStepIndex;
+//                     const isVisited = i < currentStepIndex;
+
+//                     const innerBg = isActive || isVisited ? "bg-primary" : "bg-neutral-200";
+//                     const numberColor =
+//                       isActive || isVisited ? "text-white" : "text-neutral-500";
+
+//                     return (
+//                       <button
+//                         key={step.id}
+//                         type="button"
+//                         onClick={() => scrollToStep(i)}
+//                         className="relative h-[48px] w-[48px] flex items-center justify-center cursor-pointer"
+//                         aria-current={isActive ? "step" : undefined}
+//                         aria-label={`Go to step ${i + 1}`}
+//                       >
+//                         {isActive && (
+//                           <div className="absolute inset-0 rounded-full border-2 border-primary" />
+//                         )}
+//                         <div
+//                           className={clsx(
+//                             "h-[40px] w-[40px] rounded-full flex items-center justify-center transition-colors duration-300",
+//                             innerBg
+//                           )}
+//                         >
+//                           <span
+//                             className={clsx(
+//                               "font-semibold text-[16px] leading-[20px]",
+//                               numberColor
+//                             )}
+//                           >
+//                             {i + 1}
+//                           </span>
+//                         </div>
+//                       </button>
+//                     );
+//                   })}
+//                 </div>
+//               </div>
+
+//               <div className="relative max-w-xl h-[240px] flex items-start">
+//                 <AnimatePresence mode="wait">
+//                   <motion.div
+//                     key={steps[currentStepIndex]?.id ?? currentStepIndex}
+//                     initial={{ opacity: 0, y: 20 }}
+//                     animate={{ opacity: 1, y: 0 }}
+//                     exit={{ opacity: 0, y: -20 }}
+//                     transition={{ duration: 0.4, ease: "easeOut" }}
+//                   >
+//                     <p className="text-[12px] leading-[16px] uppercase tracking-[0.14em] text-primary">
+//                       {steps[currentStepIndex].eyebrow}
+//                     </p>
+//                     <h3 className="mt-3 font-bold text-[28px] leading-[36px] text-neutral-950">
+//                       {steps[currentStepIndex].title}
+//                     </h3>
+//                     <p className="mt-3 text-[16px] leading-[28px] text-neutral-700">
+//                       {steps[currentStepIndex].description}
+//                     </p>
+//                   </motion.div>
+//                 </AnimatePresence>
+//               </div>
+//             </div>
+
+//             <div className="flex justify-end">
+//               <div className="w-full max-w-[420px] flex justify-end">
+//                 <AnimatePresence mode="wait">
+//                   <motion.div
+//                     key={steps[currentStepIndex]?.id ?? currentStepIndex}
+//                     initial={{ opacity: 0, scale: 0.98 }}
+//                     animate={{ opacity: 1, scale: 1 }}
+//                     exit={{ opacity: 0, scale: 1.02 }}
+//                     transition={{ duration: 0.45 }}
+//                     className={clsx(
+//                       "relative overflow-hidden rounded-section shadow-xl bg-white border border-neutral-100",
+//                       steps[currentStepIndex].id === 1 && "p-4"
+//                     )}
+//                     style={{ width: 340 }}
+//                   >
+//                     <div className="relative w-full aspect-[4/3] bg-white flex items-center justify-center">
+//                       {steps[currentStepIndex].imageSrc ? (
+//                         <img
+//                           src={steps[currentStepIndex].imageSrc}
+//                           alt={steps[currentStepIndex].title}
+//                           loading="lazy"
+//                           className={clsx(
+//                             "max-w-full max-h-full",
+//                             steps[currentStepIndex].id === 1 ? "object-contain" : "object-cover"
+//                           )}
+//                           style={{ width: "100%", height: "100%" }}
+//                         />
+//                       ) : null}
+//                     </div>
+//                   </motion.div>
+//                 </AnimatePresence>
+//               </div>
+//             </div>
+//           </div>
+
+//           <div className="pointer-events-none absolute left-0 right-0 bottom-0 z-30">
+//             <div className="mx-auto w-full">
+//               <div className="relative h-[3px] w-full">
+//                 <motion.div
+//                   className={clsx(
+//                     "absolute left-0 bottom-0 h-[2px] w-full bg-primary rounded-full origin-left",
+//                     "transition-[opacity] duration-700",
+//                     currentStepIndex === lastIdx ? "opacity-0" : "opacity-100"
+//                   )}
+//                   style={{ scaleX: bottomScaleX }}
+//                 />
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+
+//   return <div className="relative">{Mobile}{Desktop}</div>;
+// }
+
 function ProcessTimeline({ steps }: { steps: Step[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -93,16 +321,12 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
               </p>
 
               {step.imageSrc ? (
-                <div className="mt-4 relative w-full overflow-hidden rounded-section shadow-xl aspect-[4/3] bg-white flex items-center justify-center">
+                <div className="mt-4 relative w-full overflow-hidden rounded-section shadow-xl aspect-[4/3] bg-white">
                   <img
                     src={step.imageSrc}
                     alt={step.title}
                     loading="lazy"
-                    className={clsx(
-                      "max-w-full max-h-full",
-                      step.id === 1 ? "object-contain" : "object-cover"
-                    )}
-                    style={{ width: "100%", height: "100%" }}
+                    className="w-full h-full object-cover"
                   />
                 </div>
               ) : null}
@@ -204,17 +428,13 @@ function ProcessTimeline({ steps }: { steps: Step[] }) {
                     className="relative overflow-hidden rounded-section shadow-xl bg-white border border-neutral-100"
                     style={{ width: 340 }}
                   >
-                    <div className="relative w-full aspect-[4/3] bg-white flex items-center justify-center">
+                    <div className="relative w-full aspect-[4/3] bg-white">
                       {steps[currentStepIndex].imageSrc ? (
                         <img
                           src={steps[currentStepIndex].imageSrc}
                           alt={steps[currentStepIndex].title}
                           loading="lazy"
-                          className={clsx(
-                            "max-w-full max-h-full",
-                            steps[currentStepIndex].id === 1 ? "object-contain" : "object-cover"
-                          )}
-                          style={{ width: "100%", height: "100%" }}
+                          className="w-full h-full object-cover"
                         />
                       ) : null}
                     </div>
@@ -433,7 +653,8 @@ function HeroSection() {
 function FeaturedSection() {
   const { data: products, isLoading } = useProducts();
   const featured = products?.slice(0, 4) || [];
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const isRtl = locale === "ar";
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const isPausedRef = useRef(false);
@@ -582,12 +803,14 @@ function FeaturedSection() {
                 onTouchStart={pauseAuto}
                 onTouchEnd={resumeAuto}
                 onPointerDown={pauseForManualScroll}
+                dir={isRtl ? "ltr" : undefined}
                 style={{ scrollBehavior: "auto" }}
               >
                 {loopedProducts.map((product, idx) => (
                   <div
                     key={`${product.id}-${idx}`}
                     className="shrink-0 flex"
+                    dir={isRtl ? "rtl" : "ltr"}
                     style={{ width: 251 }}
                   >
                     <div className="w-full">
@@ -603,9 +826,18 @@ function FeaturedSection() {
         <Reveal delay={300}>
           <div className="mt-0 text-center">
             <Button asChild variant="link" className="text-primary font-bold text-lg group">
-              <Link href="/products">
-                {t.cta.viewAll}
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Link href="/products" className="inline-flex items-center gap-2">
+                {isRtl ? (
+                  <>
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    {t.cta.viewAll}
+                  </>
+                ) : (
+                  <>
+                    {t.cta.viewAll}
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                  </>
+                )}
               </Link>
             </Button>
           </div>
@@ -691,7 +923,7 @@ export default function Home() {
           </Reveal>
 
           <div className="flex justify-center">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 md:gap-x-0 lg:gap-x-0 gap-y-6 w-fit">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-0 md:gap-x-0 lg:gap-x-0 gap-y-10 md:gap-y-6 w-fit">
               {flavorTiles.map((item, i) => (
                 <Reveal key={item.key} delay={i * 100}>
                   <Link href={item.href}>

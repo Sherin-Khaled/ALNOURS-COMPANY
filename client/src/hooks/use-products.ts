@@ -14,12 +14,12 @@ export function useProducts() {
   });
 }
 
-export function useProduct(slug: string) {
+export function useProduct(slug: string, locale: "en" | "ar") {
   return useQuery({
-    queryKey: [api.products.get.path, slug],
+    queryKey: [api.products.get.path, slug, locale],
     queryFn: async (): Promise<Product | null> => {
       if (!slug) return null;
-      const url = buildUrl(api.products.get.path, { slug });
+      const url = `${buildUrl(api.products.get.path, { slug })}?lang=${locale}`;
       const res = await fetch(url);
       if (res.status === 404) return null;
       if (!res.ok) throw new Error("Failed to fetch product");

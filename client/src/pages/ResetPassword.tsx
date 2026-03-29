@@ -56,10 +56,10 @@ export default function ResetPassword() {
       <SEO title={t.resetPassword.seoTitle} description={t.resetPassword.seoDesc} />
       <div className="w-full max-w-md bg-white rounded-modal shadow-[0_24px_64px_rgba(0,0,0,0.08)] p-8 md:p-10">
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-10 h-10 bg-primary/10 rounded-md flex items-center justify-center">
-            <Citrus className="w-6 h-6 text-primary" />
+          <div className="">
+            <img src="/favicon.png" alt="Logo" className="w-6 h-6 " />
           </div>
-          <span className="font-sora font-bold text-h4 text-neutral-950">ALNOURS</span>
+          <span className="font-sora font-bold text-h4 text-primary">ALNOURS</span>
         </div>
 
         {done ? (
@@ -67,7 +67,7 @@ export default function ResetPassword() {
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check className="w-6 h-6 text-green-600" />
             </div>
-            <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.resetPassword.doneTitle}</h2>
+            <h2 className="font-sora text-h4 text-neutral-950 mb-2">{t.resetPassword.doneTitle}</h2>
             <p className="text-body text-neutral-500 mb-4">{t.resetPassword.doneBody}</p>
             <Link href="/login" className="text-primary font-semibold hover:underline" data-testid="link-go-login">{t.resetPassword.goToLogin}</Link>
           </div>
@@ -100,7 +100,7 @@ export default function ResetPassword() {
                 />
               </div>
               <Button type="submit" disabled={isPending || !token}
-                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover text-white font-semibold text-body"
+                className="w-full h-12 rounded-md bg-primary hover:bg-primary-hover !text-white font-semibold text-body"
                 data-testid="button-reset-password">
                 {isPending ? t.cta.processing : t.resetPassword.button}
               </Button>

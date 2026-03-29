@@ -3,6 +3,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import { setupSessions } from "./session";
+import { isProductionEnvironment, validateRuntimeConfig } from "./config";
 
 const app = express();
 const httpServer = createServer(app);
@@ -22,6 +24,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+setupSessions(app);
 
 export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
@@ -49,7 +52,7 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
+      if (!isProductionEnvironment() && capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
@@ -61,6 +64,14 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  const runtimeConfig = validateRuntimeConfig();
+  if (runtimeConfig.appBaseUrl) {
+    log(`public base URL set to ${runtimeConfig.appBaseUrl}`, "config");
+  }
+  for (const warning of runtimeConfig.warnings) {
+    console.warn(`[config] ${warning}`);
+  }
+
   await registerRoutes(httpServer, app);
 
   app.use((err: any, _req: Request, res: Response, next: NextFunction) => {

@@ -24,7 +24,10 @@ export function useCreateOrder() {
         body: JSON.stringify(data),
         credentials: "include",
       });
-      if (!res.ok) throw new Error("Failed to create order");
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: "Failed to create order" }));
+        throw new Error(err.message || "Failed to create order");
+      }
       return await res.json();
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [api.orders.list.path] }),

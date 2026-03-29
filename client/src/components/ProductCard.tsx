@@ -25,17 +25,17 @@ const variantStyles = {
   },
   grid: {
     width: undefined,
-    minHeight: 230,
-    imgHeight: 230,
-    imgRight: -20,
+    minHeight: 210,
+    imgHeight: 205,
+    imgRight: -12,
     imgTop: 10,
-    fruitSize: 180, // ✅ width only - reduced for better proportion
-    fruitRight: -10,
-    fruitBottom: -18,
-    textMaxW: "66%",
-    titleClass: "text-[18px] leading-[24px] font-semibold line-clamp-2",
+    fruitSize: 150,
+    fruitRight: -8,
+    fruitBottom: -12,
+    textMaxW: "62%",
+    titleClass: "text-[16px] leading-[22px] font-semibold line-clamp-2",
     buttonVariant: "full" as const,
-    padding: "p-6",
+    padding: "p-4 sm:p-6",
   },
   related: {
     width: 280,
@@ -43,7 +43,7 @@ const variantStyles = {
     imgHeight: 190,
     imgRight: -16,
     imgTop: 8,
-    fruitSize: 170, // ✅ width only - reduced for better proportion
+    fruitSize: 170,
     fruitRight: -8,
     fruitBottom: -12,
     textMaxW: "64%",
@@ -53,7 +53,6 @@ const variantStyles = {
   },
 };
 
-// Helper function to parse product name and extract size info
 function parsProductName(name: string): { title: string; size?: string } {
   const sizeMatch = name.match(/^(.+?)\s+(\d+\s*ml\s*\([^)]+\))$/i);
   if (sizeMatch) {
@@ -66,11 +65,24 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
   const s = variantStyles[variant];
   const { locale, t } = useLanguage();
   const isRtl = locale === "ar";
-  const displayName = (isRtl && (product as any).nameAr) ? (product as any).nameAr : product.name;
+
+  const artworkInset =
+    variant === "grid"
+      ? "clamp(-10px, -1.5vw, -6px)"
+      : s.imgRight;
+
+  const displayName =
+    isRtl && (product as any).nameAr ? (product as any).nameAr : product.name;
+
   const parsed = parsProductName(displayName);
   const title = parsed.title;
-  const size = parsed.size || (product.sizes?.length ? product.sizes.join(" & ") : undefined);
-  const linkClassName = variant === "grid" ? "group block w-full max-w-[420px] mx-auto" : "group block";
+  const size =
+    parsed.size || (product.sizes?.length ? product.sizes.join(" & ") : undefined);
+
+  const linkClassName =
+    variant === "grid"
+      ? "group block w-full max-w-[calc(100vw-32px)] sm:max-w-[420px] mx-auto"
+      : "group block";
 
   return (
     <Link
@@ -79,7 +91,7 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
       data-testid={`product-card-${product.id}`}
     >
       <div
-        className={`relative w-full rounded-[20px] overflow-visible ${s.padding}`}
+        className={`relative w-full rounded-[20px] overflow-hidden sm:overflow-visible ${s.padding}`}
         style={{
           minHeight: s.minHeight,
           width: variant === "grid" ? "100%" : s.width,
@@ -90,12 +102,16 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
           <div>
             <h3 className={`${s.titleClass} text-neutral-950`}>{title}</h3>
             {size && (
-              <p className="text-[13px] leading-[17px] text-neutral-400 font-normal">{size}</p>
+              <p className="text-[13px] leading-[17px] text-neutral-400 font-normal">
+                {size}
+              </p>
             )}
           </div>
 
           <div className="space-y-1">
-            <p className="text-[12px] leading-[16px] text-neutral-500">{t.product.premiumDrink}</p>
+            <p className="text-[12px] leading-[16px] text-neutral-500">
+              {t.product.premiumDrink}
+            </p>
           </div>
 
           <div className="pt-2 flex flex-col gap-3">
@@ -113,25 +129,26 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
         <div
           className="absolute pointer-events-none select-none"
           style={{
-            ...(isRtl ? { left: s.imgRight } : { right: s.imgRight }),
+            ...(isRtl ? { left: artworkInset } : { right: artworkInset }),
             top: s.imgTop,
             zIndex: 30,
             height: s.imgHeight,
           }}
         >
           <div className="relative h-full">
-            {/* ✅ Fruit splash: width fixed, height auto, ratio-safe */}
             <img
               src="/images/Home/optimized/fruit-splash.png"
               alt=""
               loading="lazy"
               decoding="async"
-              className="fruit-splash absolute pointer-events-none select-none"
+              className={`fruit-splash absolute pointer-events-none select-none${
+                variant === "related" ? " product-card-fruit-splash-related" : ""
+              }`}
               style={{
-                width: s.fruitSize,      // ✅ 262
-                height: "auto",          // ✅ keeps aspect ratio
-                maxWidth: "none",        // ✅ prevents global max-width squeezing
-                maxHeight: "none",       // ✅ prevents global max-height squeezing
+                width: s.fruitSize,
+                height: "auto",
+                maxWidth: "none",
+                maxHeight: "none",
                 left: "50%",
                 top: "50%",
                 transform: "translate(-50%, -50%)",
@@ -141,7 +158,6 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
               }}
             />
 
-            {/* Packshot */}
             <img
               src={product.images?.packshot}
               alt={product.name}
@@ -160,4 +176,4 @@ export function ProductCard({ product, variant = "grid" }: ProductCardProps) {
       </div>
     </Link>
   );
-}
+}               

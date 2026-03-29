@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import type { Address } from "@shared/schema";
+import { AccountContentLoadingState } from "@/components/account/AccountLoadingState";
 
 type FormData = { title: string; fullName: string; phone: string; city: string; addressLine: string; isDefault: boolean };
 const emptyForm: FormData = { title: "", fullName: "", phone: "", city: "", addressLine: "", isDefault: false };
@@ -16,7 +17,8 @@ export default function Addresses() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const { toast } = useToast();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const isRtl = locale === "ar";
   const [formData, setFormData] = useState<FormData>(emptyForm);
 
   const openAdd = () => {
@@ -48,7 +50,7 @@ export default function Addresses() {
     }
   };
 
-  if (isLoading) return <div>{t.cta.loading}</div>;
+  if (isLoading) return <AccountContentLoadingState variant="cards" />;
 
   return (
     <div>
@@ -114,22 +116,31 @@ export default function Addresses() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {addresses?.map(addr => (
-            <div key={addr.id} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 relative group">
-              <div className="absolute top-4 right-4 flex items-center gap-2">
-                {addr.isDefault && <span className="bg-primary text-white text-label px-3 py-1 rounded-pill">{t.account.addresses.default}</span>}
-                <button
-                  onClick={() => openEdit(addr)}
-                  className="p-1.5 rounded-md text-neutral-400 hover:text-primary hover:bg-primary/10 transition-colors"
-                  data-testid={`button-edit-address-${addr.id}`}
-                  title="Edit address"
+          {addresses?.map((addr: Address) => (
+            <div key={addr.id} className="bg-neutral-50 rounded-lg p-6 border border-neutral-200 group text-start">
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <h4 className="font-semibold text-neutral-950 flex flex-1 items-center gap-2 min-w-0 text-body">
+                  <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="truncate">{addr.title}</span>
+                </h4>
+                <div
+                  className={`flex shrink-0 items-center gap-2 ${isRtl ? "flex-row-reverse" : ""}`}
                 >
-                  <Pencil className="w-4 h-4" />
-                </button>
+                  {addr.isDefault && (
+                    <span className="bg-primary text-white text-label px-3 py-1 rounded-pill">
+                      {t.account.addresses.default}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => openEdit(addr)}
+                    className="p-1.5 rounded-md text-neutral-400 hover:text-primary hover:bg-primary/10 transition-colors"
+                    data-testid={`button-edit-address-${addr.id}`}
+                    title="Edit address"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <h4 className="font-semibold text-neutral-950 flex items-center gap-2 mb-3 text-body pr-20">
-                <MapPin className="w-4 h-4 text-primary flex-shrink-0" /> {addr.title}
-              </h4>
               <div className="text-small text-neutral-700 space-y-1">
                 <p className="font-medium text-neutral-950">{addr.fullName}</p>
                 <p>{addr.addressLine}</p>

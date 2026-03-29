@@ -3,25 +3,49 @@ import { Link, useLocation } from "wouter";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useProducts } from "@/hooks/use-products";
 import { ProductCard } from "@/components/ProductCard";
 import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useApplyPromo, usePromoQuote } from "@/hooks/use-promo";
 
 export default function Cart() {
-  const { items, updateQuantity, removeItem, getTotals, clearCart } = useCart();
+  const { items, promoCode, updateQuantity, removeItem, getTotals, setPromoCode, clearPromoCode } = useCart();
   const { data: user } = useAuth();
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { data: products } = useProducts();
 
   const [coupon, setCoupon] = useState("");
-  const { subtotal, shipping, total } = getTotals();
+  const { mutateAsync: applyPromo, isPending: isApplyingPromo } = useApplyPromo();
+  const baseTotals = getTotals();
+  const promoQuote = usePromoQuote(
+    promoCode
+      ? {
+          items: items.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity,
+            size: item.size,
+          })),
+          promoCode,
+        }
+      : null,
+  );
+
+  const subtotal = promoQuote.data?.subtotal ?? baseTotals.subtotal;
+  const shipping = promoQuote.data?.shipping ?? baseTotals.shipping;
+  const discount = promoQuote.data?.discount ?? 0;
+  const total = promoQuote.data?.total ?? baseTotals.total;
 
   const { t } = useLanguage();
   const upsellProducts = products?.filter(p => !items.some(i => i.product.id === p.id))?.slice(0, 3) || [];
+  const discountLabel = t.cart.rows.discount || "Discount";
+
+  useEffect(() => {
+    setCoupon(promoCode || "");
+  }, [promoCode]);
 
   const handleCheckout = () => {
     if (!user) {
@@ -30,6 +54,36 @@ export default function Cart() {
       return;
     }
     setLocation("/checkout");
+  };
+
+  const handleApplyCoupon = async () => {
+    const trimmedCoupon = coupon.trim();
+
+    if (!trimmedCoupon) {
+      clearPromoCode();
+      return;
+    }
+
+    try {
+      const result = await applyPromo({
+        items: items.map((item) => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          size: item.size,
+        })),
+        promoCode: trimmedCoupon,
+      });
+
+      setPromoCode(result.promoCode);
+      setCoupon(result.promoCode);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Invalid promo code";
+      toast({
+        title: "Promo code",
+        description: message,
+        variant: "destructive",
+      });
+    }
   };
 
   if (items.length === 0) {
@@ -50,7 +104,7 @@ export default function Cart() {
     <div className="min-h-screen pt-24 pb-20 bg-white">
       <SEO title={t.seo.cart.title} description={t.seo.cart.description} />
       <div className="container-custom">
-        <h1 className="text-h2 text-neutral-950 mb-10">{t.cart.title}</h1>
+        <h1 className="text-h3 text-neutral-950 mb-3 mt-5">{t.cart.title}</h1>
 
         <div className="flex flex-col lg:flex-row gap-16">
           <div className="flex-1 lg:max-w-[760px] space-y-0 divide-y divide-neutral-200">
@@ -107,7 +161,12 @@ export default function Cart() {
                   onChange={e => setCoupon(e.target.value)}
                   className="flex-1 h-11 px-4 rounded-md border border-neutral-200 focus:border-primary outline-none transition-all text-body"
                 />
-                <Button variant="outline" className="h-11 px-6 rounded-md border-neutral-200 text-neutral-70 font-semibold">
+                <Button
+                  variant="outline"
+                  className="h-11 px-6 rounded-md border-neutral-200 text-neutral-70 font-semibold"
+                  disabled={isApplyingPromo}
+                  onClick={handleApplyCoupon}
+                >
                   {t.cart.apply}
                 </Button>
               </div>
@@ -127,6 +186,12 @@ export default function Cart() {
                   <span>{t.cart.rows.subtotal}</span>
                   <span className="font-semibold">{subtotal} SAR</span>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-neutral-700 text-body">
+                    <span>{discountLabel}</span>
+                    <span className="font-semibold">- {discount} SAR</span>
+                  </div>
+                )}
                 <div className="border-t border-neutral-200 pt-4 flex justify-between font-bold text-h4 text-neutral-950">
                   <span>{t.cart.rows.totalLabel}</span>
                   <span>{total} SAR</span>

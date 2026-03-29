@@ -61,7 +61,7 @@ export default function ForgotPassword() {
 
         {sent ? (
           <div data-testid="section-forgot-success">
-            <h2 className="font-sora text-h3 text-neutral-950 mb-2">{t.forgotPassword.sentTitle}</h2>
+            <h2 className="font-sora text-h4 text-neutral-950 mb-2">{t.forgotPassword.sentTitle}</h2>
             <p className="text-body text-neutral-500 mb-6">{t.forgotPassword.sentBody}</p>
             <Link href="/login" className="flex items-center gap-2 text-primary font-semibold hover:underline" data-testid="link-back-login">
               <ArrowLeft className="w-4 h-4" /> {t.forgotPassword.backToLogin}

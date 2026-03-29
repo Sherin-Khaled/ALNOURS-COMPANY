@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, MapPin, CreditCard } from "lucide-react";
 import type { Order } from "@shared/schema";
+import { AccountContentLoadingState } from "@/components/account/AccountLoadingState";
 
 export default function OrderDetail() {
   const [, params] = useRoute("/account/orders/:id");
@@ -23,7 +24,7 @@ export default function OrderDetail() {
   });
 
   if (isLoading) {
-    return <div data-testid="text-loading">{t.cta.loading}</div>;
+    return <AccountContentLoadingState variant="detail" />;
   }
 
   if (error || !order) {
@@ -41,11 +42,23 @@ export default function OrderDetail() {
   }
 
   const statusColor =
+    order.status === "Verified" ? "bg-green-100 text-green-700" :
     order.status === "Delivered" ? "bg-secondary/10 text-secondary" :
     order.status === "Cancelled" ? "bg-destructive/10 text-destructive" :
     "bg-promo/20 text-neutral-950";
 
-  const subtotal = order.total - 10;
+  const shippingCost = order.shippingCost ?? ((order.items?.length || 0) > 0 ? 10 : 0);
+  const discountAmount = order.discountAmount ?? 0;
+  const subtotalFromItems = (order.items || []).reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const subtotal = subtotalFromItems > 0
+    ? subtotalFromItems
+    : Math.max(order.total - shippingCost + discountAmount, 0);
+  const discountLabel = t.cart.rows.discount || "Discount";
+  const paymentStatusCopy =
+    order.paymentStatus === "paid" ? { label: t.account.orderDetail?.paid || "Paid", badge: "default" as const } :
+    order.paymentStatus === "failed" ? { label: "Failed", badge: "destructive" as const } :
+    order.paymentStatus === "unpaid" ? { label: "Unpaid", badge: "secondary" as const } :
+    { label: t.account.orderDetail?.pending || "Pending", badge: "secondary" as const };
 
   return (
     <div>
@@ -117,8 +130,14 @@ export default function OrderDetail() {
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-neutral-500">{t.checkout?.shipping || "Shipping"}</span>
-                <span className="font-semibold text-neutral-950" data-testid="text-shipping">SAR 10</span>
+                <span className="font-semibold text-neutral-950" data-testid="text-shipping">SAR {shippingCost}</span>
               </div>
+              {discountAmount > 0 && (
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-neutral-500">{discountLabel}</span>
+                  <span className="font-semibold text-neutral-950">- SAR {discountAmount}</span>
+                </div>
+              )}
               <div className="border-t border-neutral-200 pt-3 flex items-center justify-between gap-2">
                 <span className="font-semibold text-neutral-950">{t.checkout?.total || "Total"}</span>
                 <span className="font-sora font-bold text-neutral-950" data-testid="text-total">SAR {order.total}</span>
@@ -142,8 +161,8 @@ export default function OrderDetail() {
               </div>
               <div className="flex items-center justify-between gap-2">
                 <span className="text-neutral-500">{t.account.orderDetail?.paymentStatus || "Status"}</span>
-                <Badge variant={order.paymentStatus === "paid" ? "default" : "secondary"} data-testid="text-payment-status">
-                  {order.paymentStatus === "paid" ? (t.account.orderDetail?.paid || "Paid") : (t.account.orderDetail?.pending || "Pending")}
+                <Badge variant={paymentStatusCopy.badge} data-testid="text-payment-status">
+                  {paymentStatusCopy.label}
                 </Badge>
               </div>
             </div>

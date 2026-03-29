@@ -14,6 +14,29 @@ export function Navbar() {
   const { locale, setLocale, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const logoSrc =
+    locale === "ar" ? "/images/\u0627\u0644\u0646\u0648\u0631\u0633.png" : "/images/Alnours_logo.png";
+  const logoAlt = locale === "ar" ? "\u0627\u0644\u0646\u0648\u0631\u0633" : "ALNOURS";
+  const socialLinks = [
+    {
+      href: "https://www.instagram.com/alnours2026/",
+      icon: SiInstagram,
+      label: "Instagram",
+      testId: "link-instagram",
+    },
+    {
+      href: "https://www.facebook.com/share/1DywunBAHY/?mibextid=wwXIfr",
+      icon: SiFacebook,
+      label: "Facebook",
+      testId: "link-facebook",
+    },
+    {
+      href: "https://www.linkedin.com/company/alnours-company/",
+      icon: SiLinkedin,
+      label: "LinkedIn",
+      testId: "link-linkedin",
+    },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -40,7 +63,14 @@ export function Navbar() {
       <div className="container-custom w-full">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center group" data-testid="link-home-logo">
-            <img src="/images/Alnours_logo.png" alt="ALNOURS" className="h-9 md:h-11 w-auto object-contain" />
+            <img
+              src={logoSrc}
+              alt={logoAlt}
+              className={clsx(
+                "w-auto object-contain",
+                locale === "ar" ? "h-10 md:h-16" : "h-9 md:h-11"
+              )}
+            />
           </Link>
 
           <div className="hidden md:flex items-center gap-6">
@@ -63,16 +93,20 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             {!user && (
-              <div className="hidden md:flex items-center gap-2 mr-1">
-                <a href="#" className="w-8 h-8 flex items-center justify-center text-neutral-500 hover:text-primary transition-colors" data-testid="link-instagram" aria-label="Instagram">
-                  <SiInstagram className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-8 h-8 flex items-center justify-center text-neutral-500 hover:text-primary transition-colors" data-testid="link-facebook" aria-label="Facebook">
-                  <SiFacebook className="w-4 h-4" />
-                </a>
-                <a href="#" className="w-8 h-8 flex items-center justify-center text-neutral-500 hover:text-primary transition-colors" data-testid="link-linkedin" aria-label="LinkedIn">
-                  <SiLinkedin className="w-4 h-4" />
-                </a>
+              <div className="hidden md:flex items-center gap-1 mr-1">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.href}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-8 h-8 flex items-center justify-center text-neutral-400 hover:text-primary transition-colors"
+                    data-testid={social.testId}
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-4 h-4" />
+                  </a>
+                ))}
               </div>
             )}
 
@@ -148,34 +182,53 @@ export function Navbar() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-neutral-200 px-4 py-6 flex flex-col gap-4 absolute top-[56px] left-0 w-full shadow-2xl z-50">
-          {links.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="font-semibold text-body text-neutral-700 hover:text-primary py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {!user && (
-            <>
-              <Link
-                href="/login"
-                className="font-semibold text-body text-primary py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t.nav.signin}
-              </Link>
-              <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
-                <a href="#" className="text-neutral-500"><SiInstagram className="w-5 h-5" /></a>
-                <a href="#" className="text-neutral-500"><SiFacebook className="w-5 h-5" /></a>
-                <a href="#" className="text-neutral-500"><SiLinkedin className="w-5 h-5" /></a>
-              </div>
-            </>
-          )}
-        </div>
+        <>
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="md:hidden fixed inset-0 z-40 bg-transparent"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div className="md:hidden absolute top-[56px] left-0 w-full px-4 pt-3 z-50">
+            <div className="rounded-[24px] bg-white border border-neutral-200 px-4 py-6 flex flex-col gap-4 shadow-2xl overflow-hidden">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="font-semibold text-body text-neutral-700 hover:text-primary py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {!user && (
+                <Link
+                  href="/login"
+                  className="font-semibold text-body text-primary py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t.nav.signin}
+                </Link>
+              )}
+              {!user && (
+                <div className="flex items-center gap-3 pt-2 border-t border-neutral-200">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.href}
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-neutral-500 hover:text-primary transition-colors"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </>
       )}
     </nav>
   );

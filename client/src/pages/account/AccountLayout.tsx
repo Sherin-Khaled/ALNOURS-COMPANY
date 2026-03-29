@@ -3,6 +3,7 @@ import { User as UserIcon, Package, MapPin, Settings, LogOut } from "lucide-reac
 import { useAuth, useLogout } from "@/hooks/use-auth";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { AccountLayoutLoadingState } from "@/components/account/AccountLoadingState";
 
 export default function AccountLayout({ children }: { children: React.ReactNode }) {
   const [location, setLocation] = useLocation();
@@ -11,7 +12,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { t } = useLanguage();
 
-  if (isLoading) return <div className="min-h-screen pt-32 text-center">{t.cta.loading}</div>;
+  if (isLoading) return <AccountLayoutLoadingState />;
   if (!user) {
     setLocation("/login");
     return null;

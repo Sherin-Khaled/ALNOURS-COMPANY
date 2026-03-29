@@ -172,7 +172,8 @@
     "ingredients": {
       "label": "Ingredients:",
       "viewFull": "View full ingredients",
-      "viewLess": "View less"
+      "viewLess": "View less",
+      "empty": "Full ingredient details will be shared soon."
     },
     "related": {
       "eyebrow": "Related products",
@@ -192,6 +193,7 @@
     "apply": "Apply",
     "summaryTitle": "Cart Total",
     "rows": {
+      "discount": "Discount",
       "shipping": "Shipping",
       "subtotal": "Subtotal",
       "totalLabel": "Total"
@@ -271,7 +273,7 @@
       "body": "Whether you're ordering for home or wholesale, we'll help you choose products, sizes, and delivery options—quickly and clearly.",
       "labels": {
         "mail": "Mail",
-        "call": "Call us",
+        "call": "Call Us",
         "address": "Address"
       }
     }
@@ -296,6 +298,266 @@
       },
       "successTitle": "Message sent!",
       "errorTitle": "Failed to send"
+    }
+  },
+
+  "company": {
+    "name": "Alnours Technology Contracting Co.",
+    "email": "rouk@alnours-sa.com",
+    "phone": "+966 53 682 1124",
+    "phoneHref": "tel:+966536821124",
+    "city": "Riyadh",
+    "address": "Al Olaya, Riyadh 12221, Saudi Arabia",
+    "cr": "1009172807",
+    "vat": "312775904700003",
+    "labels": {
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "city": "City",
+      "address": "Address",
+      "cr": "Commercial Registration",
+      "vat": "VAT Number"
+    }
+  },
+
+  "legal": {
+    "eyebrow": "Legal",
+    "lastUpdated": "Last updated: March 18, 2026",
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "This Privacy Policy explains how ALNOURS collects, uses, stores, and protects personal information when you browse the website, create an account, place an order, or contact us.",
+      "sections": [
+        {
+          "title": "Information we collect",
+          "paragraphs": [
+            "We may collect information you provide directly to us, including your name, email address, phone number, delivery address, billing details, account credentials, and order information.",
+            "We may also collect limited technical information such as browser type, device data, pages visited, and website usage information needed to operate and improve the service."
+          ]
+        },
+        {
+          "title": "How we use your information",
+          "paragraphs": [
+            "We use personal information only for legitimate business and operational purposes related to running the website and serving customers."
+          ],
+          "bullets": [
+            "Process, confirm, and fulfill orders.",
+            "Create and manage customer accounts.",
+            "Respond to inquiries, support requests, and wholesale submissions.",
+            "Coordinate payment, delivery, and order updates.",
+            "Improve website security, performance, and customer experience."
+          ]
+        },
+        {
+          "title": "Payments and security",
+          "paragraphs": [
+            "Payments may be processed through approved payment service providers. We do not intentionally publish sensitive payment data on public-facing pages.",
+            "We apply reasonable technical and organizational measures to protect personal information, but no method of transmission or storage can be guaranteed to be completely secure."
+          ]
+        },
+        {
+          "title": "Sharing and disclosure",
+          "paragraphs": [
+            "We may share personal information only when required to operate the business or comply with applicable obligations."
+          ],
+          "bullets": [
+            "Payment providers and banking partners.",
+            "Shipping, delivery, and logistics providers.",
+            "Hosting, infrastructure, and customer support service providers.",
+            "Internal systems used for order, support, and CRM operations, including Odoo where applicable."
+          ]
+        },
+        {
+          "title": "Retention, cookies, and analytics",
+          "paragraphs": [
+            "We keep information for as long as needed to provide services, complete transactions, maintain records, resolve disputes, and comply with legal or tax requirements.",
+            "We may use cookies or similar technologies to support login sessions, language preferences, website performance, and basic analytics."
+          ]
+        },
+        {
+          "title": "Your rights",
+          "paragraphs": [
+            "You may request access to, correction of, or deletion of your personal information, subject to any legal, security, or operational retention requirements that still apply."
+          ]
+        },
+        {
+          "title": "Policy updates",
+          "paragraphs": [
+            "We may update this Privacy Policy from time to time. The version published on this page is the version currently in effect."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms & Conditions",
+      "intro": "These Terms & Conditions govern your access to and use of the ALNOURS website, including account registration, product browsing, ordering, payment, and customer communication.",
+      "sections": [
+        {
+          "title": "Acceptance and scope",
+          "paragraphs": [
+            "By using the website, you agree to these Terms & Conditions and any related policies published on the site. If you do not agree, you should not use the website or place orders through it."
+          ]
+        },
+        {
+          "title": "Accounts and information",
+          "paragraphs": [
+            "You are responsible for ensuring that the information you provide is accurate, complete, and up to date."
+          ],
+          "bullets": [
+            "Keep your login credentials confidential.",
+            "Use your account only for lawful purchases and communications.",
+            "Promptly update your contact and delivery details when they change."
+          ]
+        },
+        {
+          "title": "Products, pricing, and availability",
+          "paragraphs": [
+            "Product availability, assortment, packaging, and descriptions may change without prior notice. Images are for presentation purposes and may vary slightly from delivered items.",
+            "Prices displayed on the website are shown in Saudi Riyal (SAR). We reserve the right to correct pricing, availability, or content errors if they occur."
+          ]
+        },
+        {
+          "title": "Orders, payment, and cancellation",
+          "paragraphs": [
+            "Submitting an order request does not guarantee final acceptance. We may decline or cancel an order in cases including product unavailability, payment issues, pricing errors, or suspected misuse.",
+            "Approved payment methods displayed at checkout may change at any time. If an order is cancelled after payment authorization, the applicable refund process will follow our Refund & Return Policy."
+          ]
+        },
+        {
+          "title": "Delivery and inspection",
+          "paragraphs": [
+            "Delivery timing depends on the delivery area, operational conditions, and carrier availability. Estimated delivery windows are not guaranteed unless specifically confirmed by us.",
+            "Customers should inspect delivered items upon receipt and notify us promptly if an item is damaged, defective, or incorrect."
+          ]
+        },
+        {
+          "title": "Acceptable use",
+          "paragraphs": [
+            "You may not use the website in a way that disrupts operations, harms other users, or violates applicable laws."
+          ],
+          "bullets": [
+            "Do not submit false, misleading, or unauthorized information.",
+            "Do not attempt to interfere with the website, payment flow, or connected systems.",
+            "Do not misuse promotions, pricing, or ordering tools.",
+            "Do not copy, scrape, or republish protected site content without permission."
+          ]
+        },
+        {
+          "title": "Liability and updates",
+          "paragraphs": [
+            "To the maximum extent permitted by law, ALNOURS is not liable for indirect, incidental, or consequential losses arising from website use, service interruptions, or delays beyond our reasonable control.",
+            "We may update these Terms & Conditions from time to time. Continued use of the website after updates means you accept the revised version."
+          ]
+        }
+      ]
+    },
+    "refund": {
+      "title": "Refund & Return Policy",
+      "intro": "This policy explains how refund, replacement, and return-related requests are reviewed for orders placed through ALNOURS. Requests under this policy must be submitted by contacting us.",
+      "sections": [
+        {
+          "title": "Nature of products",
+          "paragraphs": [
+            "Many products sold through the website are food or beverage items. For health, safety, and quality reasons, opened, consumed, used, or improperly stored consumable products are generally not eligible for return, replacement, or refund.",
+            "Requests are reviewed on a case-by-case basis according to product condition, order details, proof provided, and the reason for the request."
+          ]
+        },
+        {
+          "title": "Eligible cases",
+          "paragraphs": [
+            "You may contact us for case review if any of the following applies to your order."
+          ],
+          "bullets": [
+            "You received the wrong item.",
+            "The delivered item was damaged on arrival.",
+            "The product had a verified defect or quality issue at delivery.",
+            "A paid order was not delivered and could not be fulfilled."
+          ]
+        },
+        {
+          "title": "Non-returnable cases",
+          "paragraphs": [
+            "Requests are normally not accepted in the following situations."
+          ],
+          "bullets": [
+            "The product was opened, consumed, or partially used.",
+            "The issue was caused by incorrect storage or handling after delivery.",
+            "The customer changed their mind after delivery for perishable or consumable goods.",
+            "The request does not include sufficient order details or supporting evidence."
+          ]
+        },
+        {
+          "title": "Reporting window",
+          "paragraphs": [
+            "For wrong items, missing items, damage on arrival, or visible product quality issues, customers should contact us within 48 hours of delivery. Requests submitted after that period may not be accepted for consumable or perishable goods, except where required by law or reviewed as an exceptional case. Non-delivery or fulfillment-related issues should also be reported to us as soon as possible. Supporting photos, the order number, and a clear description of the issue may be required so we can review the case."
+          ]
+        },
+        {
+          "title": "Refund method and timing",
+          "paragraphs": [
+            "If a request is approved, we may offer an appropriate remedy based on the case, such as refund or replacement where applicable. Approved refunds are normally returned to the original payment method unless another solution is agreed where permitted.",
+            "Refund timing depends on the payment provider, bank, and internal review process."
+          ]
+        },
+        {
+          "title": "Order cancellation",
+          "paragraphs": [
+            "Cancellation requests, if needed, must be submitted by contacting us and are subject to order status and operational handling. Once preparation, fulfillment, or delivery handling has begun, cancellation may no longer be possible."
+          ]
+        }
+      ]
+    },
+    "shipping": {
+      "title": "Shipping & Delivery Policy",
+      "intro": "This policy explains how ALNOURS handles order processing, shipping, delivery, and customer responsibilities related to receiving orders.",
+      "sections": [
+        {
+          "title": "Delivery coverage",
+          "paragraphs": [
+            "Delivery availability depends on the service area, operational capacity, and the address entered at checkout.",
+            "We may limit or decline delivery to certain locations if service is unavailable, incomplete, restricted, or operationally unsupported."
+          ]
+        },
+        {
+          "title": "Order processing",
+          "paragraphs": [
+            "Orders are processed after successful submission and any required payment or verification steps are completed.",
+            "Processing times may vary during weekends, holidays, high-volume periods, or when additional confirmation is needed."
+          ]
+        },
+        {
+          "title": "Shipping fees and delivery timing",
+          "paragraphs": [
+            "Any applicable shipping fees are shown during checkout before order confirmation.",
+            "Displayed delivery estimates are informational and may vary due to traffic, weather, carrier delays, stock allocation, or address verification."
+          ]
+        },
+        {
+          "title": "Customer responsibilities",
+          "paragraphs": [
+            "Customers are responsible for providing complete and accurate delivery details."
+          ],
+          "bullets": [
+            "Provide the correct recipient name and phone number.",
+            "Provide an accurate city, street, and delivery location.",
+            "Be available, or ensure an authorized receiver is available, during the delivery window.",
+            "Review the order promptly once it is delivered."
+          ]
+        },
+        {
+          "title": "Delays and failed delivery",
+          "paragraphs": [
+            "If delivery cannot be completed because the customer is unreachable, the address is incomplete, or access is unavailable, additional operational handling may be required depending on the condition of the order, including possible re-delivery where appropriate.",
+            "We are not responsible for delays caused by events outside our reasonable control, including weather conditions, public restrictions, technical outages, or third-party carrier interruptions."
+          ]
+        },
+        {
+          "title": "Inspection on arrival",
+          "paragraphs": [
+            "Please inspect the package and products at delivery. If an item is missing, damaged, incorrect, or if there is another delivery issue, contact us promptly with your order number and any supporting photos so we can review the case under the applicable policy."
+          ]
+        }
+      ]
     }
   },
 
@@ -399,7 +661,7 @@
     },
     "profile": {
       "infoTitle": "Account Information",
-      "infoSubtitle": "Update your personal information.",
+      "infoSubtitle": "Update your personal information and change your password.",
       "fields": {
         "firstName": "First name",
         "lastName": "Last name",
@@ -442,7 +704,11 @@
       "products": "Products",
       "brands": "Brands",
       "about": "About",
-      "contact": "Contact us"
+      "contact": "Contact us",
+      "privacy": "Privacy Policy",
+      "terms": "Terms & Conditions",
+      "refund": "Refund & Return Policy",
+      "shippingPolicy": "Shipping & Delivery Policy"
     }
   },
 
@@ -568,6 +834,22 @@
     "contact": {
       "title": "Contact Us — ALNOURS",
       "description": "Get in touch with ALNOURS for inquiries, partnerships, or support."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy — ALNOURS",
+      "description": "Review how ALNOURS collects, uses, stores, and protects personal information."
+    },
+    "termsConditions": {
+      "title": "Terms & Conditions — ALNOURS",
+      "description": "Review the terms governing use of the ALNOURS website, ordering flow, and customer responsibilities."
+    },
+    "refundReturnPolicy": {
+      "title": "Refund & Return Policy — ALNOURS",
+      "description": "Review the ALNOURS rules for returns, replacements, cancellations, and approved refunds."
+    },
+    "shippingDeliveryPolicy": {
+      "title": "Shipping & Delivery Policy — ALNOURS",
+      "description": "Review ALNOURS shipping coverage, order processing, delivery timing, and customer responsibilities."
     },
     "login": {
       "title": "Sign In — ALNOURS",

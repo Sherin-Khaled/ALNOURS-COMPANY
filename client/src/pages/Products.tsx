@@ -261,10 +261,10 @@ export default function Products() {
   const filteredProducts = activeCategory === "all"
     ? products
     : products?.filter(p =>
-        p.flavor?.toLowerCase().includes(activeCategory.toLowerCase()) ||
-        p.category?.toLowerCase().includes(activeCategory.toLowerCase()) ||
-        p.name?.toLowerCase().includes(activeCategory.toLowerCase())
-      );
+      p.flavor?.toLowerCase().includes(activeCategory.toLowerCase()) ||
+      p.category?.toLowerCase().includes(activeCategory.toLowerCase()) ||
+      p.name?.toLowerCase().includes(activeCategory.toLowerCase())
+    );
 
   const whySteps: Step[] = t.products.whyAlnoursTimeline.steps.map((step, idx) => ({
     id: idx + 1,
@@ -300,11 +300,10 @@ export default function Products() {
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
               data-testid={`button-filter-${cat.key}`}
-              className={`h-[40px] px-6 rounded-pill font-medium transition-all ${
-                activeCategory === cat.key
-                  ? "bg-primary text-white"
-                  : "bg-neutral-50 text-neutral-700 hover:bg-neutral-200"
-              }`}
+              className={`h-[40px] px-6 rounded-pill font-medium transition-all ${activeCategory === cat.key
+                ? "bg-primary text-white"
+                : "bg-neutral-50 text-neutral-700 hover:bg-neutral-200"
+                }`}
             >
               {cat.label}
             </button>
@@ -314,13 +313,21 @@ export default function Products() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 max-w-[920px] mx-auto justify-items-center">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="h-[300px] w-full max-w-[420px] bg-neutral-50 animate-pulse rounded-lg"></div>
+              <div
+                key={i}
+                className="h-[300px] w-full max-w-[calc(100vw-32px)] sm:max-w-[420px] bg-neutral-50 animate-pulse rounded-lg"
+              />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 max-w-[920px] mx-auto justify-items-center">
             {filteredProducts?.map((product) => (
-              <ProductCard key={product.id} product={product} variant="grid" />
+              <div
+                key={product.id}
+                className="w-full max-w-[calc(100vw-32px)] sm:max-w-[420px]"
+              >
+                <ProductCard product={product} variant="grid" />
+              </div>
             ))}
             {filteredProducts?.length === 0 && (
               <div className="col-span-full text-center py-16 text-neutral-500 text-body">

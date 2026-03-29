@@ -23,8 +23,16 @@ import Profile from "@/pages/account/Profile";
 import Orders from "@/pages/account/Orders";
 import OrderDetail from "@/pages/account/OrderDetail";
 import Addresses from "@/pages/account/Addresses";
-import { About, Contact } from "@/pages/StaticPages";
+import {
+  About,
+  Contact,
+  PrivacyPolicy,
+  TermsConditions,
+  RefundReturnPolicy,
+  ShippingDeliveryPolicy,
+} from "@/pages/StaticPages";
 import Checkout from "@/pages/Checkout";
+import CheckoutPaymentReturn from "@/pages/CheckoutPaymentReturn";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 
@@ -48,7 +56,12 @@ function Router() {
           <Route path="/brands" component={Brands} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/privacy-policy" component={PrivacyPolicy} />
+          <Route path="/terms-and-conditions" component={TermsConditions} />
+          <Route path="/refund-return-policy" component={RefundReturnPolicy} />
+          <Route path="/shipping-delivery-policy" component={ShippingDeliveryPolicy} />
           <Route path="/cart" component={Cart} />
+          <Route path="/checkout/payment-return" component={CheckoutPaymentReturn} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />

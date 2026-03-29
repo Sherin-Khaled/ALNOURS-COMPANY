@@ -18,25 +18,25 @@ export function GradientMesh({
       <style>{`
         @keyframes fluidPanA {
           0% {
-            transform: translate3d(-6%, -4%, 0) scale(1.08);
+            transform: translate3d(-8%, -6%, 0) scale(1.08);
           }
           50% {
-            transform: translate3d(6%, 4%, 0) scale(1.14);
+            transform: translate3d(8%, 6%, 0) scale(1.16);
           }
           100% {
-            transform: translate3d(-6%, -4%, 0) scale(1.08);
+            transform: translate3d(-8%, -6%, 0) scale(1.08);
           }
         }
 
         @keyframes fluidPanB {
           0% {
-            transform: translate3d(5%, 6%, 0) scale(1.1);
+            transform: translate3d(7%, 8%, 0) scale(1.1);
           }
           50% {
-            transform: translate3d(-7%, -5%, 0) scale(1.16);
+            transform: translate3d(-9%, -7%, 0) scale(1.18);
           }
           100% {
-            transform: translate3d(5%, 6%, 0) scale(1.1);
+            transform: translate3d(7%, 8%, 0) scale(1.1);
           }
         }
 
@@ -45,7 +45,7 @@ export function GradientMesh({
             rotate: 0deg;
           }
           50% {
-            rotate: 3deg;
+            rotate: 4deg;
           }
           100% {
             rotate: 0deg;
@@ -57,10 +57,22 @@ export function GradientMesh({
             transform: translate3d(0%, 0%, 0) scale(1.03);
           }
           50% {
-            transform: translate3d(-1%, 1%, 0) scale(1.06);
+            transform: translate3d(-2%, 2%, 0) scale(1.08);
           }
           100% {
             transform: translate3d(0%, 0%, 0) scale(1.03);
+          }
+        }
+
+        @keyframes verticalGradientFlow {
+          0% {
+            background-position: 50% 20%;
+          }
+          50% {
+            background-position: 50% 80%;
+          }
+          100% {
+            background-position: 50% 20%;
           }
         }
 
@@ -68,15 +80,14 @@ export function GradientMesh({
           position: absolute;
           inset: 0;
           overflow: hidden;
-          background: #ffffff;
+          background: transparent;
         }
 
         .fluid-filter-wrap {
-  position: absolute;
-  inset: -8%;
-  opacity: 1;
-}
-
+          position: absolute;
+          inset: -10%;
+          opacity: 1;
+        }
 
         .fluid-layer {
           position: absolute;
@@ -87,20 +98,20 @@ export function GradientMesh({
 
         .fluid-layer-a {
           background:
-            radial-gradient(60% 42% at 18% 32%, rgba(18, 72, 172, 0.26) 0%, rgba(18, 72, 172, 0.14) 28%, rgba(18, 72, 172, 0.00) 72%),
-            radial-gradient(52% 36% at 58% 30%, rgba(18, 72, 172, 0.20) 0%, rgba(18, 72, 172, 0.10) 30%, rgba(18, 72, 172, 0.00) 74%),
+            radial-gradient(60% 42% at 18% 32%, rgba(18, 72, 172, 0.22) 0%, rgba(18, 72, 172, 0.12) 28%, rgba(18, 72, 172, 0.00) 72%),
+            radial-gradient(52% 36% at 58% 30%, rgba(18, 72, 172, 0.18) 0%, rgba(18, 72, 172, 0.09) 30%, rgba(18, 72, 172, 0.00) 74%),
             radial-gradient(46% 32% at 80% 58%, rgba(18, 72, 172, 0.12) 0%, rgba(18, 72, 172, 0.05) 30%, rgba(18, 72, 172, 0.00) 75%);
-          filter: blur(32px);
-          animation: fluidPanA 18s ease-in-out infinite, fluidRotate 24s ease-in-out infinite;
+          filter: blur(34px);
+          animation: fluidPanA 12s ease-in-out infinite, fluidRotate 18s ease-in-out infinite;
         }
 
         .fluid-layer-b {
           background:
-            radial-gradient(58% 40% at 72% 34%, rgba(18, 72, 172, 0.22) 0%, rgba(18, 72, 172, 0.11) 28%, rgba(18, 72, 172, 0.00) 72%),
-            radial-gradient(50% 34% at 42% 68%, rgba(18, 72, 172, 0.18) 0%, rgba(18, 72, 172, 0.08) 30%, rgba(18, 72, 172, 0.00) 74%),
+            radial-gradient(58% 40% at 72% 34%, rgba(18, 72, 172, 0.20) 0%, rgba(18, 72, 172, 0.10) 28%, rgba(18, 72, 172, 0.00) 72%),
+            radial-gradient(50% 34% at 42% 68%, rgba(18, 72, 172, 0.16) 0%, rgba(18, 72, 172, 0.08) 30%, rgba(18, 72, 172, 0.00) 74%),
             radial-gradient(36% 28% at 24% 62%, rgba(18, 72, 172, 0.10) 0%, rgba(18, 72, 172, 0.04) 30%, rgba(18, 72, 172, 0.00) 74%);
-          filter: blur(38px);
-          animation: fluidPanB 22s ease-in-out infinite;
+          filter: blur(40px);
+          animation: fluidPanB 14s ease-in-out infinite;
         }
 
         .fluid-noise-soften {
@@ -108,22 +119,24 @@ export function GradientMesh({
           inset: -6%;
           background:
             radial-gradient(65% 45% at 50% 48%, rgba(18, 72, 172, 0.10) 0%, rgba(18, 72, 172, 0.04) 36%, rgba(18, 72, 172, 0.00) 72%);
-          filter: blur(60px);
-          animation: noiseShift 20s ease-in-out infinite;
+          filter: blur(68px);
+          animation: noiseShift 12s ease-in-out infinite;
         }
 
-        .fluid-white-softener {
+        .fluid-vertical-gradient {
           position: absolute;
           inset: 0;
-          background:
-            linear-gradient(
-              180deg,
-              rgba(255,255,255,0.56) 0%,
-              rgba(255,255,255,0.20) 22%,
-              rgba(255,255,255,0.10) 50%,
-              rgba(255,255,255,0.20) 78%,
-              rgba(255,255,255,0.56) 100%
-            );
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(18, 72, 172, 1) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          background-size: 100% 180%;
+          background-position: 50% 50%;
+          opacity: 0.16;
+          animation: verticalGradientFlow 3.2s ease-in-out infinite;
+          will-change: background-position;
         }
 
         .fluid-edge-fade {
@@ -131,12 +144,14 @@ export function GradientMesh({
           inset: 0;
           background:
             linear-gradient(
-              to bottom,
+              180deg,
               rgba(255,255,255,1) 0%,
-              rgba(255,255,255,0.24) 12%,
+              rgba(255,255,255,0.72) 7%,
+              rgba(255,255,255,0.18) 16%,
               rgba(255,255,255,0.00) 28%,
               rgba(255,255,255,0.00) 72%,
-              rgba(255,255,255,0.24) 88%,
+              rgba(255,255,255,0.18) 84%,
+              rgba(255,255,255,0.72) 93%,
               rgba(255,255,255,1) 100%
             );
         }
@@ -148,7 +163,11 @@ export function GradientMesh({
           }
 
           .fluid-noise-soften {
-            filter: blur(44px);
+            filter: blur(54px);
+          }
+
+          .fluid-vertical-gradient {
+            opacity: 0.26;
           }
         }
       `}</style>
@@ -178,7 +197,7 @@ export function GradientMesh({
           <div className="fluid-layer fluid-layer-b" />
           <div className="fluid-noise-soften" />
         </div>
-        <div className="fluid-white-softener" />
+        <div className="fluid-vertical-gradient" />
         <div className="fluid-edge-fade" />
       </div>
     </div>

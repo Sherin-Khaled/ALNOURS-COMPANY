@@ -71,3 +71,44 @@ export function useLogout() {
     },
   });
 }
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (data: z.infer<typeof api.auth.updateProfile.input>) => {
+      const res = await fetch(api.auth.updateProfile.path, {
+        method: api.auth.updateProfile.method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: "Failed to update profile" }));
+        throw new Error(err.message || "Failed to update profile");
+      }
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      queryClient.setQueryData([api.auth.me.path], data);
+      queryClient.invalidateQueries({ queryKey: [api.auth.me.path] });
+    },
+  });
+}
+
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: async (data: z.infer<typeof api.auth.changePassword.input>) => {
+      const res = await fetch(api.auth.changePassword.path, {
+        method: api.auth.changePassword.method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ message: "Failed to update password" }));
+        throw new Error(err.message || "Failed to update password");
+      }
+      return await res.json();
+    },
+  });
+}

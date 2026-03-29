@@ -4,11 +4,15 @@ import { useAuth } from "@/hooks/use-auth";
 import { useCreateOrder } from "@/hooks/use-orders";
 import { useAddresses } from "@/hooks/use-addresses";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
+import { clearCardCheckoutDraft, clearCardCheckoutFlash, consumeCardCheckoutFlash, loadCardCheckoutDraft, saveCardCheckoutDraft } from "@/lib/card-checkout-draft";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { createBackendMoyasarPayment, createMoyasarCardToken, fetchMoyasarConfig } from "@/lib/moyasar";
 import { ChevronLeft, CreditCard, Banknote, Check, Lock } from "lucide-react";
+import type { Address } from "@shared/schema";
+import { usePromoQuote } from "@/hooks/use-promo";
 
 type Step = "shipping" | "payment" | "review";
 
@@ -18,7 +22,7 @@ const COUNTRIES = [
 ];
 
 export default function Checkout() {
-  const { items, getTotals, clearCart } = useCart();
+  const { items, getTotals, clearCart, promoCode } = useCart();
   const { data: user } = useAuth();
   const { data: savedAddresses } = useAddresses();
   const { mutateAsync: createOrder, isPending } = useCreateOrder();
@@ -28,6 +32,7 @@ export default function Checkout() {
 
   const [step, setStep] = useState<Step>("shipping");
   const [paymentMethod, setPaymentMethod] = useState<"card" | "cod">("cod");
+  const [isStartingCardPayment, setIsStartingCardPayment] = useState(false);
 
   const [address, setAddress] = useState({
     fullName: user ? `${user.firstName} ${user.lastName || ""}`.trim() : "",
@@ -48,7 +53,47 @@ export default function Checkout() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const { subtotal, shipping, total } = getTotals();
+  const baseTotals = getTotals();
+  const promoQuote = usePromoQuote(
+    promoCode
+      ? {
+          items: items.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity,
+            size: item.size,
+          })),
+          promoCode,
+        }
+      : null,
+  );
+  const subtotal = promoQuote.data?.subtotal ?? baseTotals.subtotal;
+  const shipping = promoQuote.data?.shipping ?? baseTotals.shipping;
+  const discount = promoQuote.data?.discount ?? 0;
+  const total = promoQuote.data?.total ?? baseTotals.total;
+  const isSubmittingOrder = isPending || isStartingCardPayment;
+  const discountLabel = t.cart.rows.discount || "Discount";
+
+  useEffect(() => {
+    const draft = loadCardCheckoutDraft();
+    if (draft?.paymentMethod === "card") {
+      setPaymentMethod("card");
+      setAddress({
+        ...draft.shippingAddress,
+        postalCode: draft.shippingAddress.postalCode || "",
+      });
+    }
+
+    const flash = consumeCardCheckoutFlash();
+    if (flash) {
+      setPaymentMethod("card");
+      setStep("payment");
+      toast({
+        title: flash.status === "failed" ? "Payment failed" : "Payment pending",
+        description: flash.message,
+        variant: flash.status === "failed" ? "destructive" : "default",
+      });
+    }
+  }, [toast]);
 
   if (items.length === 0) {
     setLocation("/cart");
@@ -88,22 +133,57 @@ export default function Checkout() {
   };
 
   const handlePlaceOrder = async () => {
+    const orderPayload = {
+      items: items.map(i => ({ productId: i.product.id, quantity: i.quantity, size: i.size })),
+      shippingAddress: address,
+      paymentMethod,
+      promoCode: promoCode || undefined,
+    };
+
+    if (paymentMethod === "cod") {
+      try {
+        await createOrder(orderPayload);
+        clearCardCheckoutDraft();
+        clearCardCheckoutFlash();
+        clearCart();
+        toast({ title: t.checkout.orderSuccess, description: t.checkout.orderSuccessDesc });
+        setLocation("/account/orders");
+      } catch (error) {
+        const message = error instanceof Error ? error.message : t.checkout.orderFailed;
+        toast({ title: t.checkout.orderFailed, description: message, variant: "destructive" });
+      }
+
+      return;
+    }
+
+    setIsStartingCardPayment(true);
+
     try {
-      await createOrder({
-        items: items.map(i => ({ productId: i.product.id, quantity: i.quantity, size: i.size })),
-        shippingAddress: address,
-        paymentMethod,
+      const { publishableKey } = await fetchMoyasarConfig();
+      const { tokenId } = await createMoyasarCardToken(publishableKey, cardDetails);
+
+      const payment = await createBackendMoyasarPayment({
+        items: orderPayload.items,
+        promoCode: orderPayload.promoCode,
+        shippingAddress: orderPayload.shippingAddress,
+        token: tokenId,
       });
-      clearCart();
-      toast({ title: t.checkout.orderSuccess, description: t.checkout.orderSuccessDesc });
-      setLocation("/account/orders");
-    } catch (e: any) {
-      toast({ title: t.checkout.orderFailed, description: e.message, variant: "destructive" });
+
+      saveCardCheckoutDraft({
+        paymentMethod: "card",
+        shippingAddress: address,
+      });
+      window.location.assign(payment.transactionUrl);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Failed to start card payment";
+      toast({ title: t.checkout.orderFailed, description: message, variant: "destructive" });
+    } finally {
+      setIsStartingCardPayment(false);
     }
   };
 
   const fillFromSaved = (addrId: number) => {
-    const saved = savedAddresses?.find(a => a.id === addrId);
+    const saved = savedAddresses?.find((a: Address) => a.id === addrId);
     if (saved) {
       setAddress(prev => ({
         ...prev,
@@ -165,7 +245,7 @@ export default function Checkout() {
                   <div className="mb-6">
                     <label className="text-label text-neutral-700 mb-2 block">{t.checkout.savedAddresses}</label>
                     <div className="flex flex-wrap gap-2">
-                      {savedAddresses.map(a => (
+                      {savedAddresses.map((a: Address) => (
                         <button key={a.id} onClick={() => fillFromSaved(a.id)}
                           className="px-4 py-2 rounded-pill border border-neutral-200 text-small hover:border-primary hover:text-primary transition-all"
                           data-testid={`button-saved-addr-${a.id}`}>
@@ -250,7 +330,11 @@ export default function Checkout() {
                     </div>
                   </button>
 
-                  <button onClick={() => setPaymentMethod("cod")}
+                  <button onClick={() => {
+                    clearCardCheckoutDraft();
+                    clearCardCheckoutFlash();
+                    setPaymentMethod("cod");
+                  }}
                     className={`flex items-center gap-4 p-4 rounded-lg border-2 transition-all ${paymentMethod === "cod" ? "border-primary bg-primary/5" : "border-neutral-200"}`}
                     data-testid="button-payment-cod">
                     <Banknote className={`w-6 h-6 ${paymentMethod === "cod" ? "text-primary" : "text-neutral-400"}`} />
@@ -342,9 +426,9 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <Button onClick={handlePlaceOrder} disabled={isPending}
+                <Button onClick={handlePlaceOrder} disabled={isSubmittingOrder}
                   className="w-full h-14 rounded-md bg-primary hover:bg-primary-hover text-white font-bold text-lg" data-testid="button-place-order">
-                  {isPending ? t.cta.processing : (
+                    {isSubmittingOrder ? t.cta.processing : (
                     <span className="flex items-center gap-2">
                       <Check className="w-5 h-5" />
                       {paymentMethod === "card" ? t.checkout.payNow : t.checkout.placeOrder} — {total} SAR
@@ -373,6 +457,11 @@ export default function Checkout() {
                 <div className="flex justify-between text-small text-neutral-600">
                   <span>{t.checkout.shipping}</span><span>{shipping} SAR</span>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-small text-neutral-600">
+                    <span>{discountLabel}</span><span>- {discount} SAR</span>
+                  </div>
+                )}
                 <div className="flex justify-between font-bold text-body text-neutral-950 pt-2 border-t border-neutral-200">
                   <span>{t.checkout.total}</span><span>{total} SAR</span>
                 </div>
